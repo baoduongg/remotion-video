@@ -64,6 +64,11 @@ export const Scene4FirstStrike: React.FC = () => {
 
   const usPoints = US_SHIPS.map((ship) => project(ship.lat, ship.lon) ?? [0, 0]);
   const japanPoints = JAPAN_SHIPS.map((ship) => project(ship.lat, ship.lon) ?? [0, 0]);
+  // Centroid of the Japanese fleet — used to anchor the tracer-fire origin
+  // below so it tracks the actual (map-projected) ship cluster instead of a
+  // hardcoded "right side of screen" assumption.
+  const japanCenterX = japanPoints.reduce((sum, [x]) => sum + x, 0) / japanPoints.length;
+  const japanCenterY = japanPoints.reduce((sum, [, y]) => sum + y, 0) / japanPoints.length;
 
   return (
     <AbsoluteFill
@@ -187,9 +192,11 @@ export const Scene4FirstStrike: React.FC = () => {
           const age = frame - startFrame;
           const tProgress = age / duration;
 
-          // Japanese carriers coordinates on the right side
-          const shooterY = 250 + (i % 4) * 150;
-          const startX = width - 380;
+          // Anchored to the Japanese fleet's actual map position (see
+          // japanCenterX/Y above), spread across a vertical band the same
+          // way the original 4-row spread did, just re-centered.
+          const shooterY = japanCenterY - 225 + (i % 4) * 150;
+          const startX = japanCenterX;
           const startY = shooterY + 50;
 
           // Shoots towards the left (where the planes are flying)
@@ -223,7 +230,7 @@ export const Scene4FirstStrike: React.FC = () => {
 
       {/* Moving Planes */}
       {PLANES.map((plane, i) => {
-        const isDestroyable = (plane.destroy as number | null) !== null;
+        const isDestroyable = !plane.survivor && (plane.destroy as number | null) !== null;
         const endFrame = isDestroyable
           ? (plane.destroy as number)
           : plane.launch + PLANE_TRAVEL + 60;
