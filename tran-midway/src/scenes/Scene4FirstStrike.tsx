@@ -11,7 +11,7 @@ import { Audio } from "@remotion/media";
 import { headingFont, bodyFont } from "../fonts";
 import { shotTransform } from "../kenBurns";
 import { Caption, SectionTitle } from "../TextOverlay";
-import { PacificMap, usePacificProjection } from "../vox/PacificMap";
+import { usePacificProjection } from "../vox/PacificMap";
 import { DrawOnPath } from "../vox/DrawOnPath";
 import { ShipIcon } from "../icons";
 
@@ -76,6 +76,12 @@ export const Scene4FirstStrike: React.FC = () => {
       style={{ backgroundColor: "#070d16" }}
     >
       <Audio src={staticFile("audio/vo/vo_04.mp3")} from={20} />
+      {/* Map-anchored content only (ships + attack vector) shares this Ken
+          Burns transform so markers stay locked to their projected map
+          coordinates as the shot pans/zooms. PacificMap itself is no longer
+          rendered here — at this MAP_CENTER/MAP_SCALE it produces zero
+          visible landmass pixels (Midway sector is open ocean at any
+          reasonable zoom), so the map render was pure dead cost. */}
       <div
         style={{
           position: "absolute",
@@ -84,100 +90,98 @@ export const Scene4FirstStrike: React.FC = () => {
           transformOrigin: "center",
         }}
       >
-        <PacificMap center={MAP_CENTER} scale={MAP_SCALE} landColor="#1c2f45" strokeColor="#3a5470" />
+        {/* US Ships */}
+        {US_SHIPS.map((ship, i) => {
+          const [x, y] = usPoints[i];
+          return (
+            <div
+              key={ship.label}
+              style={{
+                position: "absolute",
+                left: x,
+                top: y,
+                translate: "-50% -50%",
+                opacity: interpolate(frame, [20 + i * 10, 45 + i * 10], [0, 1], {
+                  extrapolateLeft: "clamp",
+                  extrapolateRight: "clamp",
+                }),
+                display: "flex",
+                flexDirection: "column",
+                alignItems: "center",
+              }}
+            >
+              <ShipIcon color="#4ea1ff" width={90} />
+              <div
+                style={{
+                  marginTop: 6,
+                  color: "#c7d2e0",
+                  fontFamily: bodyFont,
+                  fontSize: 22,
+                  textShadow: "0 2px 6px rgba(0,0,0,0.8)",
+                }}
+              >
+                {ship.label}
+              </div>
+            </div>
+          );
+        })}
+
+        {/* Japan Ships */}
+        {JAPAN_SHIPS.map((ship, i) => {
+          const [x, y] = japanPoints[i];
+          return (
+            <div
+              key={ship.label}
+              style={{
+                position: "absolute",
+                left: x,
+                top: y,
+                translate: "-50% -50%",
+                opacity: interpolate(frame, [20 + i * 10, 45 + i * 10], [0, 1], {
+                  extrapolateLeft: "clamp",
+                  extrapolateRight: "clamp",
+                }),
+                display: "flex",
+                flexDirection: "column",
+                alignItems: "center",
+              }}
+            >
+              <ShipIcon color="#e0483e" width={90} />
+              <div
+                style={{
+                  marginTop: 6,
+                  color: "#e6b3ae",
+                  fontFamily: bodyFont,
+                  fontSize: 22,
+                  textAlign: "right",
+                  textShadow: "0 2px 6px rgba(0,0,0,0.8)",
+                }}
+              >
+                {ship.label}
+              </div>
+            </div>
+          );
+        })}
+
+        {/* Attack vector: Torpedo Squadron 8's run from Hornet toward the Japanese formation */}
+        <svg
+          width="100%"
+          height="100%"
+          style={{ position: "absolute", inset: 0, pointerEvents: "none" }}
+        >
+          <DrawOnPath
+            d={`M${usPoints[2][0]},${usPoints[2][1]} L${japanPoints[1][0]},${japanPoints[1][1]}`}
+            from={140}
+            to={290}
+            stroke="#ffd700"
+            strokeWidth={2}
+          />
+        </svg>
       </div>
 
       <SectionTitle name="Section title">4 tháng 6, 1942 — Đợt tấn công đầu tiên</SectionTitle>
 
-      {/* US Ships */}
-      {US_SHIPS.map((ship, i) => {
-        const [x, y] = usPoints[i];
-        return (
-          <div
-            key={ship.label}
-            style={{
-              position: "absolute",
-              left: x,
-              top: y,
-              translate: "-50% -50%",
-              opacity: interpolate(frame, [20 + i * 10, 45 + i * 10], [0, 1], {
-                extrapolateLeft: "clamp",
-                extrapolateRight: "clamp",
-              }),
-              display: "flex",
-              flexDirection: "column",
-              alignItems: "center",
-            }}
-          >
-            <ShipIcon color="#4ea1ff" width={90} />
-            <div
-              style={{
-                marginTop: 6,
-                color: "#c7d2e0",
-                fontFamily: bodyFont,
-                fontSize: 22,
-                textShadow: "0 2px 6px rgba(0,0,0,0.8)",
-              }}
-            >
-              {ship.label}
-            </div>
-          </div>
-        );
-      })}
-
-      {/* Japan Ships */}
-      {JAPAN_SHIPS.map((ship, i) => {
-        const [x, y] = japanPoints[i];
-        return (
-          <div
-            key={ship.label}
-            style={{
-              position: "absolute",
-              left: x,
-              top: y,
-              translate: "-50% -50%",
-              opacity: interpolate(frame, [20 + i * 10, 45 + i * 10], [0, 1], {
-                extrapolateLeft: "clamp",
-                extrapolateRight: "clamp",
-              }),
-              display: "flex",
-              flexDirection: "column",
-              alignItems: "center",
-            }}
-          >
-            <ShipIcon color="#e0483e" width={90} />
-            <div
-              style={{
-                marginTop: 6,
-                color: "#e6b3ae",
-                fontFamily: bodyFont,
-                fontSize: 22,
-                textAlign: "right",
-                textShadow: "0 2px 6px rgba(0,0,0,0.8)",
-              }}
-            >
-              {ship.label}
-            </div>
-          </div>
-        );
-      })}
-
-      {/* Attack vector: Torpedo Squadron 8's run from Hornet toward the Japanese formation */}
-      <svg
-        width="100%"
-        height="100%"
-        style={{ position: "absolute", inset: 0, pointerEvents: "none" }}
-      >
-        <DrawOnPath
-          d={`M${usPoints[2][0]},${usPoints[2][1]} L${japanPoints[1][0]},${japanPoints[1][1]}`}
-          from={140}
-          to={290}
-          stroke="#ffd700"
-          strokeWidth={2}
-        />
-      </svg>
-
-      {/* Anti-aircraft tracer fire (Lưới lửa phòng không Nhật Bản từ biên phải sang biên trái) */}
+      {/* Anti-aircraft tracer fire (Lưới lửa phòng không Nhật Bản bắn về phía máy bay đang lao tới từ bên phải) */}
       <svg
         width={width}
         height={height}
@@ -199,9 +203,11 @@ export const Scene4FirstStrike: React.FC = () => {
           const startX = japanCenterX;
           const startY = shooterY + 50;
 
-          // Shoots towards the left (where the planes are flying)
+          // Shoots towards the right (where the planes are flying in from —
+          // Hornet side, PLANE_X_START=1400, planes fly right-to-left toward
+          // the Japanese fleet), so tracers arc toward the incoming attack.
           const lineLength = 220;
-          const angle = Math.PI - 0.2 + (i % 3) * 0.1 - (i % 2) * 0.15; // angle pointing left-ish
+          const angle = -0.2 + (i % 3) * 0.1 - (i % 2) * 0.15; // angle pointing right-ish
 
           const curDist = tProgress * 1100;
           const endX = startX + Math.cos(angle) * curDist;
