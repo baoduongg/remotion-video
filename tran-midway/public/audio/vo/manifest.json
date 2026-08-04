@@ -1,0 +1,34 @@
+{
+  "vo_01": {
+    "durationSec": 11.544,
+    "durationInFrames": 346
+  },
+  "vo_02": {
+    "durationSec": 17.568,
+    "durationInFrames": 527
+  },
+  "vo_03": {
+    "durationSec": 25.008,
+    "durationInFrames": 750
+  },
+  "vo_04": {
+    "durationSec": 21.528,
+    "durationInFrames": 646
+  },
+  "vo_05": {
+    "durationSec": 20.712,
+    "durationInFrames": 621
+  },
+  "vo_06": {
+    "durationSec": 17.592,
+    "durationInFrames": 528
+  },
+  "vo_07": {
+    "durationSec": 17.88,
+    "durationInFrames": 536
+  },
+  "vo_08": {
+    "durationSec": 9.96,
+    "durationInFrames": 299
+  }
+}

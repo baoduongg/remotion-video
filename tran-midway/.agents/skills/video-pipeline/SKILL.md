@@ -4,8 +4,6 @@ description: "Đi từ ý tưởng thô đến video Remotion hoàn chỉnh, ren
 compatibility: "Cần: edge-tts (pip install edge-tts), ffmpeg/ffprobe, skill video-qc đã cài (/watch). Dùng chung với các skill: remotion-best-practices, remotion-create, remotion-markup, frontend-design, superpowers:brainstorming."
 ---
 
-LƯU Ý : NẾU CÓ CÂU HỎI HÃY SỬ DỤNG ASKUSERQUESTION TRONG BẤT KỲ BƯỚC NÀO, KHÔNG TỰ Ý ĐOÁN HƯỚNG GIẢI QUYẾT.
-
 # Video Pipeline — ý tưởng đến video hoàn chỉnh
 
 Điều phối skill, KHÔNG tự viết code/kịch bản thay cho các skill chuyên trách. Vai trò của skill này: đúng thứ tự, đúng bước, không bỏ sót, không nhảy cóc — chi tiết từng bước xem `WORKFLOW.md` ở root repo.
