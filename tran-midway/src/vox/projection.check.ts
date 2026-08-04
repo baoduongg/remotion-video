@@ -1,6 +1,6 @@
 // ponytail: manual sanity check (no test framework in this project).
 // Run with: node src/vox/projection.check.ts
-import { createPacificProjection, projectPoint } from "./projection";
+import { createPacificProjection, projectPoint } from "./projection.ts";
 
 const width = 1920;
 const height = 1080;
