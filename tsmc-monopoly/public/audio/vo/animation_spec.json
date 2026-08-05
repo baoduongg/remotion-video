@@ -1,0 +1,589 @@
+[
+  {
+    "beatId": "vo_01",
+    "startFrame": 0,
+    "durationFrames": 100,
+    "elements": [
+      {
+        "type": "title-text",
+        "enterAtFrame": 10,
+        "motion": "slide-up",
+        "easing": "spring",
+        "label": "PHỤ THUỘC BÁN DẪN"
+      },
+      {
+        "type": "character",
+        "enterAtFrame": 30,
+        "motion": "fade-scale",
+        "easing": "easeOutCubic"
+      }
+    ]
+  },
+  {
+    "beatId": "vo_02",
+    "startFrame": 100,
+    "durationFrames": 76,
+    "elements": [
+      {
+        "type": "icon",
+        "enterAtFrame": 10,
+        "motion": "slide-left",
+        "easing": "spring"
+      }
+    ]
+  },
+  {
+    "beatId": "vo_03",
+    "startFrame": 176,
+    "durationFrames": 114,
+    "elements": [
+      {
+        "type": "icon",
+        "enterAtFrame": 15,
+        "motion": "slide-up",
+        "easing": "spring"
+      }
+    ]
+  },
+  {
+    "beatId": "vo_04",
+    "startFrame": 290,
+    "durationFrames": 66,
+    "elements": [
+      {
+        "type": "highlight-circle",
+        "enterAtFrame": 10,
+        "motion": "draw-on",
+        "easing": "easeOutCubic"
+      }
+    ]
+  },
+  {
+    "beatId": "vo_05",
+    "startFrame": 356,
+    "durationFrames": 95,
+    "elements": [
+      {
+        "type": "map",
+        "enterAtFrame": 10,
+        "motion": "fade-scale",
+        "easing": "easeOutCubic"
+      }
+    ]
+  },
+  {
+    "beatId": "vo_06",
+    "startFrame": 451,
+    "durationFrames": 102,
+    "elements": [
+      {
+        "type": "title-text",
+        "enterAtFrame": 10,
+        "motion": "slide-up",
+        "easing": "spring",
+        "label": "TSMC"
+      },
+      {
+        "type": "highlight-circle",
+        "enterAtFrame": 30,
+        "motion": "draw-on",
+        "easing": "easeOutCubic"
+      }
+    ]
+  },
+  {
+    "beatId": "vo_07",
+    "startFrame": 553,
+    "durationFrames": 123,
+    "elements": [
+      {
+        "type": "title-text",
+        "enterAtFrame": 10,
+        "motion": "slide-up",
+        "easing": "spring",
+        "label": "1987 - MORRIS CHANG"
+      }
+    ]
+  },
+  {
+    "beatId": "vo_08",
+    "startFrame": 676,
+    "durationFrames": 94,
+    "elements": [
+      {
+        "type": "icon",
+        "enterAtFrame": 15,
+        "motion": "fade-scale",
+        "easing": "easeOutCubic"
+      }
+    ]
+  },
+  {
+    "beatId": "vo_09",
+    "startFrame": 770,
+    "durationFrames": 76,
+    "elements": [
+      {
+        "type": "icon",
+        "enterAtFrame": 10,
+        "motion": "slide-up",
+        "easing": "spring"
+      }
+    ]
+  },
+  {
+    "beatId": "vo_10",
+    "startFrame": 846,
+    "durationFrames": 78,
+    "elements": [
+      {
+        "type": "icon",
+        "enterAtFrame": 15,
+        "motion": "slide-left",
+        "easing": "spring"
+      }
+    ]
+  },
+  {
+    "beatId": "vo_11",
+    "startFrame": 924,
+    "durationFrames": 84,
+    "elements": [
+      {
+        "type": "highlight-circle",
+        "enterAtFrame": 15,
+        "motion": "draw-on",
+        "easing": "easeOutCubic"
+      }
+    ]
+  },
+  {
+    "beatId": "vo_12",
+    "startFrame": 1008,
+    "durationFrames": 139,
+    "elements": [
+      {
+        "type": "chart",
+        "enterAtFrame": 10,
+        "motion": "draw-on",
+        "easing": "easeOutCubic"
+      },
+      {
+        "type": "stat-counter",
+        "enterAtFrame": 30,
+        "motion": "count-up",
+        "easing": "spring",
+        "label": "90%"
+      }
+    ]
+  },
+  {
+    "beatId": "vo_13",
+    "startFrame": 1147,
+    "durationFrames": 89,
+    "elements": [
+      {
+        "type": "title-text",
+        "enterAtFrame": 10,
+        "motion": "slide-up",
+        "easing": "spring",
+        "label": "TIÊN TIẾN NHẤT"
+      }
+    ]
+  },
+  {
+    "beatId": "vo_14",
+    "startFrame": 1236,
+    "durationFrames": 70,
+    "elements": [
+      {
+        "type": "title-text",
+        "enterAtFrame": 10,
+        "motion": "slide-up",
+        "easing": "spring",
+        "label": "< 3 NANOMET"
+      }
+    ]
+  },
+  {
+    "beatId": "vo_15",
+    "startFrame": 1306,
+    "durationFrames": 89,
+    "elements": [
+      {
+        "type": "icon",
+        "enterAtFrame": 15,
+        "motion": "fade-scale",
+        "easing": "easeOutCubic"
+      }
+    ]
+  },
+  {
+    "beatId": "vo_16",
+    "startFrame": 1395,
+    "durationFrames": 84,
+    "elements": [
+      {
+        "type": "icon",
+        "enterAtFrame": 10,
+        "motion": "slide-left",
+        "easing": "spring"
+      }
+    ]
+  },
+  {
+    "beatId": "vo_17",
+    "startFrame": 1479,
+    "durationFrames": 95,
+    "elements": [
+      {
+        "type": "title-text",
+        "enterAtFrame": 10,
+        "motion": "slide-up",
+        "easing": "spring",
+        "label": "INTEL & SAMSUNG"
+      }
+    ]
+  },
+  {
+    "beatId": "vo_18",
+    "startFrame": 1574,
+    "durationFrames": 73,
+    "elements": [
+      {
+        "type": "icon",
+        "enterAtFrame": 15,
+        "motion": "fade-scale",
+        "easing": "easeOutCubic"
+      }
+    ]
+  },
+  {
+    "beatId": "vo_19",
+    "startFrame": 1647,
+    "durationFrames": 81,
+    "elements": [
+      {
+        "type": "arrow",
+        "enterAtFrame": 10,
+        "motion": "draw-on",
+        "easing": "easeOutCubic"
+      }
+    ]
+  },
+  {
+    "beatId": "vo_20",
+    "startFrame": 1728,
+    "durationFrames": 105,
+    "elements": [
+      {
+        "type": "icon",
+        "enterAtFrame": 15,
+        "motion": "slide-up",
+        "easing": "spring"
+      }
+    ]
+  },
+  {
+    "beatId": "vo_21",
+    "startFrame": 1833,
+    "durationFrames": 90,
+    "elements": [
+      {
+        "type": "title-text",
+        "enterAtFrame": 10,
+        "motion": "slide-up",
+        "easing": "spring",
+        "label": "CỰC KỲ NGUY HIỂM?"
+      }
+    ]
+  },
+  {
+    "beatId": "vo_22",
+    "startFrame": 1923,
+    "durationFrames": 107,
+    "elements": [
+      {
+        "type": "map",
+        "enterAtFrame": 10,
+        "motion": "fade-scale",
+        "easing": "easeOutCubic"
+      },
+      {
+        "type": "arrow",
+        "enterAtFrame": 30,
+        "motion": "draw-on",
+        "easing": "easeOutCubic"
+      }
+    ]
+  },
+  {
+    "beatId": "vo_23",
+    "startFrame": 2030,
+    "durationFrames": 80,
+    "elements": [
+      {
+        "type": "arrow",
+        "enterAtFrame": 15,
+        "motion": "draw-on",
+        "easing": "easeOutCubic"
+      }
+    ]
+  },
+  {
+    "beatId": "vo_24",
+    "startFrame": 2110,
+    "durationFrames": 71,
+    "elements": [
+      {
+        "type": "icon",
+        "enterAtFrame": 10,
+        "motion": "slide-up",
+        "easing": "spring"
+      }
+    ]
+  },
+  {
+    "beatId": "vo_25",
+    "startFrame": 2181,
+    "durationFrames": 109,
+    "elements": [
+      {
+        "type": "title-text",
+        "enterAtFrame": 10,
+        "motion": "slide-up",
+        "easing": "spring",
+        "label": "ĐÓNG BĂNG"
+      }
+    ]
+  },
+  {
+    "beatId": "vo_26",
+    "startFrame": 2290,
+    "durationFrames": 81,
+    "elements": [
+      {
+        "type": "icon",
+        "enterAtFrame": 15,
+        "motion": "fade-scale",
+        "easing": "easeOutCubic"
+      }
+    ]
+  },
+  {
+    "beatId": "vo_27",
+    "startFrame": 2371,
+    "durationFrames": 84,
+    "elements": [
+      {
+        "type": "title-text",
+        "enterAtFrame": 10,
+        "motion": "slide-up",
+        "easing": "spring",
+        "label": "KHÔNG ĐIỆN THOẠI MỚI"
+      }
+    ]
+  },
+  {
+    "beatId": "vo_28",
+    "startFrame": 2455,
+    "durationFrames": 60,
+    "elements": [
+      {
+        "type": "title-text",
+        "enterAtFrame": 10,
+        "motion": "slide-up",
+        "easing": "spring",
+        "label": "KHÔNG XE ĐIỆN"
+      }
+    ]
+  },
+  {
+    "beatId": "vo_29",
+    "startFrame": 2515,
+    "durationFrames": 100,
+    "elements": [
+      {
+        "type": "title-text",
+        "enterAtFrame": 10,
+        "motion": "slide-up",
+        "easing": "spring",
+        "label": "AI NGỪNG HOẠT ĐỘNG"
+      }
+    ]
+  },
+  {
+    "beatId": "vo_30",
+    "startFrame": 2615,
+    "durationFrames": 93,
+    "elements": [
+      {
+        "type": "title-text",
+        "enterAtFrame": 10,
+        "motion": "slide-up",
+        "easing": "spring",
+        "label": "MỸ - NHẬT - CHÂU ÂU"
+      }
+    ]
+  },
+  {
+    "beatId": "vo_31",
+    "startFrame": 2708,
+    "durationFrames": 80,
+    "elements": [
+      {
+        "type": "stat-counter",
+        "enterAtFrame": 15,
+        "motion": "count-up",
+        "easing": "spring",
+        "label": "HÀNG CHỤC TỶ USD"
+      }
+    ]
+  },
+  {
+    "beatId": "vo_32",
+    "startFrame": 2788,
+    "durationFrames": 71,
+    "elements": [
+      {
+        "type": "icon",
+        "enterAtFrame": 10,
+        "motion": "slide-up",
+        "easing": "spring"
+      }
+    ]
+  },
+  {
+    "beatId": "vo_33",
+    "startFrame": 2859,
+    "durationFrames": 81,
+    "elements": [
+      {
+        "type": "arrow",
+        "enterAtFrame": 15,
+        "motion": "draw-on",
+        "easing": "easeOutCubic"
+      }
+    ]
+  },
+  {
+    "beatId": "vo_34",
+    "startFrame": 2940,
+    "durationFrames": 99,
+    "elements": [
+      {
+        "type": "title-text",
+        "enterAtFrame": 10,
+        "motion": "slide-up",
+        "easing": "spring",
+        "label": "CỰC KỲ PHỨC TẠP"
+      }
+    ]
+  },
+  {
+    "beatId": "vo_35",
+    "startFrame": 3039,
+    "durationFrames": 118,
+    "elements": [
+      {
+        "type": "map",
+        "enterAtFrame": 15,
+        "motion": "fade-scale",
+        "easing": "easeOutCubic"
+      }
+    ]
+  },
+  {
+    "beatId": "vo_36",
+    "startFrame": 3157,
+    "durationFrames": 68,
+    "elements": [
+      {
+        "type": "character",
+        "enterAtFrame": 10,
+        "motion": "slide-left",
+        "easing": "spring"
+      }
+    ]
+  },
+  {
+    "beatId": "vo_37",
+    "startFrame": 3225,
+    "durationFrames": 69,
+    "elements": [
+      {
+        "type": "icon",
+        "enterAtFrame": 15,
+        "motion": "fade-scale",
+        "easing": "easeOutCubic"
+      }
+    ]
+  },
+  {
+    "beatId": "vo_38",
+    "startFrame": 3294,
+    "durationFrames": 80,
+    "elements": [
+      {
+        "type": "title-text",
+        "enterAtFrame": 10,
+        "motion": "slide-up",
+        "easing": "spring",
+        "label": "TỰ CHỦ?"
+      }
+    ]
+  },
+  {
+    "beatId": "vo_39",
+    "startFrame": 3374,
+    "durationFrames": 78,
+    "elements": [
+      {
+        "type": "icon",
+        "enterAtFrame": 15,
+        "motion": "slide-up",
+        "easing": "spring"
+      }
+    ]
+  },
+  {
+    "beatId": "vo_40",
+    "startFrame": 3452,
+    "durationFrames": 91,
+    "elements": [
+      {
+        "type": "icon",
+        "enterAtFrame": 10,
+        "motion": "fade-scale",
+        "easing": "easeOutCubic"
+      }
+    ]
+  },
+  {
+    "beatId": "vo_41",
+    "startFrame": 3543,
+    "durationFrames": 81,
+    "elements": [
+      {
+        "type": "highlight-circle",
+        "enterAtFrame": 15,
+        "motion": "draw-on",
+        "easing": "easeOutCubic"
+      }
+    ]
+  },
+  {
+    "beatId": "vo_42",
+    "startFrame": 3624,
+    "durationFrames": 99,
+    "elements": [
+      {
+        "type": "title-text",
+        "enterAtFrame": 10,
+        "motion": "slide-up",
+        "easing": "spring",
+        "label": "PHÒNG SẠCH TSMC"
+      }
+    ]
+  }
+]

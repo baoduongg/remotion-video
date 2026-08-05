@@ -1,0 +1,172 @@
+[
+  {
+    "id": "vo_01",
+    "text": "Hãy tưởng tượng bạn đang đi du lịch từ London đến Paris, rồi sang New York.",
+    "voice": "vi-VN-NamMinhNeural"
+  },
+  {
+    "id": "vo_02",
+    "text": "Mỗi lần hạ cánh, việc đầu tiên bạn làm là gì?",
+    "voice": "vi-VN-NamMinhNeural"
+  },
+  {
+    "id": "vo_03",
+    "text": "Chắc chắn là chỉnh lại đồng hồ.",
+    "voice": "vi-VN-NamMinhNeural"
+  },
+  {
+    "id": "vo_04",
+    "text": "Nhưng đã bao giờ bạn tự hỏi, tại sao cả thế giới lại đồng ý lấy Greenwich",
+    "voice": "vi-VN-NamMinhNeural"
+  },
+  {
+    "id": "vo_05",
+    "text": "— một thị trấn nhỏ, yên bình ở ngoại ô London làm mốc xuất phát số 0 cho mọi múi giờ?",
+    "voice": "vi-VN-NamMinhNeural"
+  },
+  {
+    "id": "vo_06",
+    "text": "Tại sao không phải là Paris hoa lệ, Washington hiện đại, hay một điểm trung lập ở giữa đại dương?",
+    "voice": "vi-VN-NamMinhNeural"
+  },
+  {
+    "id": "vo_07",
+    "text": "Câu trả lời đưa chúng ta quay ngược về thế kỷ 19.",
+    "voice": "vi-VN-NamMinhNeural"
+  },
+  {
+    "id": "vo_08",
+    "text": "Lúc bấy giờ, khái niệm giờ tiêu chuẩn chưa hề tồn tại.",
+    "voice": "vi-VN-NamMinhNeural"
+  },
+  {
+    "id": "vo_09",
+    "text": "Mỗi thành phố, mỗi thị trấn tự quy định giờ riêng dựa theo vị trí mặt trời.",
+    "voice": "vi-VN-NamMinhNeural"
+  },
+  {
+    "id": "vo_10",
+    "text": "Khi mặt trời đứng bóng, đó là 12 giờ trưa.",
+    "voice": "vi-VN-NamMinhNeural"
+  },
+  {
+    "id": "vo_11",
+    "text": "Hệ quả là nước Mỹ có tới hàng trăm múi giờ khác nhau,",
+    "voice": "vi-VN-NamMinhNeural"
+  },
+  {
+    "id": "vo_12",
+    "text": "còn hành trình đi tàu hỏa ở Anh là một cơn ác mộng về thời gian.",
+    "voice": "vi-VN-NamMinhNeural"
+  },
+  {
+    "id": "vo_13",
+    "text": "Để giải quyết sự hỗn loạn này, tháng 10 năm 1884,",
+    "voice": "vi-VN-NamMinhNeural"
+  },
+  {
+    "id": "vo_14",
+    "text": "Hội nghị Kinh tuyến Quốc tế đã được tổ chức tại Washington D.C.",
+    "voice": "vi-VN-NamMinhNeural"
+  },
+  {
+    "id": "vo_15",
+    "text": "Đại diện từ 25 quốc gia đã tranh luận gay gắt để chọn ra một kinh tuyến gốc duy nhất.",
+    "voice": "vi-VN-NamMinhNeural"
+  },
+  {
+    "id": "vo_16",
+    "text": "Người Pháp, dẫn đầu bởi nhà thiên văn học Jules Janssen, kịch liệt phản đối việc chọn Greenwich.",
+    "voice": "vi-VN-NamMinhNeural"
+  },
+  {
+    "id": "vo_17",
+    "text": "Họ cho rằng kinh tuyến gốc phải là một đường hoàn toàn trung lập,",
+    "voice": "vi-VN-NamMinhNeural"
+  },
+  {
+    "id": "vo_18",
+    "text": "không thuộc về bất kỳ cường quốc nào.",
+    "voice": "vi-VN-NamMinhNeural"
+  },
+  {
+    "id": "vo_19",
+    "text": "Họ đề xuất đặt nó ở Azores hoặc eo biển Bering,",
+    "voice": "vi-VN-NamMinhNeural"
+  },
+  {
+    "id": "vo_20",
+    "text": "giống như cách hệ mét được tạo ra dựa trên kích thước Trái Đất chứ không phải một cột mốc quốc gia.",
+    "voice": "vi-VN-NamMinhNeural"
+  },
+  {
+    "id": "vo_21",
+    "text": "Nhưng người Anh và người Mỹ có một lập luận thực tế hơn nhiều:",
+    "voice": "vi-VN-NamMinhNeural"
+  },
+  {
+    "id": "vo_22",
+    "text": "72% thương mại hàng hải thế giới khi đó đã đang sử dụng bản đồ dựa trên kinh tuyến Greenwich.",
+    "voice": "vi-VN-NamMinhNeural"
+  },
+  {
+    "id": "vo_23",
+    "text": "Việc bắt đầu lại từ con số không với một địa điểm mới sẽ gây ra tổn thất kinh tế khổng lồ.",
+    "voice": "vi-VN-NamMinhNeural"
+  },
+  {
+    "id": "vo_24",
+    "text": "Cuối cùng, cuộc bỏ phiếu đã diễn ra.",
+    "voice": "vi-VN-NamMinhNeural"
+  },
+  {
+    "id": "vo_25",
+    "text": "22 quốc gia bỏ phiếu thuận cho Greenwich.",
+    "voice": "vi-VN-NamMinhNeural"
+  },
+  {
+    "id": "vo_26",
+    "text": "Chỉ có duy nhất một quốc gia bỏ phiếu chống là San Domingo, nay là Cộng hòa Dominica.",
+    "voice": "vi-VN-NamMinhNeural"
+  },
+  {
+    "id": "vo_27",
+    "text": "Hai nước bỏ phiếu trắng là Brazil và tất nhiên, Pháp.",
+    "voice": "vi-VN-NamMinhNeural"
+  },
+  {
+    "id": "vo_28",
+    "text": "Pháp đã từ chối thừa nhận thất bại này suốt nhiều thập kỷ.",
+    "voice": "vi-VN-NamMinhNeural"
+  },
+  {
+    "id": "vo_29",
+    "text": "Họ tiếp tục dùng giờ Paris cho đến năm 1911.",
+    "voice": "vi-VN-NamMinhNeural"
+  },
+  {
+    "id": "vo_30",
+    "text": "Thậm chí khi nhượng bộ, luật pháp Pháp cũng gọi giờ mới là 'giờ trung bình Paris, lùi lại 9 phút 21 giây'",
+    "voice": "vi-VN-NamMinhNeural"
+  },
+  {
+    "id": "vo_31",
+    "text": "chứ quyết không gọi là giờ Greenwich.",
+    "voice": "vi-VN-NamMinhNeural"
+  },
+  {
+    "id": "vo_32",
+    "text": "Hôm nay, đường kinh tuyến Greenwich không chỉ là một vạch kim loại trên nền đất tại Đài thiên văn Hoàng gia.",
+    "voice": "vi-VN-NamMinhNeural"
+  },
+  {
+    "id": "vo_33",
+    "text": "Nó là minh chứng cho thấy, đôi khi sự thuận tiện thực tế và sức mạnh kinh tế đã định hình cách chúng ta đo lường thế giới,",
+    "voice": "vi-VN-NamMinhNeural"
+  },
+  {
+    "id": "vo_34",
+    "text": "vượt lên trên mọi tranh chấp chính trị.",
+    "voice": "vi-VN-NamMinhNeural"
+  }
+]

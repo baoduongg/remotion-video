@@ -1,0 +1,210 @@
+{
+  "project": "why-greenwich-meridian",
+  "aspectRatio": "16:9",
+  "scenes": {
+    "vo_01": {
+      "asset": "public/images/scene-vo_01.png",
+      "motion": "slow zoom-in",
+      "textSafe": "lower third",
+      "status": "generated"
+    },
+    "vo_02": {
+      "asset": "public/images/scene-vo_02.png",
+      "motion": "static hold",
+      "textSafe": "upper third",
+      "status": "generated"
+    },
+    "vo_03": {
+      "asset": "public/images/scene-vo_03.png",
+      "motion": "pan left-to-right",
+      "textSafe": "lower third",
+      "status": "generated"
+    },
+    "vo_04": {
+      "asset": "public/images/scene-vo_04.png",
+      "motion": "static hold",
+      "textSafe": "lower third",
+      "status": "generated"
+    },
+    "vo_05": {
+      "asset": "public/images/scene-vo_05.png",
+      "motion": "slow zoom-in",
+      "textSafe": "lower third",
+      "status": "generated"
+    },
+    "vo_06": {
+      "asset": "public/images/scene-vo_06.png",
+      "motion": "slide-up",
+      "textSafe": "lower third",
+      "status": "generated"
+    },
+    "vo_07": {
+      "asset": "public/images/scene-vo_07.png",
+      "motion": "pan down-to-up",
+      "textSafe": "lower third",
+      "status": "generated"
+    },
+    "vo_08": {
+      "asset": "public/images/scene-vo_08.png",
+      "motion": "static hold",
+      "textSafe": "lower third",
+      "status": "generated"
+    },
+    "vo_09": {
+      "asset": "public/images/scene-vo_09.png",
+      "motion": "static hold",
+      "textSafe": "lower third",
+      "status": "generated"
+    },
+    "vo_10": {
+      "asset": "public/images/scene-vo_10.png",
+      "motion": "slow zoom-in",
+      "textSafe": "lower third",
+      "status": "pending_quota"
+    },
+    "vo_11": {
+      "asset": "public/images/scene-vo_11.png",
+      "motion": "pan left-to-right",
+      "textSafe": "lower third",
+      "status": "pending_quota"
+    },
+    "vo_12": {
+      "asset": "public/images/scene-vo_12.png",
+      "motion": "static hold",
+      "textSafe": "lower third",
+      "status": "pending_quota"
+    },
+    "vo_13": {
+      "asset": "public/images/scene-vo_13.png",
+      "motion": "static hold",
+      "textSafe": "lower third",
+      "status": "pending_quota"
+    },
+    "vo_14": {
+      "asset": "public/images/scene-vo_14.png",
+      "motion": "slow zoom-in",
+      "textSafe": "lower third",
+      "status": "pending_quota"
+    },
+    "vo_15": {
+      "asset": "public/images/scene-vo_15.png",
+      "motion": "fade-scale",
+      "textSafe": "lower third",
+      "status": "pending_quota"
+    },
+    "vo_16": {
+      "asset": "public/images/scene-vo_16.png",
+      "motion": "static hold",
+      "textSafe": "lower third",
+      "status": "pending_quota"
+    },
+    "vo_17": {
+      "asset": "public/images/scene-vo_17.png",
+      "motion": "pan down-to-up",
+      "textSafe": "lower third",
+      "status": "pending_quota"
+    },
+    "vo_18": {
+      "asset": "public/images/scene-vo_18.png",
+      "motion": "slow zoom-in",
+      "textSafe": "lower third",
+      "status": "pending_quota"
+    },
+    "vo_19": {
+      "asset": "public/images/scene-vo_19.png",
+      "motion": "pan left-to-right",
+      "textSafe": "lower third",
+      "status": "pending_quota"
+    },
+    "vo_20": {
+      "asset": "public/images/scene-vo_20.png",
+      "motion": "static hold",
+      "textSafe": "lower third",
+      "status": "pending_quota"
+    },
+    "vo_21": {
+      "asset": "public/images/scene-vo_21.png",
+      "motion": "static hold",
+      "textSafe": "lower third",
+      "status": "pending_quota"
+    },
+    "vo_22": {
+      "asset": "public/images/scene-vo_22.png",
+      "motion": "slow zoom-in",
+      "textSafe": "lower third",
+      "status": "pending_quota"
+    },
+    "vo_23": {
+      "asset": "public/images/scene-vo_23.png",
+      "motion": "static hold",
+      "textSafe": "lower third",
+      "status": "pending_quota"
+    },
+    "vo_24": {
+      "asset": "public/images/scene-vo_24.png",
+      "motion": "static hold",
+      "textSafe": "lower third",
+      "status": "pending_quota"
+    },
+    "vo_25": {
+      "asset": "public/images/scene-vo_25.png",
+      "motion": "slow zoom-in",
+      "textSafe": "lower third",
+      "status": "pending_quota"
+    },
+    "vo_26": {
+      "asset": "public/images/scene-vo_26.png",
+      "motion": "pan left-to-right",
+      "textSafe": "lower third",
+      "status": "pending_quota"
+    },
+    "vo_27": {
+      "asset": "public/images/scene-vo_27.png",
+      "motion": "static hold",
+      "textSafe": "lower third",
+      "status": "pending_quota"
+    },
+    "vo_28": {
+      "asset": "public/images/scene-vo_28.png",
+      "motion": "static hold",
+      "textSafe": "lower third",
+      "status": "pending_quota"
+    },
+    "vo_29": {
+      "asset": "public/images/scene-vo_29.png",
+      "motion": "slow zoom-in",
+      "textSafe": "lower third",
+      "status": "pending_quota"
+    },
+    "vo_30": {
+      "asset": "public/images/scene-vo_30.png",
+      "motion": "pan left-to-right",
+      "textSafe": "lower third",
+      "status": "pending_quota"
+    },
+    "vo_31": {
+      "asset": "public/images/scene-vo_31.png",
+      "motion": "static hold",
+      "textSafe": "lower third",
+      "status": "pending_quota"
+    },
+    "vo_32": {
+      "asset": "public/images/scene-vo_32.png",
+      "motion": "slow zoom-in",
+      "textSafe": "lower third",
+      "status": "pending_quota"
+    },
+    "vo_33": {
+      "asset": "public/images/scene-vo_33.png",
+      "motion": "static hold",
+      "textSafe": "lower third",
+      "status": "pending_quota"
+    },
+    "vo_34": {
+      "asset": "public/images/scene-vo_34.png",
+      "motion": "static hold",
+      "textSafe": "lower third",
+      "status": "pending_quota"
+    }
+  }
+}
