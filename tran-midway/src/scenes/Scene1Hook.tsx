@@ -6,17 +6,37 @@ import {
   staticFile,
   useCurrentFrame,
   useVideoConfig,
+  Img,
 } from "remotion";
 import { Audio } from "@remotion/media";
 import { headingFont, bodyFont } from "../fonts";
+import { Caption } from "../TextOverlay";
+import { shotTransform } from "../kenBurns";
 
 export const Scene1Hook: React.FC = () => {
   const frame = useCurrentFrame();
   const { fps, width, height, durationInFrames } = useVideoConfig();
 
+  const transform = shotTransform(frame, [
+    { from: 0, to: 240, scale: [1.0, 1.1] },
+    { from: 240, to: durationInFrames, scale: [1.22, 1.35], x: [-3, 2], y: [-2, 3] },
+  ]);
+
   return (
     <AbsoluteFill name="Scene 1 - Hook" style={{ backgroundColor: "#070d16" }}>
       <Audio src={staticFile("audio/vo/vo_01.mp3")} from={15} />
+      <Img
+        src={staticFile("images/scene_1_hook.png")}
+        style={{
+          position: "absolute",
+          inset: 0,
+          width: "100%",
+          height: "100%",
+          objectFit: "cover",
+          transform,
+          opacity: 0.7,
+        }}
+      />
       <svg
         width={width}
         height={height}
@@ -123,41 +143,17 @@ export const Scene1Hook: React.FC = () => {
               extrapolateRight: "clamp",
               easing: Easing.bezier(0.16, 1, 0.3, 1),
             }),
+            textShadow: "0 6px 30px rgba(0,0,0,0.6)",
           }}
         >
           Trận Midway
         </Interactive.Div>
       </div>
 
-      <div
-        style={{
-          position: "absolute",
-          left: 160,
-          right: 160,
-          bottom: 130,
-          textAlign: "center",
-        }}
-      >
-        <Interactive.Div
-          name="Hook caption"
-          style={{
-            color: "#f3f1e7",
-            fontFamily: bodyFont,
-            fontWeight: 400,
-            fontSize: 40,
-            lineHeight: 1.4,
-            opacity: interpolate(
-              frame,
-              [3 * fps, 3.6 * fps, durationInFrames - 20, durationInFrames],
-              [0, 1, 1, 0],
-              { extrapolateLeft: "clamp", extrapolateRight: "clamp" },
-            ),
-          }}
-        >
-          Một đảo san hô nhỏ gần như vô nghĩa trên bản đồ — nhưng tháng 6 năm
-          1942, nó quyết định cục diện cả một cuộc chiến.
-        </Interactive.Div>
-      </div>
+      <Caption name="Hook caption" from={3 * fps}>
+        Một đảo san hô nhỏ gần như vô nghĩa trên bản đồ — nhưng tháng 6 năm
+        1942, nó quyết định cục diện cả một cuộc chiến.
+      </Caption>
     </AbsoluteFill>
   );
 };

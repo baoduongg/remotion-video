@@ -41,21 +41,29 @@ def generate_line(id_: str, text: str, voice: str) -> float:
         except Exception:
             pass # Regenerate if file is corrupt
             
+    temp_file = Path(f"temp_tts_{id_}.txt")
+    temp_file.write_text(text, encoding="utf-8")
+            
     max_retries = 5
     for attempt in range(max_retries):
         try:
             time.sleep(1.5)  # Avoid rate limiting
             subprocess.run(
-                ["edge-tts", "--voice", voice, "--text", text, "--write-media", str(out_path)],
+                ["python", "-m", "edge_tts", "--voice", voice, "--file", str(temp_file), "--write-media", str(out_path)],
                 check=True, capture_output=True, text=True,
             )
             if not out_path.exists() or out_path.stat().st_size == 0:
                 raise RuntimeError("edge-tts produced empty file")
+            if temp_file.exists():
+                temp_file.unlink()
             return ffprobe_duration(out_path)
         except Exception as e:
             if attempt == max_retries - 1:
+                if temp_file.exists():
+                    temp_file.unlink()
                 raise e
-            print(f"[{id_}] Attempt {attempt + 1} failed: {e}. Retrying...")
+            err_msg = str(e).encode("ascii", "replace").decode("ascii")
+            print(f"[{id_}] Attempt {attempt + 1} failed: {err_msg}. Retrying...")
             time.sleep(5.0)
 
 
@@ -71,7 +79,7 @@ def main() -> None:
     if "--out-dir" in sys.argv:
         OUT_DIR = Path(sys.argv[sys.argv.index("--out-dir") + 1])
 
-    lines = json.loads(script_path.read_text())
+    lines = json.loads(script_path.read_text(encoding="utf-8"))
     OUT_DIR.mkdir(parents=True, exist_ok=True)
 
     manifest = {}

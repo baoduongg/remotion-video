@@ -1,32 +1,32 @@
 [
   {
     "id": "vo_01",
-    "text": "Hãy tưởng tượng bạn đang đi du lịch từ London đến Paris, rồi sang New York.",
+    "text": "Tại sao một thị trấn nhỏ bé gần London lại quyết định giờ giấc chính xác cho cả hành tinh?",
     "voice": "vi-VN-NamMinhNeural"
   },
   {
     "id": "vo_02",
-    "text": "Mỗi lần hạ cánh, việc đầu tiên bạn làm là gì?",
+    "text": "Mọi chiếc đồng hồ, mọi lịch bay, mọi sàn chứng khoán trên Trái Đất vẫn đang tuân theo đúng một đường kinh tuyến.",
     "voice": "vi-VN-NamMinhNeural"
   },
   {
     "id": "vo_03",
-    "text": "Chắc chắn là chỉnh lại đồng hồ.",
+    "text": "Và trong nhiều thập kỷ, nước Pháp đã từ chối chấp nhận điều đó.",
     "voice": "vi-VN-NamMinhNeural"
   },
   {
     "id": "vo_04",
-    "text": "Nhưng đã bao giờ bạn tự hỏi, tại sao cả thế giới lại đồng ý lấy Greenwich",
+    "text": "Chỉnh lại đồng hồ khi hạ cánh ở một quốc gia mới giờ đây là chuyện quá quen thuộc.",
     "voice": "vi-VN-NamMinhNeural"
   },
   {
     "id": "vo_05",
-    "text": "— một thị trấn nhỏ, yên bình ở ngoại ô London làm mốc xuất phát số 0 cho mọi múi giờ?",
+    "text": "Nhưng ở thế kỷ 19, chính ý tưởng ấy đã châm ngòi cho cuộc tranh giành giữa các đế quốc.",
     "voice": "vi-VN-NamMinhNeural"
   },
   {
     "id": "vo_06",
-    "text": "Tại sao không phải là Paris hoa lệ, Washington hiện đại, hay một điểm trung lập ở giữa đại dương?",
+    "text": "Vậy tại sao lại là Greenwich, chứ không phải Paris hoa lệ, hay một điểm trung lập giữa đại dương?",
     "voice": "vi-VN-NamMinhNeural"
   },
   {

@@ -5,6 +5,7 @@ import {
   staticFile,
   useCurrentFrame,
   useVideoConfig,
+  Img,
 } from "remotion";
 import { Audio } from "@remotion/media";
 import { headingFont } from "../fonts";
@@ -13,9 +14,26 @@ export const Scene8Outro: React.FC = () => {
   const frame = useCurrentFrame();
   const { width, height, durationInFrames } = useVideoConfig();
 
+  const scale = interpolate(frame, [0, durationInFrames], [1.05, 1.28], {
+    extrapolateLeft: "clamp",
+    extrapolateRight: "clamp",
+  });
+
   return (
     <AbsoluteFill name="Scene 8 - Outro" style={{ backgroundColor: "#070d16" }}>
       <Audio src={staticFile("audio/vo/vo_08.mp3")} from={15} />
+      <Img
+        src={staticFile("images/scene_8_outro.png")}
+        style={{
+          position: "absolute",
+          inset: 0,
+          width: "100%",
+          height: "100%",
+          objectFit: "cover",
+          transform: `scale(${scale})`,
+          opacity: 0.7,
+        }}
+      />
       <svg
         width={width}
         height={height}
@@ -77,6 +95,7 @@ export const Scene8Outro: React.FC = () => {
             fontWeight: 700,
             fontSize: 52,
             lineHeight: 1.5,
+            textShadow: "0 4px 26px rgba(0,0,0,0.65)",
             opacity: interpolate(frame, [30, 70], [0, 1], {
               extrapolateLeft: "clamp",
               extrapolateRight: "clamp",

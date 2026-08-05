@@ -1,14 +1,15 @@
 import {
   AbsoluteFill,
-  Interactive,
   interpolate,
   staticFile,
   useCurrentFrame,
   useVideoConfig,
+  Img,
 } from "remotion";
 import { Audio } from "@remotion/media";
 import { bodyFont } from "../fonts";
-import { ShipIcon, SubmarineIcon } from "../icons";
+import { shotTransform } from "../kenBurns";
+import { Caption, SectionTitle } from "../TextOverlay";
 
 const IMPACT_FRAME = 100;
 const SUB_ARRIVE = 340;
@@ -26,12 +27,29 @@ export const Scene6Yorktown: React.FC = () => {
     extrapolateRight: "clamp",
   });
 
+  const transform = shotTransform(frame, [
+    { from: 0, to: 300, scale: [1.05, 1.18], y: [-2, 0] },
+    { from: 300, to: durationInFrames, scale: [1.22, 1.35], x: [-2, 2], y: [0, 3] },
+  ]);
+
   return (
     <AbsoluteFill
       name="Scene 6 - Yorktown"
       style={{ backgroundColor: "#070d16" }}
     >
       <Audio src={staticFile("audio/vo/vo_06.mp3")} from={20} />
+      <Img
+        src={staticFile("images/scene_6_yorktown.png")}
+        style={{
+          position: "absolute",
+          inset: 0,
+          width: "100%",
+          height: "100%",
+          objectFit: "cover",
+          transform,
+          opacity: 0.65,
+        }}
+      />
       <Audio
         src={staticFile("audio/sfx/boom.mp3")}
         from={IMPACT_FRAME}
@@ -42,30 +60,13 @@ export const Scene6Yorktown: React.FC = () => {
         from={TORPEDO_HIT}
         volume={0.6}
       />
-      <div style={{ position: "absolute", left: 160, top: 90 }}>
-        <Interactive.Div
-          name="Section title"
-          style={{
-            color: "#7d90a8",
-            fontFamily: bodyFont,
-            fontSize: 30,
-            letterSpacing: 3,
-            textTransform: "uppercase",
-            opacity: interpolate(frame, [0, 20], [0, 1], {
-              extrapolateLeft: "clamp",
-              extrapolateRight: "clamp",
-            }),
-          }}
-        >
-          Cái giá của chiến thắng
-        </Interactive.Div>
-      </div>
+      <SectionTitle name="Section title">Cái giá của chiến thắng</SectionTitle>
 
       <div
         style={{
           position: "absolute",
           left: "50%",
-          top: 420,
+          top: 380,
           translate: "-50% -50%",
         }}
       >
@@ -81,14 +82,24 @@ export const Scene6Yorktown: React.FC = () => {
               (1 - sinkProgress),
           }}
         >
-          <ShipIcon color="#4ea1ff" width={220} />
+          <Img
+            src={staticFile("images/us_carrier.png")}
+            style={{
+              width: 800,
+              height: 300,
+              objectFit: "contain",
+              filter: "drop-shadow(0 16px 32px rgba(0,0,0,0.75))",
+            }}
+          />
           <div
             style={{
-              marginTop: 10,
+              marginTop: 18,
               textAlign: "center",
               color: "#c7d2e0",
               fontFamily: bodyFont,
-              fontSize: 26,
+              fontSize: 34,
+              fontWeight: 700,
+              textShadow: "0 2px 8px rgba(0,0,0,0.8)",
             }}
           >
             USS Yorktown
@@ -140,21 +151,31 @@ export const Scene6Yorktown: React.FC = () => {
             extrapolateLeft: "clamp",
             extrapolateRight: "clamp",
           }),
-          top: 560,
+          top: 540,
           opacity: interpolate(frame, [SUB_ARRIVE, SUB_ARRIVE + 30], [0, 1], {
             extrapolateLeft: "clamp",
             extrapolateRight: "clamp",
           }),
         }}
       >
-        <SubmarineIcon color="#7d3fb0" width={100} />
+        <Img
+          src={staticFile("images/submarine_sprite.png")}
+          style={{
+            width: 280,
+            height: 96,
+            objectFit: "contain",
+            filter: "drop-shadow(0 6px 12px rgba(0,0,0,0.65))",
+          }}
+        />
         <div
           style={{
-            marginTop: 6,
+            marginTop: 8,
             textAlign: "center",
             color: "#c9a8e0",
             fontFamily: bodyFont,
-            fontSize: 20,
+            fontSize: 24,
+            fontWeight: 700,
+            textShadow: "0 2px 6px rgba(0,0,0,0.8)",
           }}
         >
           I-168
@@ -187,35 +208,10 @@ export const Scene6Yorktown: React.FC = () => {
         />
       </svg>
 
-      <div
-        style={{
-          position: "absolute",
-          left: 160,
-          right: 160,
-          bottom: 100,
-          textAlign: "center",
-        }}
-      >
-        <Interactive.Div
-          name="Yorktown caption"
-          style={{
-            color: "#f3f1e7",
-            fontFamily: bodyFont,
-            fontWeight: 400,
-            fontSize: 38,
-            lineHeight: 1.4,
-            opacity: interpolate(
-              frame,
-              [140, 180, durationInFrames - 40, durationInFrames],
-              [0, 1, 1, 0],
-              { extrapolateLeft: "clamp", extrapolateRight: "clamp" },
-            ),
-          }}
-        >
-          Hiryu, tàu sân bay Nhật duy nhất còn lại, khiến Yorktown hư hại nặng
-          — trước khi tàu ngầm I-168 đánh chìm nó ba ngày sau.
-        </Interactive.Div>
-      </div>
+      <Caption name="Yorktown caption" from={140}>
+        Hiryu, tàu sân bay Nhật duy nhất còn lại, khiến Yorktown hư hại nặng —
+        trước khi tàu ngầm I-168 đánh chìm nó ba ngày sau.
+      </Caption>
     </AbsoluteFill>
   );
 };

@@ -1,27 +1,27 @@
 {
   "vo_01": {
-    "durationSec": 5.112,
-    "durationInFrames": 153
+    "durationSec": 5.4,
+    "durationInFrames": 162
   },
   "vo_02": {
-    "durationSec": 3.84,
-    "durationInFrames": 115
+    "durationSec": 6.576,
+    "durationInFrames": 197
   },
   "vo_03": {
-    "durationSec": 2.64,
-    "durationInFrames": 79
+    "durationSec": 4.56,
+    "durationInFrames": 137
   },
   "vo_04": {
-    "durationSec": 4.92,
-    "durationInFrames": 148
+    "durationSec": 4.896,
+    "durationInFrames": 147
   },
   "vo_05": {
-    "durationSec": 5.856,
-    "durationInFrames": 176
+    "durationSec": 5.496,
+    "durationInFrames": 165
   },
   "vo_06": {
-    "durationSec": 6.408,
-    "durationInFrames": 192
+    "durationSec": 6.048,
+    "durationInFrames": 181
   },
   "vo_07": {
     "durationSec": 3.72,

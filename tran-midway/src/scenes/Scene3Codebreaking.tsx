@@ -1,13 +1,15 @@
 import {
   AbsoluteFill,
-  Interactive,
   interpolate,
   staticFile,
   useCurrentFrame,
   useVideoConfig,
+  Img,
 } from "remotion";
 import { Audio } from "@remotion/media";
 import { headingFont, bodyFont } from "../fonts";
+import { shotTransform } from "../kenBurns";
+import { Caption, SectionTitle } from "../TextOverlay";
 
 const CIPHER_CHARS = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
 const TARGET = "MIDWAY";
@@ -27,42 +29,35 @@ export const Scene3Codebreaking: React.FC = () => {
   const frame = useCurrentFrame();
   const { durationInFrames } = useVideoConfig();
 
+  const transformBg = shotTransform(frame, [
+    { from: 0, to: durationInFrames, scale: [1.02, 1.15], y: [-2, 2] },
+  ]);
+
   return (
     <AbsoluteFill
       name="Scene 3 - Codebreaking"
       style={{ backgroundColor: "#070d16" }}
     >
       <Audio src={staticFile("audio/vo/vo_03.mp3")} from={30} />
-      <div
+      <Img
+        src={staticFile("images/scene_3_codebreaking.png")}
         style={{
           position: "absolute",
-          left: 160,
-          top: 90,
+          inset: 0,
+          width: "100%",
+          height: "100%",
+          objectFit: "cover",
+          transform: transformBg,
+          opacity: 0.65,
         }}
-      >
-        <Interactive.Div
-          name="Section title"
-          style={{
-            color: "#7d90a8",
-            fontFamily: bodyFont,
-            fontSize: 30,
-            letterSpacing: 3,
-            textTransform: "uppercase",
-            opacity: interpolate(frame, [0, 20], [0, 1], {
-              extrapolateLeft: "clamp",
-              extrapolateRight: "clamp",
-            }),
-          }}
-        >
-          Vũ khí bí mật
-        </Interactive.Div>
-      </div>
-
+        freeze={523}
+      />
+      <SectionTitle name="Section title">Vũ khí bí mật</SectionTitle>
       <div
         style={{
           position: "absolute",
-          left: 160,
-          top: "42%",
+          left: 140,
+          top: "45%",
           translate: "0% -50%",
         }}
       >
@@ -73,6 +68,7 @@ export const Scene3Codebreaking: React.FC = () => {
             color: "#7d90a8",
             letterSpacing: 4,
             marginBottom: 24,
+            textShadow: "0 2px 10px rgba(0,0,0,0.8)",
             opacity: interpolate(frame, [40, 70], [0, 1], {
               extrapolateLeft: "clamp",
               extrapolateRight: "clamp",
@@ -88,6 +84,7 @@ export const Scene3Codebreaking: React.FC = () => {
             fontFamily: "monospace",
             fontWeight: 700,
             fontSize: 88,
+            textShadow: "0 4px 20px rgba(0,0,0,0.9)",
           }}
         >
           {TARGET.split("").map((_, i) => (
@@ -105,12 +102,11 @@ export const Scene3Codebreaking: React.FC = () => {
           ))}
         </div>
       </div>
-
       <div
         style={{
           position: "absolute",
           right: 220,
-          top: "40%",
+          top: "45%",
           translate: "0% -50%",
           textAlign: "center",
           opacity: interpolate(frame, [80, 120], [0, 1], {
@@ -119,67 +115,56 @@ export const Scene3Codebreaking: React.FC = () => {
           }),
         }}
       >
-        <svg width={140} height={160} viewBox="0 0 140 160">
-          <circle cx="70" cy="55" r="42" fill="#16283d" stroke="#4ea1ff" strokeWidth={3} />
-          <path
-            d="M15 158 Q70 90 125 158 Z"
-            fill="#16283d"
-            stroke="#4ea1ff"
-            strokeWidth={3}
-          />
-        </svg>
         <div
           style={{
-            marginTop: 12,
+            width: 290,
+            height: 290,
+            borderRadius: 999,
+            border: "4px solid #d4af37",
+            boxShadow: "0 0 35px 10px rgba(212,175,55,0.4)",
+            overflow: "hidden",
+            margin: "0 auto 18px auto",
+            backgroundColor: "#070d16",
+          }}
+        >
+          <Img
+            src={staticFile("images/joseph_rochefort.png")}
+            style={{
+              width: "100%",
+              height: "100%",
+              objectFit: "cover",
+            }}
+          />
+        </div>
+        <div
+          style={{
+            marginTop: 50,
             color: "#f3f1e7",
             fontFamily: headingFont,
             fontWeight: 700,
-            fontSize: 30,
+            fontSize: 32,
+            textShadow: "0 2px 8px rgba(0,0,0,0.8)",
           }}
         >
           Joseph Rochefort
         </div>
         <div
           style={{
-            color: "#7d90a8",
+            color: "#9db1c9",
             fontFamily: bodyFont,
             fontSize: 24,
             letterSpacing: 2,
+            textShadow: "0 2px 8px rgba(0,0,0,0.8)",
+            marginTop: 4,
           }}
         >
           Chỉ huy Station HYPO
         </div>
       </div>
-
-      <div
-        style={{
-          position: "absolute",
-          left: 160,
-          right: 160,
-          bottom: 120,
-          textAlign: "center",
-        }}
-      >
-        <Interactive.Div
-          name="Codebreaking caption"
-          style={{
-            color: "#f3f1e7",
-            fontFamily: bodyFont,
-            fontWeight: 400,
-            fontSize: 38,
-            lineHeight: 1.4,
-            opacity: interpolate(
-              frame,
-              [380, 420, durationInFrames - 50, durationInFrames],
-              [0, 1, 1, 0],
-              { extrapolateLeft: "clamp", extrapolateRight: "clamp" },
-            ),
-          }}
-        >
-          Rochefort và đội giải mã xác nhận &quot;AF&quot; chính là Midway —
-          bằng một tin giả về sự cố thiếu nước ngọt. Nhật Bản mắc bẫy.
-        </Interactive.Div>
-      </div>
+      <Caption name="Codebreaking caption" from={380}>
+        Rochefort và đội giải mã xác nhận &quot;AF&quot; chính là Midway — bằng
+        một tin giả về sự cố thiếu nước ngọt. Nhật Bản mắc bẫy.
+      </Caption>
     </AbsoluteFill>
   );
 };

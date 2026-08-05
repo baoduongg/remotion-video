@@ -6,7 +6,7 @@ compatibility: "Cần skill `video-pipeline` đã cài (điều phối scaffold/
 
 # Vox Video Engine
 
-LƯU Ý: BẤT KỲ CÂU HỎI NÀO TRONG CÁC STATE DƯỚI ĐÂY, KỂ CẢ CÂU ĐƠN GIẢN NHƯ XÁC NHẬN CHUYỂN SANG STATE TIẾP THEO (trước đây kiểu "gõ 'next'"), PHẢI DÙNG TOOL HỎI DẠNG NÚT BẤM (AskUserQuestion / `ask_user_input_v0`) THAY VÌ GÕ CÂU HỎI THUẦN TEXT — để user chỉ cần chạm chọn thay vì gõ tay. Mẫu chuẩn cho xác nhận chuyển state: 2 option ["Tiếp tục", "Dừng lại, tôi cần chỉnh trước"]. Nếu một câu hỏi có nhiều hơn 4 lựa chọn (vd chọn 1 trong 10 ý tưởng ở STATE 3, hoặc chọn redo state nào ở STATE 11), giữ dạng liệt kê + để user gõ, vì tool giới hạn tối đa 4 option mỗi câu. Có thể gộp tối đa 3 câu hỏi độc lập vào một lần gọi tool nếu chúng thuộc cùng một state (xem STATE 4). Không tự đoán câu trả lời thay user khi câu hỏi còn mơ hồ.
+LƯU Ý: BẤT KỲ CÂU HỎI NÀO TRONG CÁC STATE DƯỚI ĐÂY, KỂ CẢ CÂU ĐƠN GIẢN NHƯ XÁC NHẬN CHUYỂN SANG STATE TIẾP THEO (trước đây kiểu "gõ 'next'"), PHẢI DÙNG TOOL HỎI DẠNG NÚT BẤM (AskUserQuestion / `ask_user_input_v0`) THAY VÌ GÕ CÂU HỎI THUẦN TEXT — để user chỉ cần chạm chọn thay vì gõ tay. Mẫu chuẩn cho xác nhận chuyển state: 2 option ["Tiếp tục", "Dừng lại, tôi cần chỉnh trước"]. Nếu một câu hỏi có nhiều hơn 4 lựa chọn (vd chọn 1 trong 10 ý tưởng ở STATE 3, hoặc chọn redo state nào ở STATE 12), giữ dạng liệt kê + để user gõ, vì tool giới hạn tối đa 4 option mỗi câu. Có thể gộp tối đa 3 câu hỏi độc lập vào một lần gọi tool nếu chúng thuộc cùng một state (xem STATE 4). Không tự đoán câu trả lời thay user khi câu hỏi còn mơ hồ.
 
 State machine tuyến tính, DỪNG và CHỜ user trả lời sau mỗi state — không tự nhảy cóc. Không dùng em dash (dùng dấu phẩy, hai chấm, ngoặc đơn, hoặc gạch ngang thường).
 
@@ -84,7 +84,7 @@ DỪNG. CHỜ.
 Dùng AskUserQuestion, gộp 3 câu trong MỘT lần gọi (đúng giới hạn tối đa 3 câu/lần của tool):
 1. "Video dài bao lâu?" — options: ["1 phút", "3 phút", "5 phút", "8 phút hoặc dài hơn (ghi rõ ở tin nhắn sau)"]
 2. "Định dạng đích?" — options: ["Horizontal 16:9", "Vertical 9:16", "Cả hai"] — quyết định aspect-ratio dùng ở STATE 7. **Chọn cả hai nghĩa là làm 2 lượt độc lập từ STATE 7 trở đi** (2 bộ ảnh, có thể 2 Composition khi render ở STATE 10), không phải 1 ảnh kéo giãn dùng chung cho cả hai tỉ lệ.
-3. "Ngôn ngữ output?" — options: ["Tiếng Anh", "Tiếng Việt"] — áp dụng cho script (STATE 5), voice (STATE 8), mọi label/text xuất hiện trong ảnh và thumbnail (STATE 7, STATE 11). Giọng Vox (hội thoại, câu hỏi tu từ, cấu trúc claim → bằng chứng → ý nghĩa) giữ nguyên DNA ở cả hai ngôn ngữ, chỉ đổi ngôn ngữ viết.
+3. "Ngôn ngữ output?" — options: ["Tiếng Anh", "Tiếng Việt"] — áp dụng cho script (STATE 5), voice (STATE 8), mọi label/text xuất hiện trong ảnh và thumbnail (STATE 7, STATE 12). Giọng Vox (hội thoại, câu hỏi tu từ, cấu trúc claim → bằng chứng → ý nghĩa) giữ nguyên DNA ở cả hai ngôn ngữ, chỉ đổi ngôn ngữ viết.
 
 Nếu tên project ở STATE 0 chỉ là tạm/generic so với ý tưởng vừa chọn, hỏi thêm (AskUserQuestion riêng, 2 options: ["Đổi tên folder cho khớp nội dung", "Giữ nguyên tên hiện tại"]) rồi `mv <ten-cu> <ten-moi>` trong `remotion-video/` nếu chọn đổi.
 
@@ -272,11 +272,24 @@ Theo đúng vòng lặp của `video-pipeline`:
 
 **Nếu QC ra ⚠️/❌ liên quan hình ảnh/phong cách Vox** (sai palette, thiếu safe-zone, motion không khớp): quay lại STATE 7, regenerate riêng ảnh lỗi qua Antigravity IDE, không làm lại toàn bộ. **Nếu liên quan phần khác** (animation code, sync audio, layout): theo đúng Bước 8 của `video-pipeline` (feedback mơ hồ → hỏi lại user bằng AskUserQuestion, nhiều mảng cùng lúc → gọi `superpowers:brainstorming` trước khi sửa hàng loạt), rồi quay lại Bước 5–7 tới khi QC pass.
 
-Kết thúc bằng AskUserQuestion: "Video đã render và QC pass tại out/<Ten>.mp4 (hoặc cả hai file nếu chọn 2 định dạng ở STATE 4). Sinh 3 thumbnail luôn?" — options: ["Tiếp tục sinh thumbnail", "Dừng lại, tôi muốn xem video trước"].
+Kết thúc bằng AskUserQuestion: "Video đã render và QC pass tại out/<Ten>.mp4 (hoặc cả hai file nếu chọn 2 định dạng ở STATE 4). Tạo nội dung SEO tối ưu luôn?" — options: ["Tiếp tục tạo SEO", "Dừng lại, tôi muốn xem video trước"].
 
 DỪNG. CHỜ.
 
-## STATE 11, THUMBNAIL
+## STATE 11, TẠO NỘI DUNG TỐI ƯU SEO
+
+Sinh các phần siêu dữ liệu (metadata) phục vụ cho việc upload lên YouTube:
+- **Tiêu đề (Title)**: Cung cấp ít nhất 3 lựa chọn tiêu đề tối ưu hóa công cụ tìm kiếm (SEO), kích thích tò mò (clickbaity) nhưng vẫn bám sát câu hỏi nghịch lý/chủ đề lõi của video.
+- **Mô tả (Description)**: Viết đoạn mô tả tóm tắt nội dung video, lời kêu gọi hành động (CTA), danh sách hashtags, và bắt buộc kèm theo **bảng Timestamps (Chapters)** chi tiết cho các phân cảnh (scene). Tính toán mốc thời gian (timestamps) thực tế bằng cách cộng dồn các giá trị `durationSec` đo thật từ `manifest.json` thu được ở STATE 8.
+- **Thẻ từ khóa (Tags)**: Tạo danh sách các từ khóa SEO có lượng tìm kiếm cao và liên quan trực tiếp đến chủ đề/niche của video.
+
+Nếu video hỗ trợ cả hai định dạng (16:9 + 9:16) hoặc có nhiều phiên bản ngôn ngữ khác nhau (Tiếng Việt và Tiếng Anh), tạo riêng nội dung SEO chi tiết cho từng phiên bản tương ứng.
+
+Kết thúc bằng AskUserQuestion: "Đã hoàn thành nội dung tối ưu SEO. Sinh 3 thumbnail luôn?" — options: ["Tiếp tục sinh thumbnail", "Dừng lại để chỉnh sửa nội dung SEO"].
+
+DỪNG. CHỜ.
+
+## STATE 12, THUMBNAIL
 
 Sinh 3 prompt thumbnail, mỗi prompt một block độc lập, phong cách Vox pushed louder cho size nhỏ:
 - Một chủ thể minh họa flat 2D chiếm phần lớn khung hình.
@@ -287,39 +300,39 @@ Sinh 3 prompt thumbnail, mỗi prompt một block độc lập, phong cách Vox 
 
 Nếu STATE 4 chọn cả hai định dạng, sinh riêng 2 bộ 3 thumbnail (một bộ 16:9, một bộ 9:16), vì thumbnail YouTube (16:9) và cover Shorts/Reels (9:16) khác tỉ lệ khung.
 
-Sinh qua Antigravity IDE theo đúng cơ chế 7d, lưu vào `<ten-video-moi>/public/thumbnails/` (hoặc `public/thumbnails/16-9/` + `public/thumbnails/9-16/` nếu 2 định dạng). Đây là deliverable cuối cùng, đi kèm file `.mp4` từ STATE 10.
+Sinh qua Antigravity IDE theo đúng cơ chế 7d, lưu vào `<ten-video-moi>/public/thumbnails/` (hoặc `public/thumbnails/16-9/` + `public/thumbnails/9-16/` nếu 2 định dạng). Đây là deliverable cuối cùng, đi kèm file `.mp4` từ STATE 10 và nội dung SEO từ STATE 11.
 
-Kết thúc bằng AskUserQuestion: "Hoàn tất: video đã render, QC pass, kèm 3 thumbnail, tất cả trong `<ten-video-moi>/`. Bạn muốn làm gì tiếp?" — options: ["Làm video mới", "Thêm phiên bản ngôn ngữ khác cho video này", "Làm lại một bước (redo)", "Kết thúc ở đây"].
+Kết thúc bằng AskUserQuestion: "Hoàn tất: video đã render, QC pass, có nội dung SEO, kèm 3 thumbnail, tất cả trong `<ten-video-moi>/`. Bạn muốn làm gì tiếp?" — options: ["Làm video mới", "Thêm phiên bản ngôn ngữ khác cho video này", "Làm lại một bước (redo)", "Kết thúc ở đây"].
 
-Nếu chọn "Thêm phiên bản ngôn ngữ khác", chuyển sang STATE 12. Nếu chọn "Làm lại một bước", hỏi tiếp (text, vì có hơn 4 state nên không vừa AskUserQuestion) muốn redo state nào, rồi quay lại đúng state đó.
+Nếu chọn "Thêm phiên bản ngôn ngữ khác", chuyển sang STATE 13. Nếu chọn "Làm lại một bước", hỏi tiếp (text, vì có hơn 4 state nên không vừa AskUserQuestion) muốn redo state nào, rồi quay lại đúng state đó.
 
 DỪNG. CHỜ.
 
-## STATE 12, THÊM PHIÊN BẢN NGÔN NGỮ KHÁC (tùy chọn, chạy sau khi đã có ít nhất 1 bản hoàn chỉnh)
+## STATE 13, THÊM PHIÊN BẢN NGÔN NGỮ KHÁC (tùy chọn, chạy sau khi đã có ít nhất 1 bản hoàn chỉnh)
 
 Chỉ tái sử dụng phần KHÔNG phụ thuộc ngôn ngữ (niche/ý tưởng đã chọn, ảnh Vox ở `public/images/`, animation spec, SFX loại), KHÔNG chạy lại State 1-4/7 từ đầu — chỉ dịch nội dung và sinh lại phần phụ thuộc ngôn ngữ.
 
 Dùng AskUserQuestion: "Thêm phiên bản ngôn ngữ nào?" — options: ["Tiếng Anh", "Tiếng Việt"] (loại bỏ ngôn ngữ đã làm ở STATE 4 khỏi danh sách nếu chỉ còn 1 lựa chọn thì bỏ qua câu hỏi, dùng luôn ngôn ngữ còn lại).
 
-### 12a. Dịch script (không viết lại từ đầu)
+### 13a. Dịch script (không viết lại từ đầu)
 
 Dịch nguyên văn `<ten-video>-script.md` (STATE 5) sang ngôn ngữ mới, giữ đúng ý, giữ đúng twist/kết đã đánh dấu, giữ đúng số beat và `id` (`vo_01, vo_02...`) để bảng động timing vẫn map 1-1. Lưu thành `<ten-video>-script-<lang>.md` (file riêng, không ghi đè bản gốc). Không cần fact-check lại vì nội dung/claim không đổi, chỉ đổi ngôn ngữ diễn đạt.
 
-### 12b. Kiểm tra ảnh có label baked ngôn ngữ cũ không
+### 13b. Kiểm tra ảnh có label baked ngôn ngữ cũ không
 
 Vì kỷ luật `imagegen-remotion`/STYLE BLOCK không cho phép baked caption, ảnh Vox thường KHÔNG chứa text ngoài nhãn ngắn 1-4 từ (nếu có). Kiểm tra bảng manifest ở STATE 7: nếu có ảnh nào từng dùng label bằng ngôn ngữ cũ, regenerate riêng đúng những ảnh đó (qua Antigravity IDE, theo cơ chế 7d) bằng label ngôn ngữ mới, lưu vào `public/images/<lang>/scene-<id>.png` (chỉ ảnh có label mới cần bản riêng, ảnh không label dùng chung được, không cần sinh lại toàn bộ).
 
-### 12c. Voice thật cho ngôn ngữ mới (như STATE 8)
+### 13c. Voice thật cho ngôn ngữ mới (như STATE 8)
 
 Build JSON mới từ script đã dịch (12a), voice map theo ngôn ngữ mới (`en-US-GuyNeural`/`en-US-AriaNeural` hoặc `vi-VN-NamMinhNeural`/`vi-VN-HoaiMyNeural`, hỏi giới tính giọng qua AskUserQuestion như STATE 8). Chạy `generate-voiceover.py` với cùng fps đã chốt ở STATE 0, output vào `public/audio/vo/<lang>/` + `manifest.json` riêng. Đối chiếu tổng thời lượng thật với độ dài mục tiêu như STATE 8 (script dịch có thể dài/ngắn hơn bản gốc).
 
-### 12d. SFX + Composition + render + QC riêng cho ngôn ngữ mới
+### 13d. SFX + Composition + render + QC riêng cho ngôn ngữ mới
 
 SFX (loại/thời điểm) giữ nguyên logic STATE 9, chỉ đổi frame theo `manifest.json` mới của 12c. Ở STATE 10: tạo thêm 1 Composition riêng cho ngôn ngữ mới (dùng lại ảnh gốc + ảnh label riêng nếu có ở 12b, audio mới ở 12c), render ra `out/<Ten>-<lang>.mp4` (nhân đôi nếu dự án có cả 2 định dạng 16:9/9:16), QC qua `video-qc` như bình thường.
 
-### 12e. Thumbnail riêng cho ngôn ngữ mới
+### 13e. Thumbnail riêng cho ngôn ngữ mới
 
-Sinh lại 3 thumbnail (STATE 11) với chữ bằng ngôn ngữ mới, lưu vào `public/thumbnails/<lang>/`.
+Sinh lại 3 thumbnail (STATE 12) với chữ bằng ngôn ngữ mới, lưu vào `public/thumbnails/<lang>/`.
 
 Kết thúc bằng AskUserQuestion: "Đã có thêm bản `<lang>` tại out/<Ten>-<lang>.mp4. Bạn muốn làm gì tiếp?" — options: ["Thêm ngôn ngữ khác nữa", "Làm video mới", "Kết thúc ở đây"].
 

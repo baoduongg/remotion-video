@@ -28,10 +28,10 @@ CLOSER = (
 )
 
 BEAT_DESCRIPTIONS = {
-    "vo_01": "A minimalist commercial airplane flying across a stylized flat world map from London to Paris and New York, with clean dotted flight path lines.",
+    "vo_01": "Zoom-out globally from outer space, then hard zoom-in on a tiny dot near London (Greenwich) with global time zone grid pulsing in sync.",
     "vo_02": "A simple wristwatch face with two hands pointing at a ticking clock, with a hand adjusting the watch crown on the side.",
-    "vo_03": "A simple pocket watch face with two hands, resting against a dark navy background.",
-    "vo_04": "A stylized flat vector map of the United Kingdom and Western Europe, highlighting the city of London.",
+    "vo_03": "British flag and French flag clashing and snapping toward each other, with a blue and red tug-of-war arrow co-pulling in the middle of the frame.",
+    "vo_04": "A minimalist commercial airplane flying across a stylized flat world map from London to Paris and New York, with clean dotted flight path lines.",
     "vo_05": "A simplified flat vector map highlighting the town of Greenwich, with a small classic observatory dome icon.",
     "vo_06": "Three paper stamps sliding in from the top: Eiffel Tower icon, US Capitol dome icon, and a blank blue ocean with a giant question mark.",
     "vo_07": "A stylized vertical timeline running backwards from the modern era to the 19th century, with old ticking clock gears in navy and cream.",

@@ -26,21 +26,30 @@ export const TranMidway: React.FC = () => {
         presentation={fade()}
         timing={linearTiming({ durationInFrames: 20 })}
       />
-      <TransitionSeries.Sequence durationInFrames={850} name="Scene3Codebreaking">
+      <TransitionSeries.Sequence
+        durationInFrames={850}
+        name="Scene3Codebreaking"
+      >
         <Scene3Codebreaking />
       </TransitionSeries.Sequence>
       <TransitionSeries.Transition
         presentation={fade()}
         timing={linearTiming({ durationInFrames: 20 })}
       />
-      <TransitionSeries.Sequence durationInFrames={750} name="Scene4FirstStrike">
+      <TransitionSeries.Sequence
+        durationInFrames={750}
+        name="Scene4FirstStrike"
+      >
         <Scene4FirstStrike />
       </TransitionSeries.Sequence>
       <TransitionSeries.Transition
         presentation={fade()}
         timing={linearTiming({ durationInFrames: 20 })}
       />
-      <TransitionSeries.Sequence durationInFrames={700} name="Scene5TurningPoint">
+      <TransitionSeries.Sequence
+        durationInFrames={700}
+        name="Scene5TurningPoint"
+      >
         <Scene5TurningPoint />
       </TransitionSeries.Sequence>
       <TransitionSeries.Transition
