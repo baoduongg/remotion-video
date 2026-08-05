@@ -13,9 +13,9 @@ Nếu video cần làm là kiểu Vox: motion graphics thuần (không cảnh qu
 | STATE 0 | Scaffold project (`npx create-video@latest --blank`, copy `WORKFLOW.md`/`scripts/`/skill dùng chung vào project mới) |
 | STATE 1-4 | Style reference, niche, 10 ý tưởng, độ dài/định dạng/ngôn ngữ |
 | STATE 5 | = Bước 1 (kịch bản + fact-check bắt buộc), theo giọng Vox có sẵn khung câu (cold open, claim → bằng chứng → ý nghĩa, kết mở) |
-| STATE 6-7 | Tách beat + sinh ảnh Vox (flat 2D, style bible cố định, 1 beat = 1 ảnh) qua skill `imagegen-remotion` gọi bằng antigravity |
+| STATE 6-7 | Tách beat + sinh ảnh Vox (flat 2D, style bible cố định, 1 beat = 1 ảnh) qua skill `imagegen-remotion` gọi bằng tính năng tạo ảnh trong Antigravity IDE |
 | STATE 8 | = Bước 3 (voice: `edge-tts` CLI + `scripts/generate-voiceover.py`, đo duration thật) |
-| STATE 9 | = Bước 4 (SFX, tiết chế hơn true-crime — chủ yếu chỉ `whoosh` nhẹ) |
+| STATE 9 | = Bước 4 (SFX, tiết chế hơn true-crime nhưng đa dạng theo khoảnh khắc: whoosh, pop/click, gavel, clock ticking — không chỉ `whoosh`) |
 | STATE 10 | = Bước 2, 5, 6, 7 (scaffold code qua `remotion-best-practices`, QA `remotion still`, render, QC `qc-video`) |
 | STATE 11 | Thumbnail (3 bản, chưa có ở workflow cũ) |
 | STATE 12 | Thêm bản ngôn ngữ khác, tái dùng ảnh/asset không phụ thuộc ngôn ngữ |
@@ -37,8 +37,9 @@ Với video KHÔNG phải Vox-style (phỏng vấn, cảnh quay thật, phong c�
 
 1. Chốt chủ đề, gọi skill `remotion-best-practices` làm router → nó tự dẫn tới `remotion-create` (scaffold) + `remotion-markup` (nội dung/animation) phù hợp với dạng video (essay nhiều scene, hoặc kể chuyện có nhân vật).
 2. Viết kịch bản ra file `.md` riêng (vd `new-script.md`) — chia theo scene, có: visual, audio/SFX, lời dẫn, hội thoại, timestamp ước lượng.
-3. **Fact-check kịch bản bằng WebSearch NGAY tại bước này**, nhất là video dạng lịch sử/kiến thức — đừng để tới lúc QC cuối mới phát hiện sai sự kiện rồi phải sửa lại toàn bộ nội dung + animation đã dựng. (Bài học từ video này: phải sửa lại kịch bản "War of the Bucket" sau khi QC vì phần lịch sử ban đầu chưa chuẩn.)
-4. Nếu kịch bản có "twist" (lật lại sự thật giữa video) — note rõ trong file script để không bị xóa nhầm khi refactor.
+3. **Hook 3-10 giây đầu phải là nghịch lý/xung đột, không phải bối cảnh an toàn kiểu giáo trình.** Khán giả quốc tế bỏ video sớm nếu mở đầu quá hiền (kiểu "hãy tưởng tượng bạn đang..." rồi mới dẫn vào câu hỏi). Mở thẳng bằng câu hỏi nghịch lý hoặc cảnh đối đầu/tranh cãi ngay giây đầu tiên, rồi mới lùi lại giải thích bối cảnh. (Bài học rút ra khi QC video "why-greenwich-meridian": hook gốc mở bằng cảnh du lịch máy bay quá an toàn.)
+4. **Fact-check kịch bản bằng WebSearch NGAY tại bước này**, nhất là video dạng lịch sử/kiến thức — đừng để tới lúc QC cuối mới phát hiện sai sự kiện rồi phải sửa lại toàn bộ nội dung + animation đã dựng. (Bài học từ video này: phải sửa lại kịch bản "War of the Bucket" sau khi QC vì phần lịch sử ban đầu chưa chuẩn.)
+5. Nếu kịch bản có "twist" (lật lại sự thật giữa video) — note rõ trong file script để không bị xóa nhầm khi refactor.
 
 ## 2. Scaffold code Remotion
 
@@ -51,11 +52,14 @@ Với video KHÔNG phải Vox-style (phỏng vấn, cảnh quay thật, phong c�
 
 ## 3. Assets: ảnh, giọng đọc (voice) + âm thanh (SFX)
 
-**Ảnh (nếu dùng phong cách Vox)** — theo skill `imagegen-remotion`, gọi qua antigravity:
+**Ảnh (nếu dùng phong cách Vox)** — theo skill `imagegen-remotion`, gọi qua tính năng tạo ảnh có sẵn trong Antigravity IDE (Gemini/Nano Banana); chạy ở harness khác không có tính năng này thì fallback Gemini/Google Flow thủ công (xuất prompt ra `public/images/prompts.txt`, tự chạy trên web app rồi bỏ ảnh vào đúng thư mục):
 1. Đúng 1 beat = 1 ảnh, lưu `public/images/scene-<id>.png` (`<id>` khớp beat trong script/audio).
 2. Ảnh là plate thô, không bao giờ vẽ chữ/caption/lower-third/logo giả — chữ đè lên sau bằng code Remotion.
 3. Viết 1 "style bible" (nhân vật, palette 3-4 màu, mood) MỘT LẦN, dán nguyên văn vào đầu mọi prompt beat để giữ nhất quán xuyên suốt video.
 4. Mỗi ảnh chọn đúng 1 motion intent (zoom-in chậm / pan / parallax / static hold) và chừa khoảng thở phù hợp.
+5. **Nhịp chuyển động không được đều đều xuyên suốt**: quá 2-3 beat liên tiếp cùng kiểu Ken Burns nhẹ dễ gây buồn ngủ. Beat mang tọa độ bản đồ hoặc dữ liệu quan trọng (số liệu, kết quả) nên zoom-out toàn cảnh rồi zoom-in sâu vào điểm cụ thể; chuỗi beat dữ kiện dồn dập (đếm phiếu, liệt kê số) nên rút ngắn khoảng cách xuất hiện để tạo nhịp giật nhanh theo voiceover thay vì đều tay.
+
+**Phụ đề động (kinetic subtitle)**: chữ hiện theo từng cụm 2-3 từ khớp nhịp voiceover, không bung cả câu cùng lúc. Từ khóa (số liệu, tên riêng, địa danh, kết luận) tô màu accent khác màu chữ thường. Không đặt trong khung nền trắng cố định kiểu hộp thoại (che đồ họa, đọc chậm hơn) — để chữ hiển thị tự do trên nền video với stroke/shadow đủ tương phản.
 
 **Voice — dùng Edge-TTS CLI trực tiếp (không qua npm package):**
 1. Viết script Python nhỏ gọi `edge-tts --voice vi-VN-NamMinhNeural --text "..." --write-media out.mp3` cho từng dòng thoại, lưu vào `public/audio/vo/` (hoặc dùng thẳng `scripts/generate-voiceover.py <file>.json --fps <fps>` — sinh hàng loạt từ JSON `[{"id","text","voice"}]`, tự đo duration bằng ffprobe, xuất `manifest.json`).
@@ -65,7 +69,7 @@ Với video KHÔNG phải Vox-style (phỏng vấn, cảnh quay thật, phong c�
 
 **SFX:**
 1. Tra cứu cách dùng qua `WebFetch` docs `remotion.dev/docs/sfx` + npm package trước khi code.
-2. Tải file free sfx (whoosh, tiếng chạy, tiếng "yoink"...) vào `public/audio/sfx/`. Với video Vox-style, tiết chế hơn hẳn true-crime — chủ yếu chỉ `whoosh` nhẹ cho draw-on/slide-in, tránh SFX kịch tính (record-scratch, wilhelm-scream, bruh) trừ khi user yêu cầu rõ.
+2. Tải file free sfx vào `public/audio/sfx/`. Với video Vox-style, tiết chế hơn hẳn true-crime nhưng KHÔNG chỉ dùng một loại `whoosh` cho cả video — SFX chiếm phần lớn cảm nhận mượt mà ở đồ họa phẳng 2D. Map theo khoảnh khắc: `whoosh` nhẹ cho draw-on/slide-in/chuyển cảnh, `pop/click` ngắn cho icon/số liệu/cờ xuất hiện, `gavel strike` cho khoảnh khắc quyết định/bỏ phiếu/phán quyết, `clock ticking` tăng dần cho đoạn chờ đợi/xung đột. Tránh SFX kịch tính kiểu true-crime (record-scratch, wilhelm-scream, bruh) trừ khi user yêu cầu rõ.
 3. Trim/fade bằng `ffmpeg -af "afade=t=out:st=..:d=.."` để khớp đúng khoảnh khắc trong scene, không để SFX dài lê thê.
 4. Đặt SFX/voice vào đúng Sequence dựa trên frame đã tính từ bước đo duration ở trên.
 
@@ -99,7 +103,7 @@ Sau mỗi batch Edit: chạy `npx tsc --noEmit` + `npx eslint src` (+ `npx prett
 
 1. Nếu feedback lớn, nhiều mảng (animation, layout, âm thanh, style) → gọi `superpowers:brainstorming` trước khi sửa hàng loạt, để chốt hướng sửa thay vì sửa lan man từng cái một.
 2. Hỏi lại user (AskUserQuestion) khi feedback mơ hồ hoặc có nhiều hướng xử lý khác nhau (vd: "giữ nguyên art, chỉ chỉnh code animation" vs "vẽ lại art mới").
-3. Feedback về ảnh/phong cách (sai palette, thiếu safe-zone, motion không khớp) → quay lại bước 3 (ảnh), regenerate riêng ảnh lỗi qua antigravity, không làm lại toàn bộ.
+3. Feedback về ảnh/phong cách (sai palette, thiếu safe-zone, motion không khớp) → quay lại bước 3 (ảnh), regenerate riêng ảnh lỗi qua Antigravity IDE, không làm lại toàn bộ.
 4. Sửa theo từng file component liên quan, lặp lại vòng QA hình ảnh (bước 4) sau mỗi thay đổi lớn.
 5. Render lại, QC lại (bước 5–6) cho tới khi pass.
 
@@ -107,7 +111,7 @@ Sau mỗi batch Edit: chạy `npx tsc --noEmit` + `npx eslint src` (+ `npx prett
 
 1. Sinh 3 prompt thumbnail độc lập: chủ thể minh họa chiếm phần lớn khung, 1-2 khối chữ in hoa tối đa 3 từ (đúng ngôn ngữ video), một highlight device (circle/underline/arrow), nền phẳng tương phản cao, đọc được ở size 200px.
 2. Nếu video có 2 định dạng, sinh riêng 2 bộ 3 thumbnail (16:9 cho YouTube, 9:16 cho Shorts/Reels) — khác tỉ lệ khung nên không dùng chung.
-3. Sinh qua antigravity như bước sinh ảnh scene, lưu vào `public/thumbnails/` (hoặc `public/thumbnails/16-9/` + `public/thumbnails/9-16/`).
+3. Sinh qua Antigravity IDE như bước sinh ảnh scene, lưu vào `public/thumbnails/` (hoặc `public/thumbnails/16-9/` + `public/thumbnails/9-16/`).
 
 ## 9. Thêm bản ngôn ngữ khác (khi đã có ít nhất 1 bản hoàn chỉnh)
 
@@ -119,7 +123,11 @@ Sau mỗi batch Edit: chạy `npx tsc --noEmit` + `npx eslint src` (+ `npx prett
 ## Checklist tối ưu — điều nên làm ngay từ đầu (rút ra từ những lần làm chậm/đi vòng)
 
 - [ ] Video kiểu Vox (animated opinion essay) → dùng thẳng skill `vox-video-engine` thay vì làm tay, nó đã có state machine + checkpoint hỏi user cho toàn bộ quy trình dưới đây.
+- [ ] Hook 3-10 giây đầu mở bằng nghịch lý/xung đột, không phải bối cảnh an toàn kiểu giáo trình — kiểm tra ngay lúc viết script, đừng để QC mới phát hiện tụt view sớm.
 - [ ] Fact-check nội dung kịch bản bằng WebSearch **trước khi** dựng animation, không phải sau QC.
+- [ ] Phụ đề động (kinetic, cụm 2-3 từ, highlight từ khóa) thay vì hộp trắng tĩnh cả câu — quyết định pattern này lúc code Composition, không phải sửa lại sau QC.
+- [ ] Nhịp chuyển động xen kẽ Ken Burns nhẹ với zoom-out/zoom-in mạnh ở beat dữ liệu/bản đồ quan trọng, tránh đều đều gây buồn ngủ.
+- [ ] SFX đa dạng theo khoảnh khắc (whoosh, pop/click, gavel, clock ticking), không chỉ một loại whoosh cho cả video.
 - [ ] Dùng Edge-TTS CLI (`edge-tts` qua pip, hoặc `scripts/generate-voiceover.py`) thẳng từ đầu, bỏ qua thử ElevenLabs/msedge-tts npm nếu không có sẵn API key.
 - [ ] Đo duration audio thật bằng ffprobe rồi mới set timing Sequence, không đoán. Đối chiếu tổng thời lượng thật với mục tiêu — tiếng Việt tốc độ âm tiết khác tiếng Anh, ước lượng 2.5 từ/giây có thể lệch nhiều.
 - [ ] Chốt `fps` một lần lúc scaffold, dùng xuyên suốt render/voiceover, đừng đổi giữa chừng.

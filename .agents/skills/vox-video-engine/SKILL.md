@@ -1,7 +1,7 @@
 ---
 name: vox-video-engine
-description: Đi từ ý tưởng thô đến video Remotion phong cách Vox (flat 2D vector, kinetic typography, "animated opinion essay") ĐÃ RENDER XONG VÀ QC. Tạo folder project Remotion NGAY TỪ ĐẦU, rồi làm mọi việc tiếp theo (script, beat, ảnh, voice, SFX, code, render, QC) bên trong folder đó. Hỗ trợ output đa dạng — định dạng 16:9, 9:16, hoặc cả hai (2 lượt render riêng), và ngôn ngữ Tiếng Anh hoặc Tiếng Việt cho script, voice, và mọi text trong ảnh/thumbnail. Sau khi đã có 1 bản hoàn chỉnh, có thể thêm bản ngôn ngữ khác cho cùng project mà không phải làm lại từ đầu (chỉ dịch script, sinh voice/render/QC/thumbnail mới). Điều phối skill `video-pipeline` cho phần scaffold/voice/SFX/QA/render/QC, tự lo phần đặc thù Vox (niche, script giọng Vox, ảnh theo kỷ luật imagegen-remotion gọi qua antigravity). LUÔN dùng skill này khi user nhắc "Vox style", "video kiểu Vox", "video explainer", "animated opinion essay", hoặc yêu cầu làm video hoàn chỉnh theo phong cách này, kể cả khi không gõ đúng từ "Vox".
-compatibility: "Cần skill `video-pipeline` đã cài (điều phối scaffold/voice/SFX/QA/render/QC), và các skill nó phụ thuộc: remotion-best-practices, remotion-create, remotion-markup, video-qc (`/watch`), edge-tts (qua generate-voiceover.py), ffmpeg/ffprobe. Cần skill `imagegen-remotion` cho kỷ luật ảnh. Cần antigravity để sinh ảnh thật. Cần thư mục cha `remotion-video/` đã có sẵn `WORKFLOW.md` + `scripts/generate-voiceover.py` + skill dùng chung (setup one-time theo `video-pipeline` Bước 0.5)."
+description: Đi từ ý tưởng thô đến video Remotion phong cách Vox (flat 2D vector, kinetic typography, "animated opinion essay") ĐÃ RENDER XONG VÀ QC. Tạo folder project Remotion NGAY TỪ ĐẦU, rồi làm mọi việc tiếp theo (script, beat, ảnh, voice, SFX, code, render, QC) bên trong folder đó. Hỗ trợ output đa dạng — định dạng 16:9, 9:16, hoặc cả hai (2 lượt render riêng), và ngôn ngữ Tiếng Anh hoặc Tiếng Việt cho script, voice, và mọi text trong ảnh/thumbnail. Sau khi đã có 1 bản hoàn chỉnh, có thể thêm bản ngôn ngữ khác cho cùng project mà không phải làm lại từ đầu (chỉ dịch script, sinh voice/render/QC/thumbnail mới). Điều phối skill `video-pipeline` cho phần scaffold/voice/SFX/QA/render/QC, tự lo phần đặc thù Vox (niche, script giọng Vox, ảnh theo kỷ luật imagegen-remotion gọi qua tính năng tạo ảnh có sẵn trong Antigravity IDE). LUÔN dùng skill này khi user nhắc "Vox style", "video kiểu Vox", "video explainer", "animated opinion essay", hoặc yêu cầu làm video hoàn chỉnh theo phong cách này, kể cả khi không gõ đúng từ "Vox".
+compatibility: "Cần skill `video-pipeline` đã cài (điều phối scaffold/voice/SFX/QA/render/QC), và các skill nó phụ thuộc: remotion-best-practices, remotion-create, remotion-markup, video-qc (`/watch`), edge-tts (qua generate-voiceover.py), ffmpeg/ffprobe. Cần skill `imagegen-remotion` cho kỷ luật ảnh. Cần chạy trong Antigravity IDE để dùng tính năng tạo ảnh có sẵn (Gemini/Nano Banana) sinh ảnh thật; nếu chạy ở harness khác không có tính năng này, cần kết nối Gemini/Google Flow tương đương hoặc làm thủ công (xem 7d). Cần thư mục cha `remotion-video/` đã có sẵn `WORKFLOW.md` + `scripts/generate-voiceover.py` + skill dùng chung (setup one-time theo `video-pipeline` Bước 0.5)."
 ---
 
 # Vox Video Engine
@@ -21,6 +21,10 @@ Kết quả cuối cùng là một file `.mp4` đã render và QC pass, kèm 3 t
 **Giọng văn**: hội thoại, trực tiếp, có thể xưng "we"/đặt câu hỏi tu từ để mở hook, nhưng vẫn dựa trên dữ kiện cụ thể (số liệu, tên, năm). Ấm hơn, gần gũi hơn true-crime, nhưng vẫn có cấu trúc lập luận rõ (claim → bằng chứng → ý nghĩa).
 
 **Hình ảnh**: flat 2D, không gradient, không đổ bóng, không gloss. Bảng màu giới hạn 3-4 màu cố định xuyên suốt cả video. Kinetic typography, highlighter/circle nhấn mạnh, bản đồ và biểu đồ đơn giản hóa, nhân vật minh họa hình học không chi tiết mặt trừ khi cần biểu cảm.
+
+**Phụ đề động (kinetic subtitle, bắt buộc, không phải tùy chọn)**: chữ xuất hiện theo từng cụm 2-3 từ đồng bộ nhịp voiceover, KHÔNG phải cả câu bung ra cùng lúc trong một hộp trắng cố định. Từ khóa (số liệu, tên riêng, địa danh, kết luận) tô màu accent (vàng/đỏ) khác màu nền chữ thường. Chữ hiển thị tự do trực tiếp trên nền video (dùng stroke/drop-shadow đủ độ tương phản để đọc được), không đặt trong khung chữ nhật nền trắng đặc — khung nền trắng che đồ họa và đọc chậm hơn kinetic. Áp dụng ngay từ STATE 7c (animation spec) và code hóa ở STATE 10.
+
+**SFX phong phú theo khoảnh khắc, không chỉ whoosh**: whoosh cho chuyển cảnh/pan/bay lướt; pop/click ngắn cho icon/số liệu/cờ/con dấu xuất hiện; gavel strike cho khoảnh khắc quyết định/bỏ phiếu/phán quyết; clock ticking tăng dần cho đoạn chờ đợi/xung đột/countdown. Với đồ họa phẳng 2D, SFX chiếm phần lớn cảm nhận mượt mà, đừng để mỗi video chỉ có một loại SFX. Chi tiết chọn/đặt SFX ở STATE 9.
 
 ## STATE 0, SCAFFOLD PROJECT TRƯỚC TIÊN (video-pipeline Bước 0.5)
 
@@ -49,9 +53,11 @@ DỪNG. CHỜ.
 
 ## STATE 1, TÀI LIỆU THAM CHIẾU PHONG CÁCH (tùy chọn)
 
-Dùng AskUserQuestion: "Bạn có brand guide / màu sắc / font / video mẫu riêng muốn Claude bám theo không?" — options: ["Có, tôi sẽ đính kèm file/link", "Dùng mặc định Vox (navy, cream, đỏ nhấn, teal nhạt)"].
+Nếu thư mục cha `remotion-video/` đã có `BRAND-GUIDE.md`, đọc file này trước khi hỏi — nó chứa palette/font/motion/SFX/công thức thumbnail đã chốt từ video trước, dùng làm mặc định thay cho placeholder chung chung.
 
-Nếu chọn "Có", chờ user đính kèm rồi đọc và ưu tiên nó hơn mặc định. Nếu chọn mặc định, dùng luôn bảng màu/font mặc định.
+Dùng AskUserQuestion: "Bạn có brand guide / màu sắc / font / video mẫu riêng muốn Claude bám theo không?" — options: ["Có, tôi sẽ đính kèm file/link khác", "Dùng mặc định kênh (BRAND-GUIDE.md nếu có, hoặc Vox gốc: navy, cream, đỏ nhấn, teal nhạt)"].
+
+Nếu chọn "Có", chờ user đính kèm rồi đọc và ưu tiên nó hơn `BRAND-GUIDE.md`. Nếu chọn mặc định: có `BRAND-GUIDE.md` thì dùng nguyên palette/font/motion/SFX trong đó (không hỏi lại từng mục), không có thì dùng mặc định Vox gốc (navy, cream, đỏ nhấn, teal nhạt).
 
 DỪNG. CHỜ.
 
@@ -90,7 +96,7 @@ Tính từ theo 2.5 từ/giây: 1 phút khoảng 150 từ, 2 phút khoảng 300,
 
 Quy tắc kịch bản:
 1. Narration liên tục, một khối văn xuôi. Không header, không chỉ dẫn hình ảnh.
-2. Cold open bằng một câu hỏi hoặc một sự thật gây bất ngờ liên quan trực tiếp đến chủ đề.
+2. **Cold open bắt buộc là nghịch lý/xung đột/tranh cãi, không phải bối cảnh an toàn kiểu giáo trình.** 3-10 giây đầu là nơi khán giả quốc tế quyết định bỏ đi hay ở lại — mở bằng cảnh minh họa trung tính rồi mới dẫn vào câu hỏi (kiểu "hãy tưởng tượng bạn...") là quá hiền, tụt view sớm. Thay vào đó mở thẳng bằng câu hỏi nghịch lý ("Why does a tiny town near London dictate the exact time for the entire planet?") hoặc hình ảnh đối đầu/tranh cãi ngay từ câu đầu tiên, rồi mới lùi lại giải thích bối cảnh.
 3. Giọng hội thoại nhưng có cấu trúc lập luận: đặt vấn đề, dẫn chứng cụ thể (số liệu, sự kiện), rồi rút ra ý nghĩa rộng hơn.
 4. Câu ngắn, một ý một câu (để cắt beat sau này dễ). Có thể xen câu hỏi tu từ.
 5. Dữ kiện phải chính xác, không bịa số liệu/tên. Nếu không chắc, viết vòng qua.
@@ -124,7 +130,7 @@ Kết thúc bằng AskUserQuestion: "Đã tách xong beat. Sinh ảnh Vox cho t�
 
 DỪNG. CHỜ.
 
-## STATE 7, SINH ẢNH VOX (theo skill `imagegen-remotion`, gọi qua antigravity)
+## STATE 7, SINH ẢNH VOX (theo skill `imagegen-remotion`, gọi qua tính năng tạo ảnh trong Antigravity IDE)
 
 Mọi ảnh lưu trực tiếp vào `<ten-video-moi>/public/images/` (thư mục này đã có sẵn từ khung Remotion tạo ở STATE 0) — đây chính là asset mà STATE 10 (scaffold code) sẽ dùng.
 
@@ -142,6 +148,7 @@ Quy tắc lõi bắt buộc lấy từ `imagegen-remotion` (không được bỏ
 - Mỗi ảnh là "plate thô" cho code: không bao giờ vẽ chữ/caption/lower-third/logo giả vào ảnh, vì Remotion sẽ code chữ đè lên sau ở STATE 10.
 - Text-safe zone rõ ràng theo tỉ lệ khung hình đã chọn ở STATE 4.
 - Motion-readiness: mỗi ảnh chọn đúng 1 motion intent (slow zoom-in / pan trái-phải / parallax / static hold cho title card) và chừa khoảng thở quanh chủ thể phù hợp motion đó.
+- **Nhịp chuyển động không được đều đều xuyên suốt video**: nếu 3+ beat liên tiếp đều dùng cùng một motion nhẹ (Ken Burns đều đều), khán giả buồn ngủ. Với beat chứa số liệu/địa danh quan trọng (bản đồ, biểu đồ, kết quả bỏ phiếu), dùng camera zoom-out toàn cảnh rồi zoom-in sâu vào điểm cụ thể trên đó thay vì pan/zoom chung chung. Với chuỗi beat cùng loại dữ kiện dồn dập (kết quả bỏ phiếu, đếm số liên tiếp), rút ngắn khoảng cách xuất hiện giữa các beat để tạo nhịp giật nhanh theo voiceover, tăng kịch tính thay vì để mỗi số liệu tự trôi ra đều nhau.
 - Cross-scene consistency: viết 1 "style bible" MỘT LẦN, dán nguyên văn vào đầu mọi prompt beat, chỉ đổi phần hành động/bối cảnh riêng.
 - Aspect-ratio discipline: toàn bộ project dùng chung đúng 1 tỉ lệ đã chọn ở STATE 4.
 
@@ -188,12 +195,11 @@ interface BeatAnimation {
 ```
 Dùng `interpolate()` và `spring()` của Remotion khi scaffold, KHÔNG dùng frame-hold kiểu stop-motion (đó là DNA true-crime, không phải Vox).
 
-### 7d. Gọi tool sinh ảnh thật qua antigravity
+### 7d. Gọi tool sinh ảnh thật qua Antigravity IDE
 
-- Nếu antigravity đang khả dụng/kết nối trong phiên, gọi trực tiếp cho từng beat theo đúng thứ tự Scene 1 → Scene N, không gộp, không đảo thứ tự.
-- Nếu antigravity chưa xuất hiện trong danh sách tool: `search_mcp_registry(["antigravity", "image generation"])` rồi `suggest_connectors` để user chọn, KHÔNG tự ý thay bằng tool image-gen khác nếu user chưa chỉ định.
-- Nếu user từng nói rõ muốn dùng tool khác ở lượt hiện tại, ưu tiên lựa chọn đó hơn mặc định antigravity.
-- Nếu không tool nào khả dụng: xuất file `.txt` + manifest từ 7c và hướng dẫn user tự chạy, rồi tự copy ảnh vào `public/images/` khi có.
+- Đang chạy trong Antigravity IDE: dùng thẳng tính năng tạo ảnh có sẵn của IDE (Gemini/Nano Banana), gọi trực tiếp cho từng beat theo đúng thứ tự Scene 1 → Scene N, không gộp, không đảo thứ tự.
+- Nếu user từng nói rõ muốn dùng tool khác ở lượt hiện tại (vd Google Flow riêng cho video keyframe), ưu tiên lựa chọn đó hơn mặc định.
+- Nếu đang chạy ở harness khác không có tính năng này (không phải Antigravity IDE): thử tool/connector Gemini hoặc Google Flow đang kết nối trong phiên nếu có; nếu không có tool nào khả dụng, xuất toàn bộ prompt theo đúng thứ tự beat vào `public/images/prompts.txt` (mỗi block một beat, đánh số `id`, cách nhau dòng trống), báo user tự dán từng prompt vào Gemini hoặc Flow, tải ảnh về đặt đúng tên `scene-<id>.png` (hoặc `<16-9|9-16>/scene-<id>.png` nếu 2 định dạng) vào `public/images/`. Sau khi user báo đã xong, đếm lại số file khớp số beat trước khi qua 7e.
 
 ### 7e. Clarity check trước khi giao (rút gọn từ `imagegen-remotion` §9)
 
@@ -237,9 +243,14 @@ DỪNG. CHỜ.
 
 ## STATE 9, SFX (bàn giao cho video-pipeline Bước 4)
 
-Với mỗi beat có `motion` là `draw-on` (đường kẻ/mũi tên tự vẽ) hoặc `highlight-circle` (khoanh tròn nhấn mạnh), gợi ý SFX nhẹ phù hợp tiết chế Vox (không lạm dụng, khác hẳn kiểu SFX kịch tính true-crime): whoosh rất nhẹ cho draw-on/slide-in, không cần SFX cho fade-scale/static hold trừ khi beat là mở đầu/kết thúc video.
+Vox dùng SFX tiết chế (không lạm dụng, khác hẳn kiểu SFX kịch tính true-crime) nhưng KHÔNG chỉ một loại whoosh cho cả video — với đồ họa phẳng 2D, SFX chiếm phần lớn cảm nhận mượt mà. Map theo loại khoảnh khắc:
+- **whoosh** (nhẹ): draw-on/slide-in/pan/chuyển cảnh bản đồ, motion `draw-on` hoặc `highlight-circle`.
+- **pop/click** (ngắn, khô): icon/số liệu/cờ/con dấu/stat-counter xuất hiện — motion `fade-scale` hoặc `count-up` ở beat có số liệu cụ thể.
+- **gavel strike** (uy nghiêm): khoảnh khắc quyết định/hội nghị/phán quyết/bỏ phiếu — dùng đúng 1-2 lần ở cao trào, không lạm dụng.
+- **clock ticking tăng dần**: đoạn xung đột kéo dài/chờ đợi/countdown/nhân vật từ chối chấp nhận kết quả — tăng tempo dần theo voiceover rồi cắt đột ngột khi kết thúc căng thẳng.
+Không cần SFX cho fade-scale/static hold thường, trừ khi beat là mở đầu/kết thúc video hoặc rơi vào 4 loại trên.
 
-Ưu tiên tái dùng file có sẵn trong `public/audio/sfx/` (whoosh, skedaddle, triggered, record-scratch, wilhelm-scream, bruh) trước khi tải mới — với Vox chỉ `whoosh` thường là lựa chọn phù hợp nhất, các SFX kịch tính khác (record-scratch, wilhelm-scream, bruh) KHÔNG hợp tông Vox, tránh dùng trừ khi user yêu cầu rõ.
+Ưu tiên tái dùng file có sẵn trong `public/audio/sfx/` (whoosh, skedaddle, triggered, record-scratch, wilhelm-scream, bruh) trước khi tải mới. `whoosh` dùng được ngay; `pop/click`, `gavel strike`, `clock ticking` thường CHƯA có sẵn trong thư viện mặc định — cần tìm/tải file free (WebFetch nguồn free-SFX) rồi lưu vào `public/audio/sfx/` trước khi dùng. Các SFX kịch tính khác (record-scratch, wilhelm-scream, bruh) KHÔNG hợp tông Vox, tránh dùng trừ khi user yêu cầu rõ.
 
 Đặt SFX vào đúng frame dựa theo `manifest.json` thật ở STATE 8, không áng chừng. Trim/fade bằng `ffmpeg -af "afade=t=out:st=..:d=.."` nếu file dài hơn khoảnh khắc cần nhấn.
 
@@ -253,11 +264,13 @@ Gọi `remotion-best-practices` làm router (dẫn tới `remotion-create` + `re
 
 Theo đúng vòng lặp của `video-pipeline`:
 1. **Bước 2**: cài package thiếu qua `npx remotion add <pkg>` trước khi dùng, theme màu/font gom 1 file. Đây là lúc viết Composition/Scene THẬT (STATE 0 chỉ tạo khung project rỗng, chưa có scene nào). Composition dùng đúng fps=30 đã chốt ở STATE 0 (khớp `generate-voiceover.py --fps 30` ở STATE 8), và `durationInFrames` của Composition lấy từ TỔNG frame thật trong `manifest.json` (STATE 8), không dùng giá trị mặc định của template blank.
+   - **Subtitle component bắt buộc kinetic**: chia `text` của beat thành cụm 2-3 từ, dùng `interpolate()`/`spring()` theo `frame` để lần lượt hiện từng cụm đúng nhịp trong `durationInFrames` của beat (không hiện cả câu cùng lúc). Từ khóa (số/tên riêng/địa danh/kết luận) tô màu accent riêng trong cùng span. Render chữ trực tiếp trên nền video (text-shadow/stroke để đủ tương phản), KHÔNG bọc trong `<div>`/`<span>` nền màu đặc cố định kiểu hộp thoại — tránh pattern che đồ họa nền.
+   - **Motion pacing không đều đều**: với scene có `type: 'map' | 'chart' | 'stat-counter'` mang số liệu/địa danh trọng tâm, dùng cặp transform zoom-out rồi zoom-in vào điểm cụ thể thay vì một phép zoom/pan tuyến tính duy nhất suốt beat. Với chuỗi beat liên tiếp cùng loại dữ kiện dồn dập (đếm phiếu, liệt kê số liệu), rút ngắn khoảng cách `enterAtFrame` giữa các phần tử để tạo nhịp giật nhanh khớp voiceover.
 2. **Bước 5 (QA hình ảnh)**: `npx remotion still <CompId> /tmp/check.png --frame=<n>` ở vài mốc, đọc ảnh bằng Read tool so kỳ vọng Vox (flat, không gloss, safe-zone đúng), `npx tsc --noEmit && npx eslint src` sau mỗi batch sửa.
 3. **Bước 6 (render)**: check sync đoạn ngắn trước (`npx remotion render <CompId> /tmp/check.mp4 --frames=<a>-<b>`). Nếu STATE 4 chọn cả hai định dạng, đây là 2 Composition riêng (mỗi cái dùng đúng bộ ảnh `public/images/16-9/` hoặc `public/images/9-16/` từ STATE 7) → render full ra 2 file: `out/<Ten>-16x9.mp4` và `out/<Ten>-9x16.mp4`.
 4. **Bước 7 (QC)**: gọi `video-qc` (`/watch out/<file>.mp4`) cho từng file render ra, kể cả khi có 2 định dạng.
 
-**Nếu QC ra ⚠️/❌ liên quan hình ảnh/phong cách Vox** (sai palette, thiếu safe-zone, motion không khớp): quay lại STATE 7, regenerate riêng ảnh lỗi qua antigravity, không làm lại toàn bộ. **Nếu liên quan phần khác** (animation code, sync audio, layout): theo đúng Bước 8 của `video-pipeline` (feedback mơ hồ → hỏi lại user bằng AskUserQuestion, nhiều mảng cùng lúc → gọi `superpowers:brainstorming` trước khi sửa hàng loạt), rồi quay lại Bước 5–7 tới khi QC pass.
+**Nếu QC ra ⚠️/❌ liên quan hình ảnh/phong cách Vox** (sai palette, thiếu safe-zone, motion không khớp): quay lại STATE 7, regenerate riêng ảnh lỗi qua Antigravity IDE, không làm lại toàn bộ. **Nếu liên quan phần khác** (animation code, sync audio, layout): theo đúng Bước 8 của `video-pipeline` (feedback mơ hồ → hỏi lại user bằng AskUserQuestion, nhiều mảng cùng lúc → gọi `superpowers:brainstorming` trước khi sửa hàng loạt), rồi quay lại Bước 5–7 tới khi QC pass.
 
 Kết thúc bằng AskUserQuestion: "Video đã render và QC pass tại out/<Ten>.mp4 (hoặc cả hai file nếu chọn 2 định dạng ở STATE 4). Sinh 3 thumbnail luôn?" — options: ["Tiếp tục sinh thumbnail", "Dừng lại, tôi muốn xem video trước"].
 
@@ -274,7 +287,7 @@ Sinh 3 prompt thumbnail, mỗi prompt một block độc lập, phong cách Vox 
 
 Nếu STATE 4 chọn cả hai định dạng, sinh riêng 2 bộ 3 thumbnail (một bộ 16:9, một bộ 9:16), vì thumbnail YouTube (16:9) và cover Shorts/Reels (9:16) khác tỉ lệ khung.
 
-Sinh qua antigravity theo đúng cơ chế 7d, lưu vào `<ten-video-moi>/public/thumbnails/` (hoặc `public/thumbnails/16-9/` + `public/thumbnails/9-16/` nếu 2 định dạng). Đây là deliverable cuối cùng, đi kèm file `.mp4` từ STATE 10.
+Sinh qua Antigravity IDE theo đúng cơ chế 7d, lưu vào `<ten-video-moi>/public/thumbnails/` (hoặc `public/thumbnails/16-9/` + `public/thumbnails/9-16/` nếu 2 định dạng). Đây là deliverable cuối cùng, đi kèm file `.mp4` từ STATE 10.
 
 Kết thúc bằng AskUserQuestion: "Hoàn tất: video đã render, QC pass, kèm 3 thumbnail, tất cả trong `<ten-video-moi>/`. Bạn muốn làm gì tiếp?" — options: ["Làm video mới", "Thêm phiên bản ngôn ngữ khác cho video này", "Làm lại một bước (redo)", "Kết thúc ở đây"].
 
@@ -294,7 +307,7 @@ Dịch nguyên văn `<ten-video>-script.md` (STATE 5) sang ngôn ngữ mới, gi
 
 ### 12b. Kiểm tra ảnh có label baked ngôn ngữ cũ không
 
-Vì kỷ luật `imagegen-remotion`/STYLE BLOCK không cho phép baked caption, ảnh Vox thường KHÔNG chứa text ngoài nhãn ngắn 1-4 từ (nếu có). Kiểm tra bảng manifest ở STATE 7: nếu có ảnh nào từng dùng label bằng ngôn ngữ cũ, regenerate riêng đúng những ảnh đó (qua antigravity, theo cơ chế 7d) bằng label ngôn ngữ mới, lưu vào `public/images/<lang>/scene-<id>.png` (chỉ ảnh có label mới cần bản riêng, ảnh không label dùng chung được, không cần sinh lại toàn bộ).
+Vì kỷ luật `imagegen-remotion`/STYLE BLOCK không cho phép baked caption, ảnh Vox thường KHÔNG chứa text ngoài nhãn ngắn 1-4 từ (nếu có). Kiểm tra bảng manifest ở STATE 7: nếu có ảnh nào từng dùng label bằng ngôn ngữ cũ, regenerate riêng đúng những ảnh đó (qua Antigravity IDE, theo cơ chế 7d) bằng label ngôn ngữ mới, lưu vào `public/images/<lang>/scene-<id>.png` (chỉ ảnh có label mới cần bản riêng, ảnh không label dùng chung được, không cần sinh lại toàn bộ).
 
 ### 12c. Voice thật cho ngôn ngữ mới (như STATE 8)
 
