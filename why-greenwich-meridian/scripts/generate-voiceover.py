@@ -35,10 +35,16 @@ def ffprobe_duration(path: Path) -> float:
 
 def generate_line(id_: str, text: str, voice: str) -> float:
     out_path = OUT_DIR / f"{id_}.mp3"
-    max_retries = 3
+    if out_path.exists() and out_path.stat().st_size > 0:
+        try:
+            return ffprobe_duration(out_path)
+        except Exception:
+            pass # Regenerate if file is corrupt
+            
+    max_retries = 5
     for attempt in range(max_retries):
         try:
-            time.sleep(0.5)  # Avoid rate limiting
+            time.sleep(1.5)  # Avoid rate limiting
             subprocess.run(
                 ["edge-tts", "--voice", voice, "--text", text, "--write-media", str(out_path)],
                 check=True, capture_output=True, text=True,
@@ -50,10 +56,11 @@ def generate_line(id_: str, text: str, voice: str) -> float:
             if attempt == max_retries - 1:
                 raise e
             print(f"[{id_}] Attempt {attempt + 1} failed: {e}. Retrying...")
-            time.sleep(2.0)
+            time.sleep(5.0)
 
 
 def main() -> None:
+    global OUT_DIR
     if len(sys.argv) < 2:
         print(__doc__)
         sys.exit(1)
@@ -61,6 +68,8 @@ def main() -> None:
     fps = 30
     if "--fps" in sys.argv:
         fps = int(sys.argv[sys.argv.index("--fps") + 1])
+    if "--out-dir" in sys.argv:
+        OUT_DIR = Path(sys.argv[sys.argv.index("--out-dir") + 1])
 
     lines = json.loads(script_path.read_text())
     OUT_DIR.mkdir(parents=True, exist_ok=True)

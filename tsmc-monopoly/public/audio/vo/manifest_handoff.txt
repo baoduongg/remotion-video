@@ -1,0 +1,185 @@
+Scene 1 — Introduction to Dependency (00:00.00–00:18.46)
+  vo_01: Mọi thiết bị điện tử bạn chạm vào hôm nay (00:00.00–00:03.34)
+    asset: scene-1-touching-screen.png
+    motion: slow zoom-in
+    text-safe: bottom 1/3, margin 6%
+  vo_02: từ chiếc iPhone trong túi (00:03.34–00:05.88)
+    asset: scene-1-phone-pocket.png
+    motion: slow pan right
+    text-safe: bottom 1/3, margin 6%
+  vo_03: đến các máy chủ AI khổng lồ của siêu máy tính (00:05.88–00:09.67)
+    asset: scene-1-server-racks.png
+    motion: slow zoom-in
+    text-safe: bottom 1/3, margin 6%
+  vo_04: đều có một điểm chung (00:09.67–00:11.88)
+    asset: scene-1-dot-nodes.png
+    motion: static hold
+    text-safe: bottom 1/3, margin 6%
+  vo_05: chúng phụ thuộc vào một hòn đảo ở Đông Á (00:11.88–00:15.05)
+    asset: scene-1-east-asia-map.png
+    motion: slow zoom-in
+    text-safe: bottom 1/3, margin 6%
+  vo_06: và công ty duy nhất mang tên TSMC (00:15.05–00:18.46)
+    asset: scene-1-tsmc-logo.png
+    motion: slow pan left
+    text-safe: bottom 1/3, margin 6%
+
+Scene 2 — Morris Chang and the Foundry Model (00:18.46–00:33.62)
+  vo_07: Được thành lập năm 1987 bởi Morris Chang (00:18.46–00:22.56)
+    asset: scene-2-morris-chang.png
+    motion: slow zoom-in
+    text-safe: bottom 1/3, margin 6%
+  vo_08: TSMC không tự thiết kế chip (00:22.56–00:22.56)
+    asset: scene-2-blank-blueprint.png
+    motion: static hold
+    text-safe: bottom 1/3, margin 6%
+  vo_09: Họ chỉ làm một việc duy nhất (00:22.56–00:28.25)
+    asset: scene-2-single-gear.png
+    motion: slow zoom-in
+    text-safe: bottom 1/3, margin 6%
+  vo_10: sản xuất chip cho các đối tác (00:28.25–00:30.84)
+    asset: scene-2-brand-logos.png
+    motion: slow pan right
+    text-safe: bottom 1/3, margin 6%
+  vo_11: nhưng làm tốt hơn bất kỳ ai (00:30.84–00:33.62)
+    asset: scene-2-pedestal-chip.png
+    motion: slow zoom-in
+    text-safe: bottom 1/3, margin 6%
+
+Scene 3 — TSMC's Monopoly and Microchips (00:33.62–00:49.34)
+  vo_12: Hiện nay, TSMC kiểm soát hơn 90% nguồn cung (00:33.62–00:38.26)
+    asset: scene-3-pie-chart.png
+    motion: slow zoom-in
+    text-safe: bottom 1/3, margin 6%
+  vo_13: chip bán dẫn tiên tiến nhất hành tinh (00:38.26–00:41.23)
+    asset: scene-3-advanced-chip.png
+    motion: slow pan left
+    text-safe: bottom 1/3, margin 6%
+  vo_14: loại dưới 3 nanomet (00:41.23–00:43.56)
+    asset: scene-3-scale-comparison.png
+    motion: static hold
+    text-safe: bottom 1/3, margin 6%
+  vo_15: dùng để vận hành trí tuệ nhân tạo (00:43.56–00:46.54)
+    asset: scene-3-digital-brain.png
+    motion: slow zoom-in
+    text-safe: bottom 1/3, margin 6%
+  vo_16: và điện thoại thông minh thế hệ mới (00:46.54–00:49.34)
+    asset: scene-3-floating-phone.png
+    motion: slow pan right
+    text-safe: bottom 1/3, margin 6%
+
+Scene 4 — Competitors Lagging Behind (00:49.34–01:01.18)
+  vo_17: Các đối thủ lớn như Intel hay Samsung (00:49.34–00:52.51)
+    asset: scene-4-runners.png
+    motion: slow zoom-in
+    text-safe: bottom 1/3, margin 6%
+  vo_18: đã đuổi theo hàng thập kỷ (00:52.51–00:54.96)
+    asset: scene-4-flying-calendar.png
+    motion: slow pan left
+    text-safe: bottom 1/3, margin 6%
+  vo_19: nhưng vẫn bị tụt lại phía sau (00:54.96–00:57.67)
+    asset: scene-4-lagging-arrows.png
+    motion: static hold
+    text-safe: bottom 1/3, margin 6%
+  vo_20: cả về hiệu suất lẫn tỷ lệ sản lượng thành phẩm (00:57.67–01:01.18)
+    asset: scene-4-conveyor-belt.png
+    motion: slow zoom-in
+    text-safe: bottom 1/3, margin 6%
+
+Scene 5 — The Geopolitical and Natural Risks (01:01.18–01:16.44)
+  vo_21: Tại sao việc này lại cực kỳ nguy hiểm? (01:01.18–01:04.18)
+    asset: scene-5-warning-triangle.png
+    motion: slow zoom-in
+    text-safe: bottom 1/3, margin 6%
+  vo_22: Nếu một trận động đất lớn xảy ra tại Đài Loan (01:04.18–01:07.75)
+    asset: scene-5-seismograph.png
+    motion: slow pan right
+    text-safe: bottom 1/3, margin 6%
+  vo_23: hoặc nếu căng thẳng địa chính trị (01:07.75–01:10.42)
+    asset: scene-5-opposing-arrows.png
+    motion: static hold
+    text-safe: bottom 1/3, margin 6%
+  vo_24: làm gián đoạn nhà máy (01:10.42–01:12.79)
+    asset: scene-5-blocked-factory.png
+    motion: slow zoom-in
+    text-safe: bottom 1/3, margin 6%
+  vo_25: nền kinh tế số toàn cầu sẽ lập tức đóng băng (01:12.79–01:16.44)
+    asset: scene-5-frozen-globe.png
+    motion: slow pan left
+    text-safe: bottom 1/3, margin 6%
+
+Scene 6 — The Consequences of Disruption (01:16.44–01:27.31)
+  vo_26: Thiếu chip của TSMC (01:16.44–01:19.15)
+    asset: scene-6-empty-motherboard.png
+    motion: slow zoom-in
+    text-safe: bottom 1/3, margin 6%
+  vo_27: nghĩa là không có điện thoại mới (01:19.15–01:21.96)
+    asset: scene-6-empty-shelf.png
+    motion: slow pan right
+    text-safe: bottom 1/3, margin 6%
+  vo_28: không có xe điện (01:21.96–01:23.98)
+    asset: scene-6-empty-car-battery.png
+    motion: static hold
+    text-safe: bottom 1/3, margin 6%
+  vo_29: và các hệ thống AI sẽ ngừng hoạt động (01:23.98–01:27.31)
+    asset: scene-6-system-offline.png
+    motion: slow zoom-in
+    text-safe: bottom 1/3, margin 6%
+
+Scene 7 — Western Subsidies and Localization (01:27.31–01:38.14)
+  vo_30: Mỹ, Nhật Bản và châu Âu (01:27.31–01:30.41)
+    asset: scene-7-global-flags.png
+    motion: slow pan left
+    text-safe: bottom 1/3, margin 6%
+  vo_31: đang đổ hàng chục tỷ đô la (01:30.41–01:33.07)
+    asset: scene-7-pouring-money.png
+    motion: slow zoom-in
+    text-safe: bottom 1/3, margin 6%
+  vo_32: xây dựng nhà máy mới (01:33.07–01:35.42)
+    asset: scene-7-cranes-factory.png
+    motion: static hold
+    text-safe: bottom 1/3, margin 6%
+  vo_33: nhằm giảm bớt sự phụ thuộc này (01:35.42–01:38.14)
+    asset: scene-7-cut-rope.png
+    motion: slow zoom-in
+    text-safe: bottom 1/3, margin 6%
+
+Scene 8 — The Complexity of the Supply Chain (01:38.14–01:49.97)
+  vo_34: Nhưng sao chép hệ sinh thái cực kỳ phức tạp (01:38.14–01:41.45)
+    asset: scene-8-gear-maze.png
+    motion: slow zoom-in
+    text-safe: bottom 1/3, margin 6%
+  vo_35: và chuỗi cung ứng bán dẫn khổng lồ của TSMC (01:41.45–01:45.38)
+    asset: scene-8-logistics-map.png
+    motion: slow pan right
+    text-safe: bottom 1/3, margin 6%
+  vo_36: là điều không thể làm (01:45.38–01:47.66)
+    asset: scene-8-pushing-wall.png
+    motion: static hold
+    text-safe: bottom 1/3, margin 6%
+  vo_37: trong một sớm một chiều (01:47.66–01:49.97)
+    asset: scene-8-sun-moon-split.png
+    motion: slow zoom-in
+    text-safe: bottom 1/3, margin 6%
+
+Scene 9 — The Future and Conclusion (01:49.97–02:04.30)
+  vo_38: Liệu thế giới có thể tự chủ (01:49.97–01:52.63)
+    asset: scene-9-independent-gear.png
+    motion: slow zoom-in
+    text-safe: bottom 1/3, margin 6%
+  vo_39: công nghệ bán dẫn tiên tiến (01:52.63–01:55.25)
+    asset: scene-9-clean-room-wafer.png
+    motion: slow pan left
+    text-safe: bottom 1/3, margin 6%
+  vo_40: trước khi một cuộc khủng hoảng lớn xảy ra? (01:55.25–01:58.27)
+    asset: scene-9-hourglass-storm.png
+    motion: static hold
+    text-safe: bottom 1/3, margin 6%
+  vo_41: Câu trả lời vẫn đang nằm tại (01:58.27–02:00.98)
+    asset: scene-9-magnifying-chip.png
+    motion: slow zoom-in
+    text-safe: bottom 1/3, margin 6%
+  vo_42: các phòng sạch vô trùng của TSMC (02:00.98–02:04.30)
+    asset: scene-9-fab-room.png
+    motion: slow pan right
+    text-safe: bottom 1/3, margin 6%

@@ -1,0 +1,172 @@
+[
+  {
+    "id": "vo_01",
+    "text": "Imagine you are traveling from London to Paris, then to New York.",
+    "voice": "en-US-GuyNeural"
+  },
+  {
+    "id": "vo_02",
+    "text": "Every time you land, what’s the very first thing you do?",
+    "voice": "en-US-GuyNeural"
+  },
+  {
+    "id": "vo_03",
+    "text": "Resetting your watch, of course.",
+    "voice": "en-US-GuyNeural"
+  },
+  {
+    "id": "vo_04",
+    "text": "But have you ever wondered why the whole world agreed to take Greenwich",
+    "voice": "en-US-GuyNeural"
+  },
+  {
+    "id": "vo_05",
+    "text": "— a small, quiet town on the outskirts of London — as the starting point zero for all time zones?",
+    "voice": "en-US-GuyNeural"
+  },
+  {
+    "id": "vo_06",
+    "text": "Why not glamorous Paris, modern Washington, or a neutral spot in the middle of the ocean?",
+    "voice": "en-US-GuyNeural"
+  },
+  {
+    "id": "vo_07",
+    "text": "The answer takes us back to the 19th century.",
+    "voice": "en-US-GuyNeural"
+  },
+  {
+    "id": "vo_08",
+    "text": "At that time, the concept of standard time didn’t exist at all.",
+    "voice": "en-US-GuyNeural"
+  },
+  {
+    "id": "vo_09",
+    "text": "Every city and town set its own local time based on the sun's position.",
+    "voice": "en-US-GuyNeural"
+  },
+  {
+    "id": "vo_10",
+    "text": "When the sun was directly overhead, that was 12 noon.",
+    "voice": "en-US-GuyNeural"
+  },
+  {
+    "id": "vo_11",
+    "text": "As a result, the United States had hundreds of different time zones,",
+    "voice": "en-US-GuyNeural"
+  },
+  {
+    "id": "vo_12",
+    "text": "and train travel in Britain was a chronological nightmare.",
+    "voice": "en-US-GuyNeural"
+  },
+  {
+    "id": "vo_13",
+    "text": "To solve this chaos, in October 1884,",
+    "voice": "en-US-GuyNeural"
+  },
+  {
+    "id": "vo_14",
+    "text": "the International Meridian Conference was held in Washington D.C.",
+    "voice": "en-US-GuyNeural"
+  },
+  {
+    "id": "vo_15",
+    "text": "Representatives from 25 nations debated fiercely to choose a single prime meridian.",
+    "voice": "en-US-GuyNeural"
+  },
+  {
+    "id": "vo_16",
+    "text": "The French, led by astronomer Jules Janssen, vehemently opposed choosing Greenwich.",
+    "voice": "en-US-GuyNeural"
+  },
+  {
+    "id": "vo_17",
+    "text": "They argued that the prime meridian had to be a completely neutral line,",
+    "voice": "en-US-GuyNeural"
+  },
+  {
+    "id": "vo_18",
+    "text": "not belonging to any global power.",
+    "voice": "en-US-GuyNeural"
+  },
+  {
+    "id": "vo_19",
+    "text": "They proposed placing it in the Azores or the Bering Strait,",
+    "voice": "en-US-GuyNeural"
+  },
+  {
+    "id": "vo_20",
+    "text": "just like how the metric system was created based on the size of the Earth, rather than a national landmark.",
+    "voice": "en-US-GuyNeural"
+  },
+  {
+    "id": "vo_21",
+    "text": "But the British and the Americans had a much more pragmatic argument:",
+    "voice": "en-US-GuyNeural"
+  },
+  {
+    "id": "vo_22",
+    "text": "72% of the world's shipping commerce at the time was already using charts based on the Greenwich meridian.",
+    "voice": "en-US-GuyNeural"
+  },
+  {
+    "id": "vo_23",
+    "text": "Starting over from scratch with a new location would cause a massive economic loss.",
+    "voice": "en-US-GuyNeural"
+  },
+  {
+    "id": "vo_24",
+    "text": "Finally, the vote took place.",
+    "voice": "en-US-GuyNeural"
+  },
+  {
+    "id": "vo_25",
+    "text": "22 countries voted in favor of Greenwich.",
+    "voice": "en-US-GuyNeural"
+  },
+  {
+    "id": "vo_26",
+    "text": "Only a single country voted against: San Domingo, now the Dominican Republic.",
+    "voice": "en-US-GuyNeural"
+  },
+  {
+    "id": "vo_27",
+    "text": "Two countries abstained: Brazil and, of course, France.",
+    "voice": "en-US-GuyNeural"
+  },
+  {
+    "id": "vo_28",
+    "text": "France refused to accept this defeat for decades.",
+    "voice": "en-US-GuyNeural"
+  },
+  {
+    "id": "vo_29",
+    "text": "They continued to use Paris time until 1911.",
+    "voice": "en-US-GuyNeural"
+  },
+  {
+    "id": "vo_30",
+    "text": "Even when they conceded, French law called the new time 'Paris mean time, retarded by 9 minutes and 21 seconds'",
+    "voice": "en-US-GuyNeural"
+  },
+  {
+    "id": "vo_31",
+    "text": "rather than ever calling it Greenwich time.",
+    "voice": "en-US-GuyNeural"
+  },
+  {
+    "id": "vo_32",
+    "text": "Today, the Greenwich Meridian is not just a metal strip on the ground at the Royal Observatory.",
+    "voice": "en-US-GuyNeural"
+  },
+  {
+    "id": "vo_33",
+    "text": "It is proof that sometimes, practical convenience and economic power shape how we measure the world,",
+    "voice": "en-US-GuyNeural"
+  },
+  {
+    "id": "vo_34",
+    "text": "rising above all political disputes.",
+    "voice": "en-US-GuyNeural"
+  }
+]
