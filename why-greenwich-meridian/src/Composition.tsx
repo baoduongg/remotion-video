@@ -1,5 +1,10 @@
 import { AbsoluteFill, Audio, Composition, interpolate, spring, staticFile, useCurrentFrame, useVideoConfig, Sequence, Img } from "remotion";
+import { loadFont } from "@remotion/google-fonts/Anton";
 import React from "react";
+
+const { fontFamily: titleFontFamily } = loadFont("normal", {
+  subsets: ["latin", "vietnamese"],
+});
 import voiceoverVi from "../voiceover.json";
 import voiceoverEn from "../voiceover-en.json";
 import voManifestViRaw from "../public/audio/vo/manifest.json";
@@ -194,7 +199,7 @@ const Scene: React.FC<{
           style={{
             backgroundColor: creamColor,
             color: navyColor,
-            fontFamily: "Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif, system-ui",
+            fontFamily: titleFontFamily,
             textTransform: "uppercase",
             letterSpacing: "0.5px",
             fontWeight: "bold",

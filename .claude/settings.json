@@ -8,7 +8,13 @@
       "Bash(cp ../WORKFLOW.md .)",
       "Bash(cp ../scripts/generate-voiceover.py scripts/)",
       "Bash(cp -r ../.claude/skills/video-pipeline ../.claude/skills/qc-video .claude/skills/)",
-      "Bash(cp -r ../.agents/skills/video-pipeline ../.agents/skills/qc-video .agents/skills/)"
+      "Bash(cp -r ../.agents/skills/video-pipeline ../.agents/skills/qc-video .agents/skills/)",
+      "Bash(rtk find *)",
+      "Bash(awk '{print $5, $NF}')",
+      "Bash(md5 scene-vo_*.png)",
+      "Bash(python3 -c ' *)",
+      "Bash(rtk grep *)",
+      "Bash(rtk read *)"
     ]
   }
 }
