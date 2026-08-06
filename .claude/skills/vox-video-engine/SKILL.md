@@ -1,47 +1,47 @@
 ---
 name: vox-video-engine
-description: Đi từ ý tưởng thô đến video Remotion phong cách Vox (flat 2D vector, kinetic typography, "animated opinion essay") ĐÃ RENDER XONG VÀ QC. Tạo folder project Remotion NGAY TỪ ĐẦU, rồi làm mọi việc tiếp theo (script, beat, ảnh, voice, SFX, code, render, QC) bên trong folder đó. Hỗ trợ output đa dạng — định dạng 16:9, 9:16, hoặc cả hai (2 lượt render riêng), và ngôn ngữ Tiếng Anh hoặc Tiếng Việt cho script, voice, và mọi text trong ảnh/thumbnail. Sau khi đã có 1 bản hoàn chỉnh, có thể thêm bản ngôn ngữ khác cho cùng project mà không phải làm lại từ đầu (chỉ dịch script, sinh voice/render/QC/thumbnail mới). Điều phối skill `video-pipeline` cho phần scaffold/voice/SFX/QA/render/QC, tự lo phần đặc thù Vox (niche, script giọng Vox, ảnh theo kỷ luật imagegen-remotion gọi qua tính năng tạo ảnh có sẵn trong Antigravity IDE). LUÔN dùng skill này khi user nhắc "Vox style", "video kiểu Vox", "video explainer", "animated opinion essay", hoặc yêu cầu làm video hoàn chỉnh theo phong cách này, kể cả khi không gõ đúng từ "Vox".
-compatibility: "Cần skill `video-pipeline` đã cài (điều phối scaffold/voice/SFX/QA/render/QC), và các skill nó phụ thuộc: remotion-best-practices, remotion-create, remotion-markup, video-qc (`/watch`), edge-tts (qua generate-voiceover.py), ffmpeg/ffprobe. Cần skill `imagegen-remotion` cho kỷ luật ảnh. Cần chạy trong Antigravity IDE để dùng tính năng tạo ảnh có sẵn (Gemini/Nano Banana) sinh ảnh thật; nếu chạy ở harness khác không có tính năng này, cần kết nối Gemini/Google Flow tương đương hoặc làm thủ công (xem 7d). Cần thư mục cha `remotion-video/` đã có sẵn `WORKFLOW.md` + `scripts/generate-voiceover.py` + skill dùng chung (setup one-time theo `video-pipeline` Bước 0.5)."
+description: Use when the user says "Vox style", "Vox-style video", "explainer video", "animated opinion essay", or asks for a full rendered-and-QC'd video in this style, even if they never type the word "Vox". Takes a raw idea through to a rendered and QC'd Remotion video in the Vox style (flat 2D vector, kinetic typography, "animated opinion essay"). Scaffolds a fresh Remotion project folder FIRST, then does everything else (script, beats, images, voice, SFX, code, render, QC) inside that folder. Supports 16:9, 9:16, or both (two separate render passes), and English or Vietnamese for script/voice/on-image text. Once one complete version exists, an additional language version can be added to the same project without starting over. Delegates scaffold/voice/SFX/QA/render/QC to the `video-pipeline` skill; handles Vox-specific parts itself (niche, Vox-voiced script, images per imagegen-remotion discipline via Antigravity IDE's built-in image generation).
+compatibility: "Requires the `video-pipeline` skill installed (coordinates scaffold/voice/SFX/QA/render/QC) plus its dependencies: remotion-best-practices, remotion-create, remotion-markup, video-qc (`/watch`), edge-tts (via generate-voiceover.py), ffmpeg/ffprobe. Requires the `imagegen-remotion` skill for image discipline. Requires running inside Antigravity IDE to use its built-in image generation (Gemini/Nano Banana) for real images; on another harness without this feature, connect an equivalent Gemini/Google Flow tool or do it manually (see 7d). Requires the parent `remotion-video/` directory to already have `WORKFLOW.md` + `scripts/generate-voiceover.py` + shared skills (one-time setup per `video-pipeline` Step 0.5)."
 ---
 
 # Vox Video Engine
 
-LƯU Ý: BẤT KỲ CÂU HỎI NÀO TRONG CÁC STATE DƯỚI ĐÂY, KỂ CẢ CÂU ĐƠN GIẢN NHƯ XÁC NHẬN CHUYỂN SANG STATE TIẾP THEO (trước đây kiểu "gõ 'next'"), PHẢI DÙNG TOOL HỎI DẠNG NÚT BẤM (AskUserQuestion / `ask_user_input_v0`) THAY VÌ GÕ CÂU HỎI THUẦN TEXT — để user chỉ cần chạm chọn thay vì gõ tay. Mẫu chuẩn cho xác nhận chuyển state: 2 option ["Tiếp tục", "Dừng lại, tôi cần chỉnh trước"]. Nếu một câu hỏi có nhiều hơn 4 lựa chọn (vd chọn 1 trong 10 ý tưởng ở STATE 3, hoặc chọn redo state nào ở STATE 11), giữ dạng liệt kê + để user gõ, vì tool giới hạn tối đa 4 option mỗi câu.
+NOTE: ANY question in the states below, including simple ones like confirming a move to the next state (formerly "type 'next'"), MUST use the button-style ask tool (AskUserQuestion / `ask_user_input_v0`) instead of plain text questions, so the user can tap instead of type. Standard pattern for a state-transition confirmation: 2 options ["Continue", "Stop, I need to adjust first"]. If a question has more than 4 choices (e.g. picking 1 of 10 ideas in STATE 3, or which state to redo in STATE 11), keep it as a plain numbered list for the user to type an answer to, since the tool caps at 4 options per question.
 
-Tool cũng yêu cầu TỐI THIỂU 2 option mỗi câu hỏi (mảng 1 phần tử bị tool reject thẳng). Với câu hỏi mà bản chất chỉ có ĐÚNG 1 giá trị hợp lý — free-text mở (vd đặt tên project ở STATE 0) hoặc lựa chọn duy nhất còn lại sau khi loại trừ (vd STATE 12 khi chỉ còn 1 ngôn ngữ chưa làm) — KHÔNG bỏ qua AskUserQuestion và KHÔNG tự ý quyết thay user. Luôn dựng đúng 2 option:
-1. Giá trị gợi ý/mặc định cụ thể (slug đề xuất, hoặc tên lựa chọn duy nhất còn lại).
-2. "Tự nhập giá trị khác" — để user gõ tay nếu không muốn dùng gợi ý mặc định.
-Nếu user chọn option 2, hỏi tiếp bằng text thường để họ gõ giá trị cụ thể. Không tự bịa thêm option thứ 3 giả cho đủ số, và không dùng "Other" mặc định của tool thay cho option 2 này (option 2 phải tường minh trong danh sách).
+The tool also requires a MINIMUM of 2 options per question (a 1-item array is rejected outright). For a question that genuinely has only ONE reasonable value — open free text (e.g. naming the project in STATE 0) or the single remaining choice after elimination (e.g. STATE 12 when only one language is left undone) — do NOT skip AskUserQuestion and do NOT decide for the user. Always build exactly 2 options:
+1. The specific suggested/default value (proposed slug, or the single remaining choice's name).
+2. "Enter a different value" — for the user to type something else if they don't want the suggested default.
+If the user picks option 2, follow up with a plain-text question so they can type the specific value. Don't invent a fake third option just to pad the count, and don't rely on the tool's built-in "Other" in place of this explicit option 2.
 
-Có thể gộp tối đa 3 câu hỏi độc lập vào một lần gọi tool nếu chúng thuộc cùng một state (xem STATE 4). Không tự đoán câu trả lời thay user khi câu hỏi còn mơ hồ.
+Up to 3 independent questions can be merged into a single tool call if they belong to the same state (see STATE 4). Never guess an answer on the user's behalf when a question is still ambiguous.
 
-State machine tuyến tính, DỪNG và CHỜ user trả lời sau mỗi state — không tự nhảy cóc. Không dùng em dash (dùng dấu phẩy, hai chấm, ngoặc đơn, hoặc gạch ngang thường).
+Linear state machine: STOP and WAIT for the user's answer after every state, never skip ahead. Don't use em dashes (use commas, colons, parentheses, or a plain hyphen).
 
-**Vai trò của skill này**: tạo project Remotion trước tiên (STATE 0), sau đó mọi bước còn lại — hỏi style, chọn niche, viết script, tách beat, sinh ảnh, sinh voice, SFX, code, render, QC, thumbnail — đều thực hiện BÊN TRONG folder project đó, không có bước nào tạo file rời ở ngoài. Phần đặc thù Vox (niche, giọng script, kỷ luật ảnh `imagegen-remotion`) do skill này tự làm; phần scaffold/voice-thật/SFX/QA/render/QC do `video-pipeline` điều phối, vox-video-engine chỉ cấp đúng nội dung/asset tại đúng bước của nó. Nếu `video-pipeline` chưa cài, dừng lại và báo user cài trước khi vào STATE 0.
+**This skill's role**: create the Remotion project first (STATE 0), then every remaining step — style questions, niche, script, beat splitting, image generation, voice generation, SFX, code, render, QC, thumbnails — happens INSIDE that project folder; no step creates a loose file outside it. The Vox-specific parts (niche, script voice, `imagegen-remotion` image discipline) are handled by this skill itself; the scaffold/real-voice/SFX/QA/render/QC parts are coordinated by `video-pipeline`, with vox-video-engine only supplying the right content/asset at the right step. If `video-pipeline` isn't installed, stop and tell the user to install it before entering STATE 0.
 
-Kết quả cuối cùng là một file `.mp4` đã render và QC pass, kèm 3 thumbnail, tất cả nằm trong `<ten-video-moi>/`.
+The final output is a rendered, QC-passed `.mp4` file plus 3 thumbnails, all inside `<new-video-name>/`.
 
-## Vox DNA (ghi nhớ xuyên suốt, không phải một state riêng)
+## Vox DNA (keep in mind throughout, not a separate state)
 
-**Nguyên tắc Joe Posner (founding producer Vox)**: video là "animated opinion essay". Không có cảnh người ngồi bàn (no desks), không dùng phỏng vấn talking-head làm xương sống. Toàn bộ hình ảnh là motion graphics/minh họa, không phải cảnh quay thật.
+**Joe Posner principle (Vox founding producer)**: the video is an "animated opinion essay". No desk shots, no talking-head interviews as the backbone. All visuals are motion graphics/illustration, never live-action footage.
 
-**Giọng văn**: hội thoại, trực tiếp, có thể xưng "we"/đặt câu hỏi tu từ để mở hook, nhưng vẫn dựa trên dữ kiện cụ thể (số liệu, tên, năm). Ấm hơn, gần gũi hơn true-crime, nhưng vẫn có cấu trúc lập luận rõ (claim → bằng chứng → ý nghĩa).
+**Voice**: conversational, direct, can say "we" or open with a rhetorical question as a hook, but still grounded in concrete facts (numbers, names, years). Warmer and closer than true-crime, but still has clear argument structure (claim → evidence → significance).
 
-**Hình ảnh**: flat 2D, không gradient, không đổ bóng, không gloss. Bảng màu giới hạn 3-4 màu cố định xuyên suốt cả video. Kinetic typography, highlighter/circle nhấn mạnh, bản đồ và biểu đồ đơn giản hóa, nhân vật minh họa hình học không chi tiết mặt trừ khi cần biểu cảm.
+**Visuals**: flat 2D, no gradients, no drop shadows, no gloss. A fixed 3-4 color palette held constant for the whole video. Kinetic typography, highlighter/circle emphasis devices, simplified maps and charts, geometric illustrated characters without facial detail unless expression is needed.
 
-**Phụ đề động (kinetic subtitle, bắt buộc, không phải tùy chọn)**: chữ xuất hiện theo từng cụm 2-3 từ đồng bộ nhịp voiceover, KHÔNG phải cả câu bung ra cùng lúc trong một hộp trắng cố định. Từ khóa (số liệu, tên riêng, địa danh, kết luận) tô màu accent (vàng/đỏ) khác màu nền chữ thường. Chữ hiển thị tự do trực tiếp trên nền video (dùng stroke/drop-shadow đủ độ tương phản để đọc được), không đặt trong khung chữ nhật nền trắng đặc — khung nền trắng che đồ họa và đọc chậm hơn kinetic. Áp dụng ngay từ STATE 7c (animation spec) và code hóa ở STATE 10.
+**Kinetic subtitles (mandatory, not optional)**: text appears in 2-3 word clusters synced to the voiceover's rhythm, NEVER the whole sentence dumped at once inside a fixed white box. Keywords (numbers, proper names, places, conclusions) are colored with an accent (yellow/red) distinct from regular text. Text renders directly over the video (with enough stroke/drop-shadow contrast to stay readable), never inside a solid-background rectangle — a white background box hides the graphics and reads slower than kinetic type. Apply this from STATE 7c (animation spec) onward and code it in STATE 10.
 
-**SFX phong phú theo khoảnh khắc, không chỉ whoosh**: whoosh cho chuyển cảnh/pan/bay lướt; pop/click ngắn cho icon/số liệu/cờ/con dấu xuất hiện; gavel strike cho khoảnh khắc quyết định/bỏ phiếu/phán quyết; clock ticking tăng dần cho đoạn chờ đợi/xung đột/countdown. Với đồ họa phẳng 2D, SFX chiếm phần lớn cảm nhận mượt mà, đừng để mỗi video chỉ có một loại SFX. Chi tiết chọn/đặt SFX ở STATE 9.
+**Rich, moment-specific SFX, not just whoosh**: whoosh for transitions/pans/flythroughs; short dry pop/click for icons/stats/flags/stamps appearing; gavel strike for decision/vote/verdict moments; rising clock ticking for waiting/conflict/countdown beats. With flat 2D graphics, SFX carries most of the perceived polish, don't let a video run on a single SFX type. Selection/placement detail in STATE 9.
 
-## STATE 0, SCAFFOLD PROJECT TRƯỚC TIÊN (video-pipeline Bước 0.5)
+## STATE 0, SCAFFOLD THE PROJECT FIRST (video-pipeline Step 0.5)
 
-Tự đề xuất một slug mặc định hợp lệ (không dấu, không khoảng trắng, vd `vox-video-<yyyymmdd>`), rồi dùng AskUserQuestion: "Đặt tên ngắn cho project này (slug không dấu, không khoảng trắng)? Có thể đổi tên/nội dung cụ thể sau khi chọn niche/ý tưởng ở các bước tiếp theo, tên này chỉ để tạo folder ngay bây giờ." — options: ["Dùng `<slug đề xuất>`", "Tự nhập tên khác"]. Nếu chọn "Tự nhập tên khác", hỏi tiếp bằng text thường để user gõ slug.
+Propose a valid default slug (no accents, no spaces, e.g. `vox-video-<yyyymmdd>`), then use AskUserQuestion: "Short name for this project (slug, no accents, no spaces)? You can rename/refine the content later once niche/idea are chosen in the next steps — this name is just to create the folder now." — options: ["Use `<proposed slug>`", "Enter a different name"]. If "Enter a different name" is picked, follow up in plain text for the user to type a slug.
 
-Sau khi có tên, chạy ngay từ thư mục cha `remotion-video/` (mặc định fps 30, dùng xuyên suốt STATE 8 và STATE 10, không đổi giữa chừng):
+Once named, run from the parent `remotion-video/` directory (fps defaults to 30, used throughout STATE 8 and STATE 10, don't change mid-project):
 ```bash
-npx create-video@latest --yes --blank <ten-video-moi>
-cd <ten-video-moi>
-npx skills add remotion-dev/skills -g -y   # cài remotion-best-practices, remotion-create, remotion-markup dùng ở STATE 10
+npx create-video@latest --yes --blank <new-video-name>
+cd <new-video-name>
+npx skills add remotion-dev/skills -g -y   # installs remotion-best-practices, remotion-create, remotion-markup used in STATE 10
 
 mkdir -p .claude/skills .agents/skills scripts
 cp ../WORKFLOW.md .
@@ -50,147 +50,147 @@ cp -r ../.claude/skills/video-pipeline ../.claude/skills/qc-video .claude/skills
 cp -r ../.agents/skills/video-pipeline ../.agents/skills/qc-video .agents/skills/
 ```
 
-Nếu thư mục cha `remotion-video/` chưa có `WORKFLOW.md`/`scripts/generate-voiceover.py`/skill dùng chung, dừng lại và báo user cần setup one-time đó trước (xem `compatibility` trong `video-pipeline/SKILL.md`).
+If the parent `remotion-video/` directory doesn't yet have `WORKFLOW.md`/`scripts/generate-voiceover.py`/shared skills, stop and tell the user that one-time setup is needed first (see `compatibility` in `video-pipeline/SKILL.md`).
 
-Từ đây, MỌI file của các state sau (script, ảnh, audio, code) đều nằm trong `<ten-video-moi>/`, không tạo ở ngoài.
+From here on, EVERY file from later states (script, images, audio, code) lives inside `<new-video-name>/`, never created outside it.
 
-Kết thúc bằng AskUserQuestion: "Đã tạo project tại `<ten-video-moi>/`. Tiếp tục?" — options: ["Tiếp tục", "Dừng lại, tôi cần kiểm tra project trước"].
+End with AskUserQuestion: "Project created at `<new-video-name>/`. Continue?" — options: ["Continue", "Stop, I need to check the project first"].
 
-DỪNG. CHỜ.
+STOP. WAIT.
 
-## STATE 1, TÀI LIỆU THAM CHIẾU PHONG CÁCH (tùy chọn)
+## STATE 1, STYLE REFERENCE MATERIAL (optional)
 
-Nếu thư mục cha `remotion-video/` đã có `BRAND-GUIDE.md`, đọc file này trước khi hỏi — nó chứa palette/font/motion/SFX/công thức thumbnail đã chốt từ video trước, dùng làm mặc định thay cho placeholder chung chung.
+If the parent `remotion-video/` directory already has `BRAND-GUIDE.md`, read it before asking — it contains the palette/font/motion/SFX/thumbnail formula already locked in from a prior video, use it as the default instead of the generic placeholder.
 
-Dùng AskUserQuestion: "Bạn có brand guide / màu sắc / font / video mẫu riêng muốn Claude bám theo không?" — options: ["Có, tôi sẽ đính kèm file/link khác", "Dùng mặc định kênh (BRAND-GUIDE.md nếu có, hoặc Vox gốc: navy, cream, đỏ nhấn, teal nhạt)"].
+Use AskUserQuestion: "Do you have a brand guide / colors / fonts / reference video you want Claude to follow?" — options: ["Yes, I'll attach a file/link separately", "Use the channel default (BRAND-GUIDE.md if present, else original Vox: navy, cream, red accent, light teal)"].
 
-Nếu chọn "Có", chờ user đính kèm rồi đọc và ưu tiên nó hơn `BRAND-GUIDE.md`. Nếu chọn mặc định: có `BRAND-GUIDE.md` thì dùng nguyên palette/font/motion/SFX trong đó (không hỏi lại từng mục), không có thì dùng mặc định Vox gốc (navy, cream, đỏ nhấn, teal nhạt).
+If "Yes" is picked, wait for the user's attachment, then read it and prioritize it over `BRAND-GUIDE.md`. If the default is picked: use `BRAND-GUIDE.md`'s exact palette/font/motion/SFX as-is if it exists (don't ask item by item), otherwise use the original Vox default (navy, cream, red accent, light teal).
 
-DỪNG. CHỜ.
+STOP. WAIT.
 
 ## STATE 2, NICHE
 
-Dùng AskUserQuestion: "Chủ đề video hôm nay thuộc nhóm nào?" — options: ["Chính trị & xã hội", "Kinh tế & công nghệ", "Lịch sử & văn hóa", "Môi trường / tự nhập chủ đề khác"].
+Use AskUserQuestion: "What category does today's video topic fall under?" — options: ["Politics & society", "Economy & technology", "History & culture", "Other / type a different topic"].
 
-Nếu chọn "Môi trường / tự nhập chủ đề khác", để user gõ tự do tên niche/chủ đề rộng (không phải ý tưởng cụ thể — ý tưởng cụ thể sẽ sinh ở STATE 3).
+If "Other / type a different topic" is picked, let the user type a broad niche/topic freely (not a specific idea — specific ideas are generated in STATE 3).
 
-State này CHỈ chốt niche/nhóm rộng, KHÔNG hỏi thêm chủ đề cụ thể ở đây (tránh trùng với STATE 3, nơi duy nhất sinh và chọn ý tưởng cụ thể).
+This state ONLY locks in the broad niche/category, do NOT ask for a specific topic here (avoid overlap with STATE 3, the only place specific ideas are generated and chosen).
 
-DỪNG. CHỜ.
+STOP. WAIT.
 
-## STATE 3, 10 Ý TƯỞNG
+## STATE 3, 10 IDEAS
 
-Sinh đúng 10 ý tưởng video trong niche đã chọn ở STATE 2. Mỗi ý tưởng là MỘT câu hỏi cụ thể mà video sẽ trả lời (đúng tinh thần Vox: "Why do cities trap heat?", "Why are shipping containers all the same size?"). Không trùng chủ đề con. Mỗi ý tưởng phải có một hook cụ thể (số liệu, sự kiện, địa danh).
+Generate exactly 10 video ideas within the niche chosen in STATE 2. Each idea is ONE specific question the video will answer (true to Vox's spirit: "Why do cities trap heat?", "Why are shipping containers all the same size?"). No overlapping subtopics. Each idea needs a concrete hook (a stat, event, or place).
 
-Xuất danh sách 1-10, mỗi dòng một ý, không thêm gì khác. Kết thúc đúng: "Chọn một số, hoặc mô tả chủ đề khác." (10 lựa chọn vượt giới hạn 4 option của AskUserQuestion, giữ dạng liệt kê để user gõ số thay vì tool nút bấm.)
+Output a numbered list 1-10, one idea per line, nothing else. End exactly with: "Pick a number, or describe a different topic." (10 choices exceed AskUserQuestion's 4-option cap, so keep this as a plain list for the user to type a number instead of tapping a button.)
 
-DỪNG. CHỜ.
+STOP. WAIT.
 
-## STATE 4, ĐỘ DÀI + ĐỊNH DẠNG + NGÔN NGỮ
+## STATE 4, LENGTH + FORMAT + LANGUAGE
 
-Dùng AskUserQuestion, gộp 3 câu trong MỘT lần gọi (đúng giới hạn tối đa 3 câu/lần của tool):
-1. "Video dài bao lâu?" — options: ["1 phút", "3 phút", "5 phút", "8 phút hoặc dài hơn (ghi rõ ở tin nhắn sau)"]
-2. "Định dạng đích?" — options: ["Horizontal 16:9", "Vertical 9:16", "Cả hai"] — quyết định aspect-ratio dùng ở STATE 7. **Chọn cả hai nghĩa là làm 2 lượt độc lập từ STATE 7 trở đi** (2 bộ ảnh, có thể 2 Composition khi render ở STATE 10), không phải 1 ảnh kéo giãn dùng chung cho cả hai tỉ lệ.
-3. "Ngôn ngữ output?" — options: ["Tiếng Anh", "Tiếng Việt"] — áp dụng cho script (STATE 5), voice (STATE 8), mọi label/text xuất hiện trong ảnh và thumbnail (STATE 7, STATE 11). Giọng Vox (hội thoại, câu hỏi tu từ, cấu trúc claim → bằng chứng → ý nghĩa) giữ nguyên DNA ở cả hai ngôn ngữ, chỉ đổi ngôn ngữ viết.
+Use AskUserQuestion, bundling 3 questions in ONE call (the tool's max is 3 per call):
+1. "How long should the video be?" — options: ["1 minute", "3 minutes", "5 minutes", "8 minutes or longer (specify in your next message)"]
+2. "Target format?" — options: ["Horizontal 16:9", "Vertical 9:16", "Both"] — determines the aspect ratio used in STATE 7. **Choosing both means running two independent passes from STATE 7 onward** (two image sets, potentially two Compositions at render in STATE 10), not one stretched image shared across both ratios.
+3. "Output language?" — options: ["English", "Vietnamese"] — applies to the script (STATE 5), voice (STATE 8), and every label/text appearing in images and thumbnails (STATE 7, STATE 11). The Vox DNA (conversational tone, rhetorical questions, claim → evidence → significance structure) stays the same in both languages, only the written language changes.
 
-Nếu tên project ở STATE 0 chỉ là tạm/generic so với ý tưởng vừa chọn, hỏi thêm (AskUserQuestion riêng, 2 options: ["Đổi tên folder cho khớp nội dung", "Giữ nguyên tên hiện tại"]) rồi `mv <ten-cu> <ten-moi>` trong `remotion-video/` nếu chọn đổi.
+If the project name from STATE 0 is only a placeholder/generic compared to the idea just chosen, ask a follow-up (separate AskUserQuestion, 2 options: ["Rename the folder to match the content", "Keep the current name"]), then `mv <old-name> <new-name>` inside `remotion-video/` if renaming is chosen.
 
-DỪNG. CHỜ.
+STOP. WAIT.
 
-## STATE 5, SCRIPT (VOX VOICE) + FACT-CHECK BẮT BUỘC
+## STATE 5, SCRIPT (VOX VOICE) + MANDATORY FACT-CHECK
 
-Tính từ theo 2.5 từ/giây: 1 phút khoảng 150 từ, 2 phút khoảng 300, 3 phút khoảng 450, 5 phút khoảng 750, 8 phút khoảng 1200. Sai số trong 5%.
+Estimate at 2.5 words/second: 1 minute ≈ 150 words, 2 minutes ≈ 300, 3 minutes ≈ 450, 5 minutes ≈ 750, 8 minutes ≈ 1200. Tolerance: 5%.
 
-Quy tắc kịch bản:
-1. Narration liên tục, một khối văn xuôi. Không header, không chỉ dẫn hình ảnh.
-2. **Cold open bắt buộc là nghịch lý/xung đột/tranh cãi, không phải bối cảnh an toàn kiểu giáo trình.** 3-10 giây đầu là nơi khán giả quốc tế quyết định bỏ đi hay ở lại — mở bằng cảnh minh họa trung tính rồi mới dẫn vào câu hỏi (kiểu "hãy tưởng tượng bạn...") là quá hiền, tụt view sớm. Thay vào đó mở thẳng bằng câu hỏi nghịch lý ("Why does a tiny town near London dictate the exact time for the entire planet?") hoặc hình ảnh đối đầu/tranh cãi ngay từ câu đầu tiên, rồi mới lùi lại giải thích bối cảnh.
-3. Giọng hội thoại nhưng có cấu trúc lập luận: đặt vấn đề, dẫn chứng cụ thể (số liệu, sự kiện), rồi rút ra ý nghĩa rộng hơn.
-4. Câu ngắn, một ý một câu (để cắt beat sau này dễ). Có thể xen câu hỏi tu từ.
-5. Dữ kiện phải chính xác, không bịa số liệu/tên. Nếu không chắc, viết vòng qua.
-6. Không quảng cáo, không kêu gọi subscribe.
-7. Kết bằng một câu chốt mở rộng, câu hỏi để lại cho người xem hoặc một nhận định sắc.
+Script rules:
+1. Continuous narration, one prose block. No headers, no visual directions.
+2. **The cold open MUST be a paradox/conflict/controversy, not a safe textbook-style setup.** The first 3-10 seconds are where an international audience decides to stay or leave — opening on a neutral illustrated scene before easing into a "imagine you..." question is too soft and loses viewers early. Instead, open directly with a paradoxical question ("Why does a tiny town near London dictate the exact time for the entire planet?") or a confrontational/controversial image in the very first sentence, then step back to explain context.
+3. Conversational tone but with clear argument structure: raise the issue, give concrete evidence (stats, events), then draw a broader conclusion.
+4. Short sentences, one idea per sentence (makes later beat-splitting easier). Rhetorical questions are fine to weave in.
+5. Facts must be accurate, never invent numbers/names. If unsure, phrase around it.
+6. No ads, no subscribe calls-to-action.
+7. End on an expansive closing line, either a question left for the viewer or a sharp final observation.
 
-Viết script bằng đúng ngôn ngữ đã chọn ở STATE 4 (Anh hoặc Việt). Web_search có thể trả kết quả bằng ngôn ngữ khác, luôn diễn giải lại claim sang ngôn ngữ script khi đưa vào bản viết.
+Write the script in the exact language chosen in STATE 4 (English or Vietnamese). Web_search may return results in a different language; always rephrase claims into the script's language before adding them to the draft.
 
-**Bắt buộc trước khi coi script hoàn tất (khớp Bước 1 của `video-pipeline`, không lùi việc này tới QC)**: mọi claim kiểm chứng được (sự kiện, tên riêng, mốc thời gian, số liệu) phải `web_search` đối chiếu NGAY tại state này. Đánh dấu rõ trong script nếu có twist/kết cần giữ nguyên khi scaffold code sau. Chỉ qua STATE 6 khi không còn claim sai đã biết.
+**Required before the script is considered done (matches `video-pipeline` Step 1, don't defer this to QC)**: every checkable claim (facts, proper names, dates, numbers) must be cross-checked via `web_search` right in this state. Clearly flag in the script any twist/ending that must be preserved later during scaffolding. Only move to STATE 6 once no known-false claim remains.
 
-Lưu script trực tiếp vào `<ten-video-moi>/<ten-video>-script.md` (project đã có sẵn từ STATE 0), chia theo scene, có visual/audio/SFX/lời dẫn (khớp format Bước 1 của `video-pipeline`).
+Save the script directly to `<new-video-name>/<video-name>-script.md` (the project already exists from STATE 0), organized by scene, with visual/audio/SFX/narration (matching `video-pipeline` Step 1's format).
 
-Format xuất:
+Output format:
 ```
-TARGET: [N] từ / [độ dài]
-[kịch bản, một khối liên tục]
-FINAL: [N thực tế] từ
-FACT-CHECK: [liệt kê claim đã đối chiếu + nguồn, hoặc "không có claim cần kiểm chứng"]
+TARGET: [N] words / [length]
+[script, one continuous block]
+FINAL: [actual N] words
+FACT-CHECK: [list of cross-checked claims + sources, or "no claims requiring verification"]
 ```
-Kết thúc bằng AskUserQuestion: "Đã lưu script vào `<ten-video>-script.md`. Tách beat luôn?" — options: ["Tiếp tục tách beat", "Dừng lại, tôi muốn sửa script trước"].
+End with AskUserQuestion: "Script saved to `<video-name>-script.md`. Split into beats now?" — options: ["Continue to beat splitting", "Stop, I want to edit the script first"].
 
-DỪNG. CHỜ.
+STOP. WAIT.
 
-## STATE 6, TÁCH BEAT (ước lượng, sẽ ghi đè bằng số đo thật ở STATE 8)
+## STATE 6, BEAT SPLITTING (estimate, overwritten with real measurements in STATE 8)
 
-Mỗi beat phủ khoảng 2-3 giây narration (~5-8 từ ở 2.5 từ/giây). Một câu ngắn = một beat, câu dài tách theo mệnh đề tự nhiên. Mỗi beat gán một `id` dạng `vo_01`, `vo_02`... để dùng xuyên suốt các state sau (ảnh, voice, SFX, Sequence).
+Each beat covers roughly 2-3 seconds of narration (~5-8 words at 2.5 words/second). One short sentence = one beat; long sentences split at natural clause boundaries. Assign each beat an `id` like `vo_01`, `vo_02`... used throughout the following states (images, voice, SFX, Sequence).
 
-Xuất bảng: `id`, timecode bắt đầu ƯỚC LƯỢNG (tích lũy theo 2.5 từ/giây, sẽ bị ghi đè ở STATE 8), nguyên văn từ ngữ của beat đó. Cập nhật bảng này vào `<ten-video>-script.md` (nối thêm, không ghi đè phần script gốc).
+Output a table: `id`, ESTIMATED start timecode (cumulative at 2.5 words/second, to be overwritten in STATE 8), the beat's exact wording. Append this table to `<video-name>-script.md` (append, don't overwrite the original script section).
 
-Kết thúc bằng AskUserQuestion: "Đã tách xong beat. Sinh ảnh Vox cho từng beat luôn?" — options: ["Tiếp tục sinh ảnh", "Dừng lại, tôi muốn sửa bảng beat trước"].
+End with AskUserQuestion: "Beats are split. Generate Vox images for each beat now?" — options: ["Continue to image generation", "Stop, I want to edit the beat table first"].
 
-DỪNG. CHỜ.
+STOP. WAIT.
 
-## STATE 7, SINH ẢNH VOX (theo skill `imagegen-remotion`, gọi qua tính năng tạo ảnh trong Antigravity IDE)
+## STATE 7, VOX IMAGE GENERATION (per the `imagegen-remotion` skill, called via Antigravity IDE's image generation feature)
 
-Mọi ảnh lưu trực tiếp vào `<ten-video-moi>/public/images/` (thư mục này đã có sẵn từ khung Remotion tạo ở STATE 0) — đây chính là asset mà STATE 10 (scaffold code) sẽ dùng.
+Save every image directly to `<new-video-name>/public/images/` (this folder already exists from the Remotion scaffold in STATE 0) — this is exactly the asset STATE 10 (code scaffolding) will use.
 
-**Nếu STATE 4 chọn cả hai định dạng (16:9 + 9:16)**: chạy 7a-7e hai lượt độc lập, mỗi lượt có safe-zone riêng theo đúng tỉ lệ (16:9 chừa 1/3 dưới hoặc trên cho caption, margin ~6% mọi cạnh; 9:16 chừa top ~15% cho UI overlay, middle-to-lower third cho caption dạng TikTok-style). Không dùng lại một ảnh cho cả hai tỉ lệ. Lưu vào hai thư mục con: `public/images/16-9/scene-<id>.png` và `public/images/9-16/scene-<id>.png`, mỗi thư mục có manifest riêng.
+**If STATE 4 chose both formats (16:9 + 9:16)**: run 7a-7e as two independent passes, each with its own safe zone matching its ratio (16:9 reserves the bottom or top third for captions, ~6% margin on all edges; 9:16 reserves the top ~15% for UI overlay, middle-to-lower third for TikTok-style captions). Never reuse one image for both ratios. Save into two subfolders: `public/images/16-9/scene-<id>.png` and `public/images/9-16/scene-<id>.png`, each with its own manifest.
 
-Label (nếu prompt cần 1 nhãn ngắn 1-4 từ trên paper strip/stamp) viết bằng đúng ngôn ngữ đã chọn ở STATE 4, phần còn lại của prompt (SCENE, STYLE BLOCK, CLOSER) vẫn giữ tiếng Anh vì đây là câu lệnh cho mô hình sinh ảnh.
+Labels (if a prompt needs a short 1-4 word label on a paper strip/stamp) are written in the exact language chosen in STATE 4; the rest of the prompt (SCENE, STYLE BLOCK, CLOSER) stays in English since it's an instruction to the image model.
 
-### 7a. Kiểm tra và áp dụng skill `imagegen-remotion`
+### 7a. Check for and apply the `imagegen-remotion` skill
 
-- Nếu skill này đã có trong danh sách skill khả dụng, coi các quy tắc của nó là bắt buộc cho mọi ảnh sinh ra ở state này.
-- Nếu chưa có, gọi `search_skills(["imagegen remotion", "video asset", "scene plate"])` rồi `suggest_skills` để user thêm; trong lúc chờ vẫn tự áp dụng thủ công các quy tắc tóm tắt ở 7b-7c bên dưới để không chặn tiến độ.
+- If this skill is already in the available skills list, treat its rules as mandatory for every image generated in this state.
+- If not, call `search_skills(["imagegen remotion", "video asset", "scene plate"])` then `suggest_skills` so the user can add it; while waiting, manually apply the summarized rules in 7b-7c below so progress isn't blocked.
 
-Quy tắc lõi bắt buộc lấy từ `imagegen-remotion` (không được bỏ qua):
-- 1 beat (`id` từ STATE 6) = đúng 1 ảnh, không gộp nhiều beat vào một ảnh, không thiếu.
-- Mỗi ảnh là "plate thô" cho code: không bao giờ vẽ chữ/caption/lower-third/logo giả vào ảnh, vì Remotion sẽ code chữ đè lên sau ở STATE 10.
-- Text-safe zone rõ ràng theo tỉ lệ khung hình đã chọn ở STATE 4.
-- Motion-readiness: mỗi ảnh chọn đúng 1 motion intent (slow zoom-in / pan trái-phải / parallax / static hold cho title card) và chừa khoảng thở quanh chủ thể phù hợp motion đó.
-- **Nhịp chuyển động không được đều đều xuyên suốt video**: nếu 3+ beat liên tiếp đều dùng cùng một motion nhẹ (Ken Burns đều đều), khán giả buồn ngủ. Với beat chứa số liệu/địa danh quan trọng (bản đồ, biểu đồ, kết quả bỏ phiếu), dùng camera zoom-out toàn cảnh rồi zoom-in sâu vào điểm cụ thể trên đó thay vì pan/zoom chung chung. Với chuỗi beat cùng loại dữ kiện dồn dập (kết quả bỏ phiếu, đếm số liên tiếp), rút ngắn khoảng cách xuất hiện giữa các beat để tạo nhịp giật nhanh theo voiceover, tăng kịch tính thay vì để mỗi số liệu tự trôi ra đều nhau.
-- Cross-scene consistency: viết 1 "style bible" MỘT LẦN, dán nguyên văn vào đầu mọi prompt beat, chỉ đổi phần hành động/bối cảnh riêng.
-- Aspect-ratio discipline: toàn bộ project dùng chung đúng 1 tỉ lệ đã chọn ở STATE 4.
+Core rules from `imagegen-remotion` (mandatory, can't skip):
+- 1 beat (`id` from STATE 6) = exactly 1 image, never merge multiple beats into one image, never skip one.
+- Every image is a "raw plate" for code: never bake text/captions/lower-thirds/fake logos into the image, Remotion will code text on top later in STATE 10.
+- A clear text-safe zone matching the aspect ratio chosen in STATE 4.
+- Motion-readiness: each image picks exactly 1 motion intent (slow zoom-in / pan left-right / parallax / static hold for a title card) and leaves breathing room around the subject to match.
+- **Motion pacing must not be monotonous throughout the video**: if 3+ consecutive beats all use the same gentle motion (constant Ken Burns), the audience gets bored. For beats carrying an important stat/place (a map, chart, vote result), use a wide zoom-out followed by a deep zoom-in on the specific point rather than a generic pan/zoom. For a run of beats with the same rapid-fire data type (consecutive vote tallies, number counts), shorten the gap between beats to create a fast, punchy rhythm matching the voiceover, building tension instead of letting each number drift by at the same pace.
+- Cross-scene consistency: write one "style bible" ONCE, paste it verbatim at the top of every beat's prompt, only change the action/setting portion.
+- Aspect-ratio discipline: the whole project uses exactly the one ratio chosen in STATE 4.
 
-### 7b. Style bible (viết 1 lần trước beat đầu tiên)
+### 7b. Style bible (write once before the first beat)
 
-Chốt: mô tả chủ thể/nhân vật lặp lại nếu video có nhân vật cố định, palette 3-4 màu từ STATE 1, hướng sáng/mood, render style = Vox flat 2D vector (khớp STYLE BLOCK bên dưới). Dán y nguyên vào đầu mọi prompt của mọi beat.
+Lock in: recurring subject/character description if the video has a fixed character, the 3-4 color palette from STATE 1, lighting direction/mood, render style = Vox flat 2D vector (matches STYLE BLOCK below). Paste this verbatim into every beat's prompt.
 
-### 7c. Viết prompt cho từng beat (đúng 1 ảnh/beat)
+### 7c. Write the prompt for each beat (exactly 1 image/beat)
 
-Cấu trúc mỗi prompt: [style bible] + [hành động/bối cảnh riêng của beat, một ý tưởng hình ảnh trung tâm duy nhất] + STYLE BLOCK + CLOSER.
+Structure per prompt: [style bible] + [the beat's own action/setting, one central visual idea] + STYLE BLOCK + CLOSER.
 
-**STYLE BLOCK (chèn nguyên văn vào MỌI prompt):**
+**STYLE BLOCK (insert verbatim into EVERY prompt):**
 ```
 Flat 2D vector illustration in the style of Vox explainer videos: clean geometric shapes, no gradients, no drop shadows, no gloss, minimal thin outlines, generous negative space reserved for kinetic-typography overlay. Bold but limited color palette of 3 to 4 flat colors held consistent across the whole project (state the exact palette once, e.g. navy, cream, red accent, muted teal). Simple geometric character silhouettes without facial detail unless the beat needs a specific expression. Editorial infographic elements where relevant: simplified maps, bar or line charts, icons, timeline bars, arrows, circles used as highlight devices. Clean modern bold sans-serif type only where a label is specified. Clarity over realism, poster-like composition, crisp vector edges. No baked-in captions, no fake lower-thirds, no fake logos or UI elements.
 ```
 
-**CLOSER (chèn nguyên văn cuối MỌI prompt):**
+**CLOSER (insert verbatim at the end of EVERY prompt):**
 ```
 The composition stays flat, clean, and editorial with generous negative space, built for smooth kinetic-typography motion. NOT photorealistic, NOT painterly, NOT paper collage, NOT 3D render, no clutter, no watermark, no logos, no text beyond the specified label. Premium explainer-video vector aesthetic, matching the project's fixed aspect ratio, ultra-detailed, crisp vector lines.
 ```
 
-Lưu file mỗi ảnh vào `public/images/scene-<id>.png` (nếu chỉ 1 định dạng), hoặc `public/images/<16-9|9-16>/scene-<id>.png` (nếu STATE 4 chọn cả hai, theo đúng cấu trúc thư mục đã nêu ở đầu STATE 7). Kèm bảng manifest handoff cho STATE 10 (một manifest riêng mỗi định dạng nếu có 2):
+Save each image to `public/images/scene-<id>.png` (if only one format), or `public/images/<16-9|9-16>/scene-<id>.png` (if STATE 4 chose both, per the folder structure noted at the top of STATE 7). Include a manifest table for STATE 10's handoff (a separate manifest per format if there are two):
 ```
-Scene <id> — <tên beat> (timecode ước lượng từ STATE 6, sẽ ghi đè ở STATE 8)
+Scene <id> — <beat name> (estimated timecode from STATE 6, overwritten in STATE 8)
   asset: public/images/scene-<id>.png
-  motion: <motion intent đã chọn>
-  text-safe: <vùng chừa trống cho caption/kinetic typography>
+  motion: <chosen motion intent>
+  text-safe: <area reserved for caption/kinetic typography>
 ```
 
-Animation spec JSON (giữ để làm căn cứ cho `remotion-best-practices`/`remotion-create`/`remotion-markup` ở STATE 10, KHÔNG phải deliverable độc lập):
+Animation spec JSON (kept as the basis for `remotion-best-practices`/`remotion-create`/`remotion-markup` in STATE 10, NOT a standalone deliverable):
 ```ts
 interface BeatAnimation {
-  beatId: string;           // khớp id STATE 6, vd "vo_03"
-  startFrame: number;       // ghi đè bằng số đo thật ở STATE 8 (manifest.json, fps từ STATE 0)
-  durationFrames: number;   // ghi đè bằng số đo thật ở STATE 8
+  beatId: string;           // matches STATE 6 id, e.g. "vo_03"
+  startFrame: number;       // overwritten with real measurement in STATE 8 (manifest.json, fps from STATE 0)
+  durationFrames: number;   // overwritten with real measurement in STATE 8
   elements: {
     type: 'title-text' | 'icon' | 'chart' | 'map' | 'character' | 'highlight-circle' | 'arrow' | 'stat-counter';
     enterAtFrame: number;
@@ -200,134 +200,134 @@ interface BeatAnimation {
   }[];
 }
 ```
-Dùng `interpolate()` và `spring()` của Remotion khi scaffold, KHÔNG dùng frame-hold kiểu stop-motion (đó là DNA true-crime, không phải Vox).
+Use Remotion's `interpolate()` and `spring()` when scaffolding, do NOT use stop-motion-style frame-hold (that's true-crime DNA, not Vox).
 
-### 7d. Gọi tool sinh ảnh thật qua Antigravity IDE
+### 7d. Call the real image-generation tool via Antigravity IDE
 
-- Đang chạy trong Antigravity IDE: dùng thẳng tính năng tạo ảnh có sẵn của IDE (Gemini/Nano Banana), gọi trực tiếp cho từng beat theo đúng thứ tự Scene 1 → Scene N, không gộp, không đảo thứ tự.
-- Nếu user từng nói rõ muốn dùng tool khác ở lượt hiện tại (vd Google Flow riêng cho video keyframe), ưu tiên lựa chọn đó hơn mặc định.
-- Nếu đang chạy ở harness khác không có tính năng này (không phải Antigravity IDE): thử tool/connector Gemini hoặc Google Flow đang kết nối trong phiên nếu có; nếu không có tool nào khả dụng, xuất toàn bộ prompt theo đúng thứ tự beat vào `public/images/prompts.txt` (mỗi block một beat, đánh số `id`, cách nhau dòng trống), báo user tự dán từng prompt vào Gemini hoặc Flow, tải ảnh về đặt đúng tên `scene-<id>.png` (hoặc `<16-9|9-16>/scene-<id>.png` nếu 2 định dạng) vào `public/images/`. Sau khi user báo đã xong, đếm lại số file khớp số beat trước khi qua 7e.
+- Running in Antigravity IDE: use the IDE's built-in image generation (Gemini/Nano Banana) directly, calling it for each beat in strict order Scene 1 → Scene N, no batching, no reordering.
+- If the user has already said they want a different tool for this pass (e.g. a separate Google Flow for video keyframes), prioritize that over the default.
+- If running on a different harness without this feature (not Antigravity IDE): try any connected Gemini or Google Flow tool/connector available in the session; if none is available, export all prompts in beat order to `public/images/prompts.txt` (one block per beat, numbered by `id`, separated by a blank line), tell the user to paste each prompt into Gemini or Flow themselves, download the images, and name them exactly `scene-<id>.png` (or `<16-9|9-16>/scene-<id>.png` for two formats) into `public/images/`. Once the user confirms it's done, verify the file count matches the beat count before moving to 7e.
 
-### 7e. Clarity check trước khi giao (rút gọn từ `imagegen-remotion` §9)
+### 7e. Clarity check before handoff (condensed from `imagegen-remotion` §9)
 
-1. Số ảnh đúng bằng số beat, không gộp không thiếu?
-2. Nhân vật/palette/ánh sáng/render style đồng nhất mọi ảnh (khớp style bible)?
-3. Mọi ảnh đúng tỉ lệ khung hình đã chọn?
-4. Mỗi ảnh có safe-zone rõ cho text, và KHÔNG có caption/logo/UI giả bị vẽ vào?
-5. Mỗi ảnh đủ khoảng thở cho motion intent đã chọn?
+1. Image count exactly matches beat count, none merged, none missing?
+2. Character/palette/lighting/render style consistent across every image (matches the style bible)?
+3. Every image is the exact aspect ratio chosen?
+4. Every image has a clear text-safe zone, and NO caption/logo/fake UI baked in?
+5. Every image leaves enough breathing room for its chosen motion intent?
 
-Nếu có câu trả lời "không", regenerate riêng ảnh lỗi đó, không giao cả bộ khi còn một mắt xích hỏng.
+If any answer is "no", regenerate just that broken image, don't hand off the whole batch while one link is still broken.
 
-Kết thúc bằng AskUserQuestion: "Ảnh đã sẵn sàng trong public/images/. Sinh voice thật luôn?" — options: ["Tiếp tục sinh voice", "Dừng lại, tôi muốn duyệt lại ảnh trước"].
+End with AskUserQuestion: "Images are ready in public/images/. Generate real voice now?" — options: ["Continue to voice generation", "Stop, I want to review the images first"].
 
-DỪNG. CHỜ.
+STOP. WAIT.
 
-## STATE 8, VOICE THẬT (bàn giao cho video-pipeline Bước 3)
+## STATE 8, REAL VOICE (handed off to video-pipeline Step 3)
 
-Build file JSON theo đúng format Bước 3 của `video-pipeline`, một object mỗi beat (`id` khớp STATE 6/7), lưu vào `<ten-video-moi>/`:
+Build a JSON file matching `video-pipeline` Step 3's exact format, one object per beat (`id` matching STATE 6/7), saved to `<new-video-name>/`:
 ```json
 [
-  {"id": "vo_01", "text": "<nguyên văn beat 1>", "voice": "en-US-GuyNeural"},
-  {"id": "vo_02", "text": "<nguyên văn beat 2>", "voice": "en-US-GuyNeural"}
+  {"id": "vo_01", "text": "<beat 1 exact text>", "voice": "en-US-GuyNeural"},
+  {"id": "vo_02", "text": "<beat 2 exact text>", "voice": "en-US-GuyNeural"}
 ]
 ```
 
-Voice bắt buộc khớp ngôn ngữ đã chọn ở STATE 4 (không được lệch với ngôn ngữ script STATE 5). Dùng AskUserQuestion: "Giọng nam hay nữ?" — options: ["Nam", "Nữ"], rồi map:
-- Tiếng Anh: `en-US-GuyNeural` (nam) hoặc `en-US-AriaNeural` (nữ)
-- Tiếng Việt: `vi-VN-NamMinhNeural` (nam) hoặc `vi-VN-HoaiMyNeural` (nữ)
+The voice must match the language chosen in STATE 4 (must not diverge from the STATE 5 script language). Use AskUserQuestion: "Male or female voice?" — options: ["Male", "Female"], then map:
+- English: `en-US-GuyNeural` (male) or `en-US-AriaNeural` (female)
+- Vietnamese: `vi-VN-NamMinhNeural` (male) or `vi-VN-HoaiMyNeural` (female)
 
-Không dùng ElevenLabs hay msedge-tts (npm) — đúng quy tắc `video-pipeline`, `edge-tts` CLI qua pip là đường đã kiểm chứng.
+Don't use ElevenLabs or msedge-tts (npm) — per `video-pipeline` rules, the `edge-tts` CLI via pip is the proven path.
 
-Chạy trong `<ten-video-moi>/`: `python3 scripts/generate-voiceover.py <file>.json --fps 30` (fps khớp project Remotion tạo ở STATE 0) → sinh `public/audio/vo/<id>.mp3` + `public/audio/vo/manifest.json` chứa `durationSec`/`durationInFrames` đo thật bằng ffprobe.
+Run from `<new-video-name>/`: `python3 scripts/generate-voiceover.py <file>.json --fps 30` (fps matches the Remotion project created in STATE 0) → produces `public/audio/vo/<id>.mp3` + `public/audio/vo/manifest.json` containing real `durationSec`/`durationInFrames` measured via ffprobe.
 
-**Ghi đè bảng beat ở STATE 6 và animation spec ở STATE 7c bằng số đo thật trong `manifest.json`** — không dùng ước lượng 2.5 từ/giây nữa từ đây trở đi.
+**Overwrite the STATE 6 beat table and the STATE 7c animation spec with the real measurements from `manifest.json`** — stop using the 2.5 words/second estimate from here on.
 
-**Đối chiếu tổng thời lượng thật**: cộng `durationSec` toàn bộ beat trong `manifest.json`, so với độ dài mục tiêu đã chọn ở STATE 4. Ước lượng 2.5 từ/giây ở STATE 5 là chuẩn tiếng Anh và có thể lệch đáng kể với tiếng Việt (tốc độ âm tiết khác). Nếu tổng thời lượng thật lệch quá ~15% so với mục tiêu, dùng AskUserQuestion: "Video thực tế dài [X]s, lệch so với mục tiêu [Y]s. Xử lý sao?" — options: ["Quay lại STATE 5 sửa/cắt script", "Giữ nguyên độ dài thực tế, không sửa"]. Nếu lệch trong khoảng chấp nhận được, bỏ qua bước này và tiếp tục.
+**Cross-check the real total duration**: sum `durationSec` across all beats in `manifest.json` and compare to the target length chosen in STATE 4. The 2.5 words/second estimate in STATE 5 is calibrated for English and can drift noticeably for Vietnamese (different syllable pacing). If the real total duration is off by more than ~15% from the target, use AskUserQuestion: "The actual video is [X]s, off from the [Y]s target. How to handle it?" — options: ["Go back to STATE 5 to edit/trim the script", "Keep the actual duration, no edits"]. If the drift is within an acceptable range, skip this and continue.
 
-Kết thúc bằng AskUserQuestion: "Voice đã có duration thật. Sinh SFX luôn?" — options: ["Tiếp tục sinh SFX", "Dừng lại, tôi muốn nghe thử voice trước"].
+End with AskUserQuestion: "Voice is done with real durations. Generate SFX now?" — options: ["Continue to SFX generation", "Stop, I want to listen to the voice first"].
 
-DỪNG. CHỜ.
+STOP. WAIT.
 
-## STATE 9, SFX (bàn giao cho video-pipeline Bước 4)
+## STATE 9, SFX (handed off to video-pipeline Step 4)
 
-Vox dùng SFX tiết chế (không lạm dụng, khác hẳn kiểu SFX kịch tính true-crime) nhưng KHÔNG chỉ một loại whoosh cho cả video — với đồ họa phẳng 2D, SFX chiếm phần lớn cảm nhận mượt mà. Map theo loại khoảnh khắc:
-- **whoosh** (nhẹ): draw-on/slide-in/pan/chuyển cảnh bản đồ, motion `draw-on` hoặc `highlight-circle`.
-- **pop/click** (ngắn, khô): icon/số liệu/cờ/con dấu/stat-counter xuất hiện — motion `fade-scale` hoặc `count-up` ở beat có số liệu cụ thể.
-- **gavel strike** (uy nghiêm): khoảnh khắc quyết định/hội nghị/phán quyết/bỏ phiếu — dùng đúng 1-2 lần ở cao trào, không lạm dụng.
-- **clock ticking tăng dần**: đoạn xung đột kéo dài/chờ đợi/countdown/nhân vật từ chối chấp nhận kết quả — tăng tempo dần theo voiceover rồi cắt đột ngột khi kết thúc căng thẳng.
-Không cần SFX cho fade-scale/static hold thường, trừ khi beat là mở đầu/kết thúc video hoặc rơi vào 4 loại trên.
+Vox uses restrained SFX (not heavy-handed, unlike true-crime's dramatic style) but NOT a single whoosh for the whole video — with flat 2D graphics, SFX carries most of the perceived polish. Map by moment type:
+- **whoosh** (light): draw-on/slide-in/pan/map transitions, motion `draw-on` or `highlight-circle`.
+- **pop/click** (short, dry): icon/stat/flag/stamp/stat-counter appearing, motion `fade-scale` or `count-up` on beats with a specific number.
+- **gavel strike** (weighty): decision/hearing/verdict/vote moments, use just 1-2 times at the climax, don't overuse.
+- **rising clock ticking**: extended conflict/waiting/countdown beats, or a character refusing to accept a result, ramp tempo with the voiceover then cut abruptly when the tension resolves.
+No SFX needed for a plain fade-scale/static hold, unless the beat opens or closes the video, or falls into one of the 4 types above.
 
-Ưu tiên tái dùng file có sẵn trong `public/audio/sfx/` (whoosh, skedaddle, triggered, record-scratch, wilhelm-scream, bruh) trước khi tải mới. `whoosh` dùng được ngay; `pop/click`, `gavel strike`, `clock ticking` thường CHƯA có sẵn trong thư viện mặc định — cần tìm/tải file free (WebFetch nguồn free-SFX) rồi lưu vào `public/audio/sfx/` trước khi dùng. Các SFX kịch tính khác (record-scratch, wilhelm-scream, bruh) KHÔNG hợp tông Vox, tránh dùng trừ khi user yêu cầu rõ.
+Prefer reusing existing files in `public/audio/sfx/` (whoosh, skedaddle, triggered, record-scratch, wilhelm-scream, bruh) before downloading new ones. `whoosh` is ready to use; `pop/click`, `gavel strike`, `clock ticking` usually AREN'T in the default library yet, find/download free files (WebFetch a free-SFX source) and save them to `public/audio/sfx/` before use. The other dramatic SFX (record-scratch, wilhelm-scream, bruh) DON'T fit the Vox tone, avoid them unless the user explicitly asks.
 
-Đặt SFX vào đúng frame dựa theo `manifest.json` thật ở STATE 8, không áng chừng. Trim/fade bằng `ffmpeg -af "afade=t=out:st=..:d=.."` nếu file dài hơn khoảnh khắc cần nhấn.
+Place SFX at the exact frame based on the real `manifest.json` from STATE 8, never approximate. Trim/fade with `ffmpeg -af "afade=t=out:st=..:d=.."` if a file runs longer than the moment it should punctuate.
 
-Kết thúc bằng AskUserQuestion: "SFX đã đặt xong. Dựng code và render luôn?" — options: ["Tiếp tục dựng code", "Dừng lại, tôi muốn chỉnh SFX trước"].
+End with AskUserQuestion: "SFX placement is done. Build code and render now?" — options: ["Continue to code building", "Stop, I want to adjust SFX first"].
 
-DỪNG. CHỜ.
+STOP. WAIT.
 
-## STATE 10, DỰNG CODE + QA + RENDER + QC (bàn giao cho video-pipeline Bước 2, 5, 6, 7)
+## STATE 10, BUILD CODE + QA + RENDER + QC (handed off to video-pipeline Steps 2, 5, 6, 7)
 
-Gọi `remotion-best-practices` làm router (dẫn tới `remotion-create` + `remotion-markup` phù hợp). Nếu cần định hướng thẩm mỹ rõ, gọi thêm `frontend-design`. Input cho bước này: ảnh ở `public/images/` (STATE 7), animation spec JSON (STATE 7c, đã ghi đè timing thật ở STATE 8), audio ở `public/audio/vo/` + manifest.json (STATE 8), SFX ở `public/audio/sfx/` (STATE 9). Toàn bộ đã nằm sẵn trong `<ten-video-moi>/` từ STATE 0.
+Call `remotion-best-practices` as the router (leads to the right `remotion-create` + `remotion-markup`). If clear aesthetic direction is needed, also call `frontend-design`. Inputs for this step: images in `public/images/` (STATE 7), the animation spec JSON (STATE 7c, timing overwritten with real values in STATE 8), audio in `public/audio/vo/` + manifest.json (STATE 8), SFX in `public/audio/sfx/` (STATE 9). All of it already sits inside `<new-video-name>/` from STATE 0.
 
-Theo đúng vòng lặp của `video-pipeline`:
-1. **Bước 2**: cài package thiếu qua `npx remotion add <pkg>` trước khi dùng, theme màu/font gom 1 file. Đây là lúc viết Composition/Scene THẬT (STATE 0 chỉ tạo khung project rỗng, chưa có scene nào). Composition dùng đúng fps=30 đã chốt ở STATE 0 (khớp `generate-voiceover.py --fps 30` ở STATE 8), và `durationInFrames` của Composition lấy từ TỔNG frame thật trong `manifest.json` (STATE 8), không dùng giá trị mặc định của template blank.
-   - **Subtitle component bắt buộc kinetic**: chia `text` của beat thành cụm 2-3 từ, dùng `interpolate()`/`spring()` theo `frame` để lần lượt hiện từng cụm đúng nhịp trong `durationInFrames` của beat (không hiện cả câu cùng lúc). Từ khóa (số/tên riêng/địa danh/kết luận) tô màu accent riêng trong cùng span. Render chữ trực tiếp trên nền video (text-shadow/stroke để đủ tương phản), KHÔNG bọc trong `<div>`/`<span>` nền màu đặc cố định kiểu hộp thoại — tránh pattern che đồ họa nền.
-   - **Motion pacing không đều đều**: với scene có `type: 'map' | 'chart' | 'stat-counter'` mang số liệu/địa danh trọng tâm, dùng cặp transform zoom-out rồi zoom-in vào điểm cụ thể thay vì một phép zoom/pan tuyến tính duy nhất suốt beat. Với chuỗi beat liên tiếp cùng loại dữ kiện dồn dập (đếm phiếu, liệt kê số liệu), rút ngắn khoảng cách `enterAtFrame` giữa các phần tử để tạo nhịp giật nhanh khớp voiceover.
-2. **Bước 5 (QA hình ảnh)**: `npx remotion still <CompId> /tmp/check.png --frame=<n>` ở vài mốc, đọc ảnh bằng Read tool so kỳ vọng Vox (flat, không gloss, safe-zone đúng), `npx tsc --noEmit && npx eslint src` sau mỗi batch sửa.
-3. **Bước 6 (render)**: check sync đoạn ngắn trước (`npx remotion render <CompId> /tmp/check.mp4 --frames=<a>-<b>`). Nếu STATE 4 chọn cả hai định dạng, đây là 2 Composition riêng (mỗi cái dùng đúng bộ ảnh `public/images/16-9/` hoặc `public/images/9-16/` từ STATE 7) → render full ra 2 file: `out/<Ten>-16x9.mp4` và `out/<Ten>-9x16.mp4`.
-4. **Bước 7 (QC)**: gọi `video-qc` (`/watch out/<file>.mp4`) cho từng file render ra, kể cả khi có 2 định dạng.
+Follow `video-pipeline`'s loop exactly:
+1. **Step 2**: install missing packages via `npx remotion add <pkg>` before use, keep the color/font theme in one file. This is where the REAL Composition/Scene gets written (STATE 0 only created an empty project shell, no scene yet). The Composition uses the exact fps=30 locked in STATE 0 (matching `generate-voiceover.py --fps 30` from STATE 8), and the Composition's `durationInFrames` comes from the TOTAL real frame count in `manifest.json` (STATE 8), not the blank template's default.
+   - **Subtitle component must be kinetic**: split each beat's `text` into 2-3 word clusters, use `interpolate()`/`spring()` keyed on `frame` to reveal each cluster in sequence within the beat's `durationInFrames` (never the whole sentence at once). Keywords (numbers/proper names/places/conclusions) get a distinct accent color within the same span. Render text directly over the video (text-shadow/stroke for enough contrast), NEVER wrapped in a `<div>`/`<span>` with a solid fixed background color like a dialogue box, avoid that pattern that hides the background graphics.
+   - **Motion pacing must not be monotonous**: for a scene with `type: 'map' | 'chart' | 'stat-counter'` carrying a key stat/place, use a zoom-out then zoom-in-on-the-specific-point transform pair instead of a single linear zoom/pan for the whole beat. For a run of consecutive beats with the same rapid-fire data type (vote counting, listing numbers), shorten the `enterAtFrame` gap between elements to create a fast, punchy rhythm matching the voiceover.
+2. **Step 5 (visual QA)**: `npx remotion still <CompId> /tmp/check.png --frame=<n>` at several points, read the image with the Read tool against Vox expectations (flat, no gloss, correct safe-zone), `npx tsc --noEmit && npx eslint src` after each batch of fixes.
+3. **Step 6 (render)**: check sync on a short segment first (`npx remotion render <CompId> /tmp/check.mp4 --frames=<a>-<b>`). If STATE 4 chose both formats, this means 2 separate Compositions (each using the correct `public/images/16-9/` or `public/images/9-16/` set from STATE 7) → full render produces 2 files: `out/<Name>-16x9.mp4` and `out/<Name>-9x16.mp4`.
+4. **Step 7 (QC)**: call `video-qc` (`/watch out/<file>.mp4`) for each rendered file, including both if there are two formats.
 
-**Nếu QC ra ⚠️/❌ liên quan hình ảnh/phong cách Vox** (sai palette, thiếu safe-zone, motion không khớp): quay lại STATE 7, regenerate riêng ảnh lỗi qua Antigravity IDE, không làm lại toàn bộ. **Nếu liên quan phần khác** (animation code, sync audio, layout): theo đúng Bước 8 của `video-pipeline` (feedback mơ hồ → hỏi lại user bằng AskUserQuestion, nhiều mảng cùng lúc → gọi `superpowers:brainstorming` trước khi sửa hàng loạt), rồi quay lại Bước 5–7 tới khi QC pass.
+**If QC returns ⚠️/❌ related to visuals/Vox style** (wrong palette, missing safe-zone, mismatched motion): go back to STATE 7, regenerate just the broken image via Antigravity IDE, don't redo the whole batch. **If it's something else** (animation code, audio sync, layout): follow `video-pipeline` Step 8 exactly (vague feedback → ask the user again via AskUserQuestion, multiple issues at once → call `superpowers:brainstorming` before batch-fixing), then loop back through Steps 5-7 until QC passes.
 
-Kết thúc bằng AskUserQuestion: "Video đã render và QC pass tại out/<Ten>.mp4 (hoặc cả hai file nếu chọn 2 định dạng ở STATE 4). Sinh 3 thumbnail luôn?" — options: ["Tiếp tục sinh thumbnail", "Dừng lại, tôi muốn xem video trước"].
+End with AskUserQuestion: "Video is rendered and QC-passed at out/<Name>.mp4 (or both files if STATE 4 chose two formats). Generate 3 thumbnails now?" — options: ["Continue to thumbnails", "Stop, I want to watch the video first"].
 
-DỪNG. CHỜ.
+STOP. WAIT.
 
-## STATE 11, THUMBNAIL
+## STATE 11, THUMBNAILS
 
-Sinh 3 prompt thumbnail, mỗi prompt một block độc lập, phong cách Vox pushed louder cho size nhỏ:
-- Một chủ thể minh họa flat 2D chiếm phần lớn khung hình.
-- 1-2 khối chữ in hoa condensed, tối đa 3 từ mỗi khối, từ khóa hook của video, viết bằng đúng ngôn ngữ đã chọn ở STATE 4.
-- Một highlight device (circle/underline/arrow) màu đỏ hoặc vàng từ bảng màu dự án.
-- Nền phẳng, một trong các màu chủ đạo của dự án, tương phản cao, không chi tiết nhỏ chết ở size 200px.
-- Cùng STYLE BLOCK và CLOSER ở STATE 7, đổi "no text beyond the specified label" thành "no text beyond the specified thumbnail words".
+Generate 3 thumbnail prompts, each its own independent block, Vox style pushed louder for small sizes:
+- One flat 2D illustrated subject filling most of the frame.
+- 1-2 blocks of condensed uppercase type, max 3 words per block, the video's hook keywords, written in the exact language chosen in STATE 4.
+- One highlight device (circle/underline/arrow) in red or yellow from the project's palette.
+- Flat background, one of the project's primary colors, high contrast, no small detail that dies at 200px size.
+- Same STYLE BLOCK and CLOSER as STATE 7, swapping "no text beyond the specified label" for "no text beyond the specified thumbnail words".
 
-Nếu STATE 4 chọn cả hai định dạng, sinh riêng 2 bộ 3 thumbnail (một bộ 16:9, một bộ 9:16), vì thumbnail YouTube (16:9) và cover Shorts/Reels (9:16) khác tỉ lệ khung.
+If STATE 4 chose both formats, generate two separate sets of 3 thumbnails (one 16:9, one 9:16), since YouTube thumbnails (16:9) and Shorts/Reels covers (9:16) differ in ratio.
 
-Sinh qua Antigravity IDE theo đúng cơ chế 7d, lưu vào `<ten-video-moi>/public/thumbnails/` (hoặc `public/thumbnails/16-9/` + `public/thumbnails/9-16/` nếu 2 định dạng). Đây là deliverable cuối cùng, đi kèm file `.mp4` từ STATE 10.
+Generate via Antigravity IDE per the same mechanism as 7d, save to `<new-video-name>/public/thumbnails/` (or `public/thumbnails/16-9/` + `public/thumbnails/9-16/` for two formats). This is the final deliverable, alongside the `.mp4` from STATE 10.
 
-Kết thúc bằng AskUserQuestion: "Hoàn tất: video đã render, QC pass, kèm 3 thumbnail, tất cả trong `<ten-video-moi>/`. Bạn muốn làm gì tiếp?" — options: ["Làm video mới", "Thêm phiên bản ngôn ngữ khác cho video này", "Làm lại một bước (redo)", "Kết thúc ở đây"].
+End with AskUserQuestion: "Done: video rendered, QC-passed, with 3 thumbnails, all inside `<new-video-name>/`. What next?" — options: ["Start a new video", "Add another language version of this video", "Redo a step", "Finish here"].
 
-Nếu chọn "Thêm phiên bản ngôn ngữ khác", chuyển sang STATE 12. Nếu chọn "Làm lại một bước", hỏi tiếp (text, vì có hơn 4 state nên không vừa AskUserQuestion) muốn redo state nào, rồi quay lại đúng state đó.
+If "Add another language version" is picked, move to STATE 12. If "Redo a step" is picked, follow up (plain text, since there are more than 4 states so it won't fit AskUserQuestion) asking which state to redo, then return to that exact state.
 
-DỪNG. CHỜ.
+STOP. WAIT.
 
-## STATE 12, THÊM PHIÊN BẢN NGÔN NGỮ KHÁC (tùy chọn, chạy sau khi đã có ít nhất 1 bản hoàn chỉnh)
+## STATE 12, ADD ANOTHER LANGUAGE VERSION (optional, runs after at least 1 complete version exists)
 
-Chỉ tái sử dụng phần KHÔNG phụ thuộc ngôn ngữ (niche/ý tưởng đã chọn, ảnh Vox ở `public/images/`, animation spec, SFX loại), KHÔNG chạy lại State 1-4/7 từ đầu — chỉ dịch nội dung và sinh lại phần phụ thuộc ngôn ngữ.
+Only reuse the language-independent parts (chosen niche/idea, Vox images in `public/images/`, animation spec, SFX types), do NOT redo States 1-4/7 from scratch — only translate content and regenerate the language-dependent parts.
 
-Nếu dự án chỉ hỗ trợ 2 ngôn ngữ (Anh/Việt) và STATE 4 đã chọn 1 trong 2, ngôn ngữ còn lại là lựa chọn mặc định duy nhất khả dĩ. Vẫn dùng AskUserQuestion: "Thêm phiên bản ngôn ngữ nào?" — options: ["Dùng `<ngôn ngữ còn lại>`", "Tự nhập ngôn ngữ khác"]. Nếu chọn "Tự nhập ngôn ngữ khác", hỏi tiếp bằng text thường tên ngôn ngữ cụ thể (vd dự án tương lai hỗ trợ thêm ngôn ngữ ngoài Anh/Việt). Nếu thực sự có từ 2 ngôn ngữ CHƯA làm trở lên, options là toàn bộ danh sách đó (không cần thêm option "Tự nhập khác").
+If the project only supports 2 languages (English/Vietnamese) and STATE 4 already picked one, the remaining language is the only sensible default. Still use AskUserQuestion: "Add which language version?" — options: ["Use `<remaining language>`", "Enter a different language"]. If "Enter a different language" is picked, follow up in plain text for the specific language name (e.g. a future project supporting languages beyond English/Vietnamese). If there genuinely are 2+ languages not yet done, the options are that full list (no need for an extra "enter different" option).
 
-### 12a. Dịch script (không viết lại từ đầu)
+### 12a. Translate the script (don't rewrite from scratch)
 
-Dịch nguyên văn `<ten-video>-script.md` (STATE 5) sang ngôn ngữ mới, giữ đúng ý, giữ đúng twist/kết đã đánh dấu, giữ đúng số beat và `id` (`vo_01, vo_02...`) để bảng động timing vẫn map 1-1. Lưu thành `<ten-video>-script-<lang>.md` (file riêng, không ghi đè bản gốc). Không cần fact-check lại vì nội dung/claim không đổi, chỉ đổi ngôn ngữ diễn đạt.
+Translate `<video-name>-script.md` (STATE 5) verbatim into the new language, preserving meaning, preserving any flagged twist/ending, preserving the exact beat count and `id`s (`vo_01, vo_02...`) so the timing table still maps 1-1. Save as `<video-name>-script-<lang>.md` (a separate file, don't overwrite the original). No need to re-fact-check since content/claims don't change, only the language of expression.
 
-### 12b. Kiểm tra ảnh có label baked ngôn ngữ cũ không
+### 12b. Check images for old-language baked labels
 
-Vì kỷ luật `imagegen-remotion`/STYLE BLOCK không cho phép baked caption, ảnh Vox thường KHÔNG chứa text ngoài nhãn ngắn 1-4 từ (nếu có). Kiểm tra bảng manifest ở STATE 7: nếu có ảnh nào từng dùng label bằng ngôn ngữ cũ, regenerate riêng đúng những ảnh đó (qua Antigravity IDE, theo cơ chế 7d) bằng label ngôn ngữ mới, lưu vào `public/images/<lang>/scene-<id>.png` (chỉ ảnh có label mới cần bản riêng, ảnh không label dùng chung được, không cần sinh lại toàn bộ).
+Since `imagegen-remotion`/STYLE BLOCK discipline forbids baked captions, Vox images usually contain NO text besides a short 1-4 word label (if any). Check the STATE 7 manifest table: if any image used a label in the old language, regenerate just those images (via Antigravity IDE, per the 7d mechanism) with the new-language label, saved to `public/images/<lang>/scene-<id>.png` (only labeled images need a separate version, unlabeled images can be shared, no need to regenerate everything).
 
-### 12c. Voice thật cho ngôn ngữ mới (như STATE 8)
+### 12c. Real voice for the new language (as in STATE 8)
 
-Build JSON mới từ script đã dịch (12a), voice map theo ngôn ngữ mới (`en-US-GuyNeural`/`en-US-AriaNeural` hoặc `vi-VN-NamMinhNeural`/`vi-VN-HoaiMyNeural`, hỏi giới tính giọng qua AskUserQuestion như STATE 8). Chạy `generate-voiceover.py` với cùng fps đã chốt ở STATE 0, output vào `public/audio/vo/<lang>/` + `manifest.json` riêng. Đối chiếu tổng thời lượng thật với độ dài mục tiêu như STATE 8 (script dịch có thể dài/ngắn hơn bản gốc).
+Build a new JSON from the translated script (12a), voice mapped to the new language (`en-US-GuyNeural`/`en-US-AriaNeural` or `vi-VN-NamMinhNeural`/`vi-VN-HoaiMyNeural`, ask voice gender via AskUserQuestion as in STATE 8). Run `generate-voiceover.py` with the same fps locked in STATE 0, output to `public/audio/vo/<lang>/` + its own `manifest.json`. Cross-check the real total duration against the target length as in STATE 8 (a translated script can run longer/shorter than the original).
 
-### 12d. SFX + Composition + render + QC riêng cho ngôn ngữ mới
+### 12d. SFX + Composition + render + QC for the new language
 
-SFX (loại/thời điểm) giữ nguyên logic STATE 9, chỉ đổi frame theo `manifest.json` mới của 12c. Ở STATE 10: tạo thêm 1 Composition riêng cho ngôn ngữ mới (dùng lại ảnh gốc + ảnh label riêng nếu có ở 12b, audio mới ở 12c), render ra `out/<Ten>-<lang>.mp4` (nhân đôi nếu dự án có cả 2 định dạng 16:9/9:16), QC qua `video-qc` như bình thường.
+SFX (type/timing) follows the same STATE 9 logic, just retimed against the new `manifest.json` from 12c. In STATE 10: create one more Composition for the new language (reusing the original images + any labeled images from 12b, new audio from 12c), render to `out/<Name>-<lang>.mp4` (doubled if the project has both 16:9/9:16 formats), QC via `video-qc` as normal.
 
-### 12e. Thumbnail riêng cho ngôn ngữ mới
+### 12e. Thumbnails for the new language
 
-Sinh lại 3 thumbnail (STATE 11) với chữ bằng ngôn ngữ mới, lưu vào `public/thumbnails/<lang>/`.
+Regenerate the 3 thumbnails (STATE 11) with text in the new language, saved to `public/thumbnails/<lang>/`.
 
-Kết thúc bằng AskUserQuestion: "Đã có thêm bản `<lang>` tại out/<Ten>-<lang>.mp4. Bạn muốn làm gì tiếp?" — options: ["Thêm ngôn ngữ khác nữa", "Làm video mới", "Kết thúc ở đây"].
+End with AskUserQuestion: "Added a `<lang>` version at out/<Name>-<lang>.mp4. What next?" — options: ["Add another language", "Start a new video", "Finish here"].
 
-DỪNG. CHỜ.
+STOP. WAIT.
