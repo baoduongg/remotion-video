@@ -1,0 +1,182 @@
+{
+  "vo_01": {
+    "durationSec": 3.0,
+    "durationInFrames": 90
+  },
+  "vo_02": {
+    "durationSec": 3.528,
+    "durationInFrames": 106
+  },
+  "vo_03": {
+    "durationSec": 3.192,
+    "durationInFrames": 96
+  },
+  "vo_04": {
+    "durationSec": 2.856,
+    "durationInFrames": 86
+  },
+  "vo_05": {
+    "durationSec": 3.768,
+    "durationInFrames": 113
+  },
+  "vo_06": {
+    "durationSec": 3.288,
+    "durationInFrames": 99
+  },
+  "vo_07": {
+    "durationSec": 3.48,
+    "durationInFrames": 104
+  },
+  "vo_08": {
+    "durationSec": 3.192,
+    "durationInFrames": 96
+  },
+  "vo_09": {
+    "durationSec": 4.104,
+    "durationInFrames": 123
+  },
+  "vo_10": {
+    "durationSec": 3.408,
+    "durationInFrames": 102
+  },
+  "vo_11": {
+    "durationSec": 2.496,
+    "durationInFrames": 75
+  },
+  "vo_12": {
+    "durationSec": 3.24,
+    "durationInFrames": 97
+  },
+  "vo_13": {
+    "durationSec": 2.904,
+    "durationInFrames": 87
+  },
+  "vo_14": {
+    "durationSec": 3.648,
+    "durationInFrames": 109
+  },
+  "vo_15": {
+    "durationSec": 2.4,
+    "durationInFrames": 72
+  },
+  "vo_16": {
+    "durationSec": 4.152,
+    "durationInFrames": 125
+  },
+  "vo_17": {
+    "durationSec": 3.912,
+    "durationInFrames": 117
+  },
+  "vo_18": {
+    "durationSec": 2.952,
+    "durationInFrames": 89
+  },
+  "vo_19": {
+    "durationSec": 4.488,
+    "durationInFrames": 135
+  },
+  "vo_20": {
+    "durationSec": 2.664,
+    "durationInFrames": 80
+  },
+  "vo_21": {
+    "durationSec": 3.456,
+    "durationInFrames": 104
+  },
+  "vo_22": {
+    "durationSec": 4.272,
+    "durationInFrames": 128
+  },
+  "vo_23": {
+    "durationSec": 2.736,
+    "durationInFrames": 82
+  },
+  "vo_24": {
+    "durationSec": 3.624,
+    "durationInFrames": 109
+  },
+  "vo_25": {
+    "durationSec": 5.28,
+    "durationInFrames": 158
+  },
+  "vo_26": {
+    "durationSec": 3.456,
+    "durationInFrames": 104
+  },
+  "vo_27": {
+    "durationSec": 4.056,
+    "durationInFrames": 122
+  },
+  "vo_28": {
+    "durationSec": 3.144,
+    "durationInFrames": 94
+  },
+  "vo_29": {
+    "durationSec": 4.488,
+    "durationInFrames": 135
+  },
+  "vo_30": {
+    "durationSec": 2.832,
+    "durationInFrames": 85
+  },
+  "vo_31": {
+    "durationSec": 4.08,
+    "durationInFrames": 122
+  },
+  "vo_32": {
+    "durationSec": 2.856,
+    "durationInFrames": 86
+  },
+  "vo_33": {
+    "durationSec": 3.576,
+    "durationInFrames": 107
+  },
+  "vo_34": {
+    "durationSec": 3.864,
+    "durationInFrames": 116
+  },
+  "vo_35": {
+    "durationSec": 5.28,
+    "durationInFrames": 158
+  },
+  "vo_36": {
+    "durationSec": 4.2,
+    "durationInFrames": 126
+  },
+  "vo_37": {
+    "durationSec": 4.128,
+    "durationInFrames": 124
+  },
+  "vo_38": {
+    "durationSec": 3.408,
+    "durationInFrames": 102
+  },
+  "vo_39": {
+    "durationSec": 3.048,
+    "durationInFrames": 91
+  },
+  "vo_40": {
+    "durationSec": 3.504,
+    "durationInFrames": 105
+  },
+  "vo_41": {
+    "durationSec": 3.336,
+    "durationInFrames": 100
+  },
+  "vo_42": {
+    "durationSec": 3.312,
+    "durationInFrames": 99
+  },
+  "vo_43": {
+    "durationSec": 4.488,
+    "durationInFrames": 135
+  },
+  "vo_44": {
+    "durationSec": 4.248,
+    "durationInFrames": 127
+  },
+  "vo_45": {
+    "durationSec": 2.328,
+    "durationInFrames": 70
+  }
+}

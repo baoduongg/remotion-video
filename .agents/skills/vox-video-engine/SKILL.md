@@ -1,7 +1,7 @@
 ---
 name: vox-video-engine
-description: Đi từ ý tưởng thô đến video Remotion phong cách Vox (flat 2D vector, kinetic typography, "animated opinion essay") ĐÃ RENDER XONG VÀ QC. Tạo folder project Remotion NGAY TỪ ĐẦU, rồi làm mọi việc tiếp theo (script, beat, ảnh, voice, SFX, code, render, QC) bên trong folder đó. Hỗ trợ output đa dạng — định dạng 16:9, 9:16, hoặc cả hai (2 lượt render riêng), và ngôn ngữ Tiếng Anh hoặc Tiếng Việt cho script, voice, và mọi text trong ảnh/thumbnail. Sau khi đã có 1 bản hoàn chỉnh, có thể thêm bản ngôn ngữ khác cho cùng project mà không phải làm lại từ đầu (chỉ dịch script, sinh voice/render/QC/thumbnail mới). Điều phối skill `video-pipeline` cho phần scaffold/voice/SFX/QA/render/QC, tự lo phần đặc thù Vox (niche, script giọng Vox, ảnh theo kỷ luật imagegen-remotion gọi qua tính năng tạo ảnh có sẵn trong Antigravity IDE). LUÔN dùng skill này khi user nhắc "Vox style", "video kiểu Vox", "video explainer", "animated opinion essay", hoặc yêu cầu làm video hoàn chỉnh theo phong cách này, kể cả khi không gõ đúng từ "Vox".
-compatibility: "Cần skill `video-pipeline` đã cài (điều phối scaffold/voice/SFX/QA/render/QC), và các skill nó phụ thuộc: remotion-best-practices, remotion-create, remotion-markup, video-qc (`/watch`), edge-tts (qua generate-voiceover.py), ffmpeg/ffprobe. Cần skill `imagegen-remotion` cho kỷ luật ảnh. Cần chạy trong Antigravity IDE để dùng tính năng tạo ảnh có sẵn (Gemini/Nano Banana) sinh ảnh thật; nếu chạy ở harness khác không có tính năng này, cần kết nối Gemini/Google Flow tương đương hoặc làm thủ công (xem 7d). Cần thư mục cha `remotion-video/` đã có sẵn `WORKFLOW.md` + `scripts/generate-voiceover.py` + skill dùng chung (setup one-time theo `video-pipeline` Bước 0.5)."
+description: Đi từ ý tưởng thô đến video Remotion phong cách Vox (flat 2D vector, kinetic typography, "animated opinion essay") ĐÃ RENDER XONG VÀ QC. Tạo folder project Remotion NGAY TỪ ĐẦU, rồi làm mọi việc tiếp theo (script, beat, ảnh, voice, SFX, code, render, QC) bên trong folder đó. Hỗ trợ output đa dạng — định dạng 16:9, 9:16, hoặc cả hai (2 lượt render riêng), và ngôn ngữ Tiếng Anh hoặc Tiếng Việt cho script, voice, và mọi text trong ảnh/thumbnail. Sau khi đã có 1 bản hoàn chỉnh, có thể thêm bản ngôn ngữ khác cho cùng project mà không phải làm lại từ đầu (chỉ dịch script, sinh voice/render/QC/thumbnail mới). Điều phối skill `video-pipeline` cho phần scaffold/voice/SFX/QA/render/QC, tự lo phần đặc thù Vox (niche, script giọng Vox, ảnh theo kỷ luật imagegen-remotion xuất sẵn `prompts_parsed.json`, user tự sinh ảnh). LUÔN dùng skill này khi user nhắc "Vox style", "video kiểu Vox", "video explainer", "animated opinion essay", hoặc yêu cầu làm video hoàn chỉnh theo phong cách này, kể cả khi không gõ đúng từ "Vox".
+compatibility: "Cần skill `video-pipeline` đã cài (điều phối scaffold/voice/SFX/QA/render/QC), và các skill nó phụ thuộc: remotion-best-practices, remotion-create, remotion-markup, video-qc (`/watch`), edge-tts (qua generate-voiceover.py), ffmpeg/ffprobe. Cần skill `imagegen-remotion` cho kỷ luật ảnh. STATE 7 KHÔNG tự sinh ảnh, chỉ xuất `prompts_parsed.json` để user tự sinh ảnh bằng tool bất kỳ (không phụ thuộc Antigravity IDE hay bất kỳ image-gen tool nào có sẵn trong phiên). Cần thư mục cha `remotion-video/` đã có sẵn `WORKFLOW.md` + `scripts/generate-voiceover.py` + skill dùng chung (setup one-time theo `video-pipeline` Bước 0.5)."
 ---
 
 # Vox Video Engine
@@ -130,7 +130,7 @@ Kết thúc bằng AskUserQuestion: "Đã tách xong beat. Sinh ảnh Vox cho t�
 
 DỪNG. CHỜ.
 
-## STATE 7, SINH ẢNH VOX (theo skill `imagegen-remotion`, gọi qua tính năng tạo ảnh trong Antigravity IDE)
+## STATE 7, SINH ẢNH VOX (theo skill `imagegen-remotion`, xuất `prompts_parsed.json` cho user tự sinh ảnh)
 
 Mọi ảnh lưu trực tiếp vào `<ten-video-moi>/public/images/` (thư mục này đã có sẵn từ khung Remotion tạo ở STATE 0) — đây chính là asset mà STATE 10 (scaffold code) sẽ dùng.
 
@@ -195,11 +195,27 @@ interface BeatAnimation {
 ```
 Dùng `interpolate()` và `spring()` của Remotion khi scaffold, KHÔNG dùng frame-hold kiểu stop-motion (đó là DNA true-crime, không phải Vox).
 
-### 7d. Gọi tool sinh ảnh thật qua Antigravity IDE
+### 7d. Xuất `prompts_parsed.json` cho user tự sinh ảnh
 
-- Đang chạy trong Antigravity IDE: dùng thẳng tính năng tạo ảnh có sẵn của IDE (Gemini/Nano Banana), gọi trực tiếp cho từng beat theo đúng thứ tự Scene 1 → Scene N, không gộp, không đảo thứ tự.
-- Nếu user từng nói rõ muốn dùng tool khác ở lượt hiện tại (vd Google Flow riêng cho video keyframe), ưu tiên lựa chọn đó hơn mặc định.
-- Nếu đang chạy ở harness khác không có tính năng này (không phải Antigravity IDE): thử tool/connector Gemini hoặc Google Flow đang kết nối trong phiên nếu có; nếu không có tool nào khả dụng, xuất toàn bộ prompt theo đúng thứ tự beat vào `public/images/prompts.txt` (mỗi block một beat, đánh số `id`, cách nhau dòng trống), báo user tự dán từng prompt vào Gemini hoặc Flow, tải ảnh về đặt đúng tên `scene-<id>.png` (hoặc `<16-9|9-16>/scene-<id>.png` nếu 2 định dạng) vào `public/images/`. Sau khi user báo đã xong, đếm lại số file khớp số beat trước khi qua 7e.
+Không tự gọi tool sinh ảnh. Ráp prompt hoàn chỉnh của mọi beat (style bible + hành động/bối cảnh riêng + STYLE BLOCK + CLOSER, đúng thứ tự Scene 1 → Scene N, không gộp không đảo) rồi ghi vào `public/images/prompts_parsed.json` (hoặc `public/images/<16-9|9-16>/prompts_parsed.json`, một file riêng mỗi định dạng nếu STATE 4 chọn cả hai):
+```json
+[
+  {
+    "id": "vo_01",
+    "output": "public/images/scene-vo_01.png",
+    "motion": "slow-zoom-in",
+    "textSafeZone": "bottom third, margin 6%",
+    "prompt": "<toàn văn prompt ráp sẵn: style bible + hành động/bối cảnh riêng beat + STYLE BLOCK + CLOSER>"
+  }
+]
+```
+`output` phải khớp đúng đường dẫn `public/images/scene-<id>.png` (hoặc `public/images/<16-9|9-16>/scene-<id>.png`) mà STATE 10 sẽ dùng.
+
+Báo user: "Đã xuất `prompts_parsed.json` ([N] prompt). Tự sinh ảnh bằng tool bất kỳ (Gemini/Nano Banana, Midjourney, v.v.) từ từng prompt trong file, lưu đúng tên/đường dẫn theo trường `output`." Dùng AskUserQuestion: "Đã tự sinh xong ảnh và lưu đúng đường dẫn `output` trong prompts_parsed.json chưa?" — options: ["Xong rồi, kiểm tra tiếp", "Chưa, tôi cần thêm thời gian"].
+
+DỪNG. CHỜ user xác nhận đã sinh xong ảnh trước khi tiếp tục.
+
+Sau khi user xác nhận, đếm lại số file thực tế trong `public/images/` khớp số entry trong `prompts_parsed.json` trước khi qua 7e; nếu thiếu, liệt kê rõ `id` còn thiếu và tiếp tục CHỜ.
 
 ### 7e. Clarity check trước khi giao (rút gọn từ `imagegen-remotion` §9)
 
@@ -270,7 +286,7 @@ Theo đúng vòng lặp của `video-pipeline`:
 3. **Bước 6 (render)**: check sync đoạn ngắn trước (`npx remotion render <CompId> /tmp/check.mp4 --frames=<a>-<b>`). Nếu STATE 4 chọn cả hai định dạng, đây là 2 Composition riêng (mỗi cái dùng đúng bộ ảnh `public/images/16-9/` hoặc `public/images/9-16/` từ STATE 7) → render full ra 2 file: `out/<Ten>-16x9.mp4` và `out/<Ten>-9x16.mp4`.
 4. **Bước 7 (QC)**: gọi `video-qc` (`/watch out/<file>.mp4`) cho từng file render ra, kể cả khi có 2 định dạng.
 
-**Nếu QC ra ⚠️/❌ liên quan hình ảnh/phong cách Vox** (sai palette, thiếu safe-zone, motion không khớp): quay lại STATE 7, regenerate riêng ảnh lỗi qua Antigravity IDE, không làm lại toàn bộ. **Nếu liên quan phần khác** (animation code, sync audio, layout): theo đúng Bước 8 của `video-pipeline` (feedback mơ hồ → hỏi lại user bằng AskUserQuestion, nhiều mảng cùng lúc → gọi `superpowers:brainstorming` trước khi sửa hàng loạt), rồi quay lại Bước 5–7 tới khi QC pass.
+**Nếu QC ra ⚠️/❌ liên quan hình ảnh/phong cách Vox** (sai palette, thiếu safe-zone, motion không khớp): quay lại STATE 7d, xuất riêng entry ảnh lỗi vào `prompts_parsed.json`, báo user tự sinh lại đúng ảnh đó, không làm lại toàn bộ. **Nếu liên quan phần khác** (animation code, sync audio, layout): theo đúng Bước 8 của `video-pipeline` (feedback mơ hồ → hỏi lại user bằng AskUserQuestion, nhiều mảng cùng lúc → gọi `superpowers:brainstorming` trước khi sửa hàng loạt), rồi quay lại Bước 5–7 tới khi QC pass.
 
 Kết thúc bằng AskUserQuestion: "Video đã render và QC pass tại out/<Ten>.mp4 (hoặc cả hai file nếu chọn 2 định dạng ở STATE 4). Tạo nội dung SEO tối ưu luôn?" — options: ["Tiếp tục tạo SEO", "Dừng lại, tôi muốn xem video trước"].
 
@@ -300,7 +316,7 @@ Sinh 3 prompt thumbnail, mỗi prompt một block độc lập, phong cách Vox 
 
 Nếu STATE 4 chọn cả hai định dạng, sinh riêng 2 bộ 3 thumbnail (một bộ 16:9, một bộ 9:16), vì thumbnail YouTube (16:9) và cover Shorts/Reels (9:16) khác tỉ lệ khung.
 
-Sinh qua Antigravity IDE theo đúng cơ chế 7d, lưu vào `<ten-video-moi>/public/thumbnails/` (hoặc `public/thumbnails/16-9/` + `public/thumbnails/9-16/` nếu 2 định dạng). Đây là deliverable cuối cùng, đi kèm file `.mp4` từ STATE 10 và nội dung SEO từ STATE 11.
+Xuất theo đúng cơ chế 7d: ghi 3 prompt vào `public/thumbnails/prompts_parsed.json` (hoặc `public/thumbnails/<16-9|9-16>/prompts_parsed.json` nếu 2 định dạng), mỗi entry có `id` (`thumb_1`, `thumb_2`, `thumb_3`), `output` (`public/thumbnails/thumb_<n>.png`), `prompt`. Báo user tự sinh ảnh và lưu đúng `output`, dùng AskUserQuestion xác nhận đã xong như 7d trước khi coi là hoàn tất. Đây là deliverable cuối cùng, đi kèm file `.mp4` từ STATE 10 và nội dung SEO từ STATE 11.
 
 Kết thúc bằng AskUserQuestion: "Hoàn tất: video đã render, QC pass, có nội dung SEO, kèm 3 thumbnail, tất cả trong `<ten-video-moi>/`. Bạn muốn làm gì tiếp?" — options: ["Làm video mới", "Thêm phiên bản ngôn ngữ khác cho video này", "Làm lại một bước (redo)", "Kết thúc ở đây"].
 
@@ -320,7 +336,7 @@ Dịch nguyên văn `<ten-video>-script.md` (STATE 5) sang ngôn ngữ mới, gi
 
 ### 13b. Kiểm tra ảnh có label baked ngôn ngữ cũ không
 
-Vì kỷ luật `imagegen-remotion`/STYLE BLOCK không cho phép baked caption, ảnh Vox thường KHÔNG chứa text ngoài nhãn ngắn 1-4 từ (nếu có). Kiểm tra bảng manifest ở STATE 7: nếu có ảnh nào từng dùng label bằng ngôn ngữ cũ, regenerate riêng đúng những ảnh đó (qua Antigravity IDE, theo cơ chế 7d) bằng label ngôn ngữ mới, lưu vào `public/images/<lang>/scene-<id>.png` (chỉ ảnh có label mới cần bản riêng, ảnh không label dùng chung được, không cần sinh lại toàn bộ).
+Vì kỷ luật `imagegen-remotion`/STYLE BLOCK không cho phép baked caption, ảnh Vox thường KHÔNG chứa text ngoài nhãn ngắn 1-4 từ (nếu có). Kiểm tra bảng manifest ở STATE 7: nếu có ảnh nào từng dùng label bằng ngôn ngữ cũ, xuất riêng đúng những entry đó vào `prompts_parsed.json` mới (theo cơ chế 7d) bằng label ngôn ngữ mới, báo user tự sinh lại và lưu vào `public/images/<lang>/scene-<id>.png` (chỉ ảnh có label mới cần bản riêng, ảnh không label dùng chung được, không cần sinh lại toàn bộ).
 
 ### 13c. Voice thật cho ngôn ngữ mới (như STATE 8)
 

@@ -1,0 +1,20 @@
+[
+  {"beatId": "vo_02", "type": "whoosh", "file": "public/audio/sfx/whoosh.wav", "frame": 90, "volume": 0.25, "note": "zoom-in vao 2 bang hinh chu nhat"},
+  {"beatId": "vo_05", "type": "whoosh", "file": "public/audio/sfx/whoosh.wav", "frame": 378, "volume": 0.25, "note": "pan sang song Mississippi, chuyen canh lon"},
+  {"beatId": "vo_09", "type": "pop", "file": "public/audio/sfx/click.mp3", "frame": 790, "volume": 0.3, "note": "dau hoi fade-scale"},
+  {"beatId": "vo_11", "type": "pop", "file": "public/audio/sfx/click.mp3", "frame": 1015, "volume": 0.3, "note": "mui ten noi 2 map fragment"},
+  {"beatId": "vo_14", "type": "gavel", "file": "public/audio/sfx/gavel.mp3", "frame": 1274, "volume": 0.4, "note": "vua Charles II cap dac quyen, khoanh khac quyet dinh 1"},
+  {"beatId": "vo_16", "type": "pop", "file": "public/audio/sfx/click.mp3", "frame": 1455, "volume": 0.3, "note": "icon ve tinh bi gach cheo xuat hien"},
+  {"beatId": "vo_17", "type": "whoosh", "file": "public/audio/sfx/whoosh.wav", "frame": 1580, "volume": 0.25, "note": "pan canh song nui"},
+  {"beatId": "vo_22", "type": "pop", "file": "public/audio/sfx/click.mp3", "frame": 2105, "volume": 0.3, "note": "nhan vat John Smith xuat hien"},
+  {"beatId": "vo_24", "type": "pop", "file": "public/audio/sfx/click.mp3", "frame": 2315, "volume": 0.3, "note": "2 van ban va cham"},
+  {"beatId": "vo_25", "type": "clock-tick-start", "file": "public/audio/sfx/clock-tick-toledo.mp3", "frame": 2424, "volume": 0.3, "durationFrames": 384, "note": "bat dau tang cang thang Toledo War, keo dai het vo_25-vo_27, cat dot ngot khi vo_28 bat dau (frame 2808)"},
+  {"beatId": "vo_28", "type": "pop", "file": "public/audio/sfx/click.mp3", "frame": 2808, "volume": 0.35, "note": "con dau TOLEDO WAR dong xuong, dung ngay sau khi clock-tick cat"},
+  {"beatId": "vo_29", "type": "whoosh", "file": "public/audio/sfx/whoosh.wav", "frame": 2902, "volume": 0.25, "note": "mui ten quet tay sang, chuyen sang chuong moi"},
+  {"beatId": "vo_31", "type": "gavel", "file": "public/audio/sfx/gavel.mp3", "frame": 3122, "volume": 0.4, "note": "Quoc hoi ban hanh Land Ordinance 1785, khoanh khac quyet dinh 2"},
+  {"beatId": "vo_35", "type": "whoosh", "file": "public/audio/sfx/whoosh.wav", "frame": 3553, "volume": 0.25, "note": "pan ke duong thang tao bang moi"},
+  {"beatId": "vo_37", "type": "pop", "file": "public/audio/sfx/click.mp3", "frame": 3837, "volume": 0.3, "note": "cac bang hoan thanh hien ra"},
+  {"beatId": "vo_39", "type": "pop", "file": "public/audio/sfx/click.mp3", "frame": 4063, "volume": 0.3, "note": "icon la gach cheo xuat hien"},
+  {"beatId": "vo_43", "type": "whoosh", "file": "public/audio/sfx/whoosh.wav", "frame": 4458, "volume": 0.25, "note": "zoom out toan canh ban do ket bai"},
+  {"beatId": "vo_45", "type": "pop", "file": "public/audio/sfx/click.mp3", "frame": 4720, "volume": 0.3, "note": "hinh dong closing, vuong mien + thuoc ke"}
+]

@@ -6,7 +6,14 @@ compatibility: "Cần skill `video-pipeline` đã cài (điều phối scaffold/
 
 # Vox Video Engine
 
-LƯU Ý: BẤT KỲ CÂU HỎI NÀO TRONG CÁC STATE DƯỚI ĐÂY, KỂ CẢ CÂU ĐƠN GIẢN NHƯ XÁC NHẬN CHUYỂN SANG STATE TIẾP THEO (trước đây kiểu "gõ 'next'"), PHẢI DÙNG TOOL HỎI DẠNG NÚT BẤM (AskUserQuestion / `ask_user_input_v0`) THAY VÌ GÕ CÂU HỎI THUẦN TEXT — để user chỉ cần chạm chọn thay vì gõ tay. Mẫu chuẩn cho xác nhận chuyển state: 2 option ["Tiếp tục", "Dừng lại, tôi cần chỉnh trước"]. Nếu một câu hỏi có nhiều hơn 4 lựa chọn (vd chọn 1 trong 10 ý tưởng ở STATE 3, hoặc chọn redo state nào ở STATE 11), giữ dạng liệt kê + để user gõ, vì tool giới hạn tối đa 4 option mỗi câu. Có thể gộp tối đa 3 câu hỏi độc lập vào một lần gọi tool nếu chúng thuộc cùng một state (xem STATE 4). Không tự đoán câu trả lời thay user khi câu hỏi còn mơ hồ.
+LƯU Ý: BẤT KỲ CÂU HỎI NÀO TRONG CÁC STATE DƯỚI ĐÂY, KỂ CẢ CÂU ĐƠN GIẢN NHƯ XÁC NHẬN CHUYỂN SANG STATE TIẾP THEO (trước đây kiểu "gõ 'next'"), PHẢI DÙNG TOOL HỎI DẠNG NÚT BẤM (AskUserQuestion / `ask_user_input_v0`) THAY VÌ GÕ CÂU HỎI THUẦN TEXT — để user chỉ cần chạm chọn thay vì gõ tay. Mẫu chuẩn cho xác nhận chuyển state: 2 option ["Tiếp tục", "Dừng lại, tôi cần chỉnh trước"]. Nếu một câu hỏi có nhiều hơn 4 lựa chọn (vd chọn 1 trong 10 ý tưởng ở STATE 3, hoặc chọn redo state nào ở STATE 11), giữ dạng liệt kê + để user gõ, vì tool giới hạn tối đa 4 option mỗi câu.
+
+Tool cũng yêu cầu TỐI THIỂU 2 option mỗi câu hỏi (mảng 1 phần tử bị tool reject thẳng). Với câu hỏi mà bản chất chỉ có ĐÚNG 1 giá trị hợp lý — free-text mở (vd đặt tên project ở STATE 0) hoặc lựa chọn duy nhất còn lại sau khi loại trừ (vd STATE 12 khi chỉ còn 1 ngôn ngữ chưa làm) — KHÔNG bỏ qua AskUserQuestion và KHÔNG tự ý quyết thay user. Luôn dựng đúng 2 option:
+1. Giá trị gợi ý/mặc định cụ thể (slug đề xuất, hoặc tên lựa chọn duy nhất còn lại).
+2. "Tự nhập giá trị khác" — để user gõ tay nếu không muốn dùng gợi ý mặc định.
+Nếu user chọn option 2, hỏi tiếp bằng text thường để họ gõ giá trị cụ thể. Không tự bịa thêm option thứ 3 giả cho đủ số, và không dùng "Other" mặc định của tool thay cho option 2 này (option 2 phải tường minh trong danh sách).
+
+Có thể gộp tối đa 3 câu hỏi độc lập vào một lần gọi tool nếu chúng thuộc cùng một state (xem STATE 4). Không tự đoán câu trả lời thay user khi câu hỏi còn mơ hồ.
 
 State machine tuyến tính, DỪNG và CHỜ user trả lời sau mỗi state — không tự nhảy cóc. Không dùng em dash (dùng dấu phẩy, hai chấm, ngoặc đơn, hoặc gạch ngang thường).
 
@@ -28,7 +35,7 @@ Kết quả cuối cùng là một file `.mp4` đã render và QC pass, kèm 3 t
 
 ## STATE 0, SCAFFOLD PROJECT TRƯỚC TIÊN (video-pipeline Bước 0.5)
 
-Hỏi: "Đặt tên ngắn cho project này (slug không dấu, không khoảng trắng, vd `why-cities-trap-heat`)? Có thể đổi tên/nội dung cụ thể sau khi chọn niche/ý tưởng ở các bước tiếp theo, tên này chỉ để tạo folder ngay bây giờ."
+Tự đề xuất một slug mặc định hợp lệ (không dấu, không khoảng trắng, vd `vox-video-<yyyymmdd>`), rồi dùng AskUserQuestion: "Đặt tên ngắn cho project này (slug không dấu, không khoảng trắng)? Có thể đổi tên/nội dung cụ thể sau khi chọn niche/ý tưởng ở các bước tiếp theo, tên này chỉ để tạo folder ngay bây giờ." — options: ["Dùng `<slug đề xuất>`", "Tự nhập tên khác"]. Nếu chọn "Tự nhập tên khác", hỏi tiếp bằng text thường để user gõ slug.
 
 Sau khi có tên, chạy ngay từ thư mục cha `remotion-video/` (mặc định fps 30, dùng xuyên suốt STATE 8 và STATE 10, không đổi giữa chừng):
 ```bash
@@ -299,7 +306,7 @@ DỪNG. CHỜ.
 
 Chỉ tái sử dụng phần KHÔNG phụ thuộc ngôn ngữ (niche/ý tưởng đã chọn, ảnh Vox ở `public/images/`, animation spec, SFX loại), KHÔNG chạy lại State 1-4/7 từ đầu — chỉ dịch nội dung và sinh lại phần phụ thuộc ngôn ngữ.
 
-Dùng AskUserQuestion: "Thêm phiên bản ngôn ngữ nào?" — options: ["Tiếng Anh", "Tiếng Việt"] (loại bỏ ngôn ngữ đã làm ở STATE 4 khỏi danh sách nếu chỉ còn 1 lựa chọn thì bỏ qua câu hỏi, dùng luôn ngôn ngữ còn lại).
+Nếu dự án chỉ hỗ trợ 2 ngôn ngữ (Anh/Việt) và STATE 4 đã chọn 1 trong 2, ngôn ngữ còn lại là lựa chọn mặc định duy nhất khả dĩ. Vẫn dùng AskUserQuestion: "Thêm phiên bản ngôn ngữ nào?" — options: ["Dùng `<ngôn ngữ còn lại>`", "Tự nhập ngôn ngữ khác"]. Nếu chọn "Tự nhập ngôn ngữ khác", hỏi tiếp bằng text thường tên ngôn ngữ cụ thể (vd dự án tương lai hỗ trợ thêm ngôn ngữ ngoài Anh/Việt). Nếu thực sự có từ 2 ngôn ngữ CHƯA làm trở lên, options là toàn bộ danh sách đó (không cần thêm option "Tự nhập khác").
 
 ### 12a. Dịch script (không viết lại từ đầu)
 

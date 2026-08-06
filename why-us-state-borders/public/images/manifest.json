@@ -1,0 +1,362 @@
+[
+  {
+    "beatId": "vo_01",
+    "asset": "public/images/scene-vo_01.png",
+    "motion": "static hold",
+    "textSafe": "duoi 1/3 man hinh cho kinetic caption, margin ~6% moi canh (16:9)",
+    "startFrame": 0,
+    "durationFrames": 90
+  },
+  {
+    "beatId": "vo_02",
+    "asset": "public/images/scene-vo_02.png",
+    "motion": "slow zoom-in",
+    "textSafe": "duoi 1/3 man hinh cho kinetic caption, margin ~6% moi canh (16:9)",
+    "startFrame": 90,
+    "durationFrames": 106
+  },
+  {
+    "beatId": "vo_03",
+    "asset": "public/images/scene-vo_03.png",
+    "motion": "static hold",
+    "textSafe": "duoi 1/3 man hinh cho kinetic caption, margin ~6% moi canh (16:9)",
+    "startFrame": 196,
+    "durationFrames": 96
+  },
+  {
+    "beatId": "vo_04",
+    "asset": "public/images/scene-vo_04.png",
+    "motion": "static hold",
+    "textSafe": "duoi 1/3 man hinh cho kinetic caption, margin ~6% moi canh (16:9)",
+    "startFrame": 292,
+    "durationFrames": 86
+  },
+  {
+    "beatId": "vo_05",
+    "asset": "public/images/scene-vo_05.png",
+    "motion": "pan left-to-right",
+    "textSafe": "duoi 1/3 man hinh cho kinetic caption, margin ~6% moi canh (16:9)",
+    "startFrame": 378,
+    "durationFrames": 113
+  },
+  {
+    "beatId": "vo_06",
+    "asset": "public/images/scene-vo_06.png",
+    "motion": "slow zoom-in",
+    "textSafe": "duoi 1/3 man hinh cho kinetic caption, margin ~6% moi canh (16:9)",
+    "startFrame": 491,
+    "durationFrames": 99
+  },
+  {
+    "beatId": "vo_07",
+    "asset": "public/images/scene-vo_07.png",
+    "motion": "pan down-to-up",
+    "textSafe": "duoi 1/3 man hinh cho kinetic caption, margin ~6% moi canh (16:9)",
+    "startFrame": 590,
+    "durationFrames": 104
+  },
+  {
+    "beatId": "vo_08",
+    "asset": "public/images/scene-vo_08.png",
+    "motion": "static hold",
+    "textSafe": "duoi 1/3 man hinh cho kinetic caption, margin ~6% moi canh (16:9)",
+    "startFrame": 694,
+    "durationFrames": 96
+  },
+  {
+    "beatId": "vo_09",
+    "asset": "public/images/scene-vo_09.png",
+    "motion": "fade-scale",
+    "textSafe": "duoi 1/3 man hinh cho kinetic caption, margin ~6% moi canh (16:9)",
+    "startFrame": 790,
+    "durationFrames": 123
+  },
+  {
+    "beatId": "vo_10",
+    "asset": "public/images/scene-vo_10.png",
+    "motion": "static hold",
+    "textSafe": "duoi 1/3 man hinh cho kinetic caption, margin ~6% moi canh (16:9)",
+    "startFrame": 913,
+    "durationFrames": 102
+  },
+  {
+    "beatId": "vo_11",
+    "asset": "public/images/scene-vo_11.png",
+    "motion": "fade-scale",
+    "textSafe": "duoi 1/3 man hinh cho kinetic caption, margin ~6% moi canh (16:9)",
+    "startFrame": 1015,
+    "durationFrames": 75
+  },
+  {
+    "beatId": "vo_12",
+    "asset": "public/images/scene-vo_12.png",
+    "motion": "static hold",
+    "textSafe": "duoi 1/3 man hinh cho kinetic caption, margin ~6% moi canh (16:9)",
+    "startFrame": 1090,
+    "durationFrames": 97
+  },
+  {
+    "beatId": "vo_13",
+    "asset": "public/images/scene-vo_13.png",
+    "motion": "slide-up",
+    "textSafe": "duoi 1/3 man hinh cho kinetic caption, margin ~6% moi canh (16:9)",
+    "startFrame": 1187,
+    "durationFrames": 87
+  },
+  {
+    "beatId": "vo_14",
+    "asset": "public/images/scene-vo_14.png",
+    "motion": "static hold",
+    "textSafe": "duoi 1/3 man hinh cho kinetic caption, margin ~6% moi canh (16:9)",
+    "startFrame": 1274,
+    "durationFrames": 109
+  },
+  {
+    "beatId": "vo_15",
+    "asset": "public/images/scene-vo_15.png",
+    "motion": "static hold",
+    "textSafe": "duoi 1/3 man hinh cho kinetic caption, margin ~6% moi canh (16:9)",
+    "startFrame": 1383,
+    "durationFrames": 72
+  },
+  {
+    "beatId": "vo_16",
+    "asset": "public/images/scene-vo_16.png",
+    "motion": "fade-scale",
+    "textSafe": "duoi 1/3 man hinh cho kinetic caption, margin ~6% moi canh (16:9)",
+    "startFrame": 1455,
+    "durationFrames": 125
+  },
+  {
+    "beatId": "vo_17",
+    "asset": "public/images/scene-vo_17.png",
+    "motion": "pan left-to-right",
+    "textSafe": "duoi 1/3 man hinh cho kinetic caption, margin ~6% moi canh (16:9)",
+    "startFrame": 1580,
+    "durationFrames": 117
+  },
+  {
+    "beatId": "vo_18",
+    "asset": "public/images/scene-vo_18.png",
+    "motion": "static hold",
+    "textSafe": "duoi 1/3 man hinh cho kinetic caption, margin ~6% moi canh (16:9)",
+    "startFrame": 1697,
+    "durationFrames": 89
+  },
+  {
+    "beatId": "vo_19",
+    "asset": "public/images/scene-vo_19.png",
+    "motion": "pan left-to-right",
+    "textSafe": "duoi 1/3 man hinh cho kinetic caption, margin ~6% moi canh (16:9)",
+    "startFrame": 1786,
+    "durationFrames": 135
+  },
+  {
+    "beatId": "vo_20",
+    "asset": "public/images/scene-vo_20.png",
+    "motion": "slow zoom-in",
+    "textSafe": "duoi 1/3 man hinh cho kinetic caption, margin ~6% moi canh (16:9)",
+    "startFrame": 1921,
+    "durationFrames": 80
+  },
+  {
+    "beatId": "vo_21",
+    "asset": "public/images/scene-vo_21.png",
+    "motion": "static hold",
+    "textSafe": "duoi 1/3 man hinh cho kinetic caption, margin ~6% moi canh (16:9)",
+    "startFrame": 2001,
+    "durationFrames": 104
+  },
+  {
+    "beatId": "vo_22",
+    "asset": "public/images/scene-vo_22.png",
+    "motion": "fade-scale",
+    "textSafe": "duoi 1/3 man hinh cho kinetic caption, margin ~6% moi canh (16:9)",
+    "startFrame": 2105,
+    "durationFrames": 128
+  },
+  {
+    "beatId": "vo_23",
+    "asset": "public/images/scene-vo_23.png",
+    "motion": "static hold",
+    "textSafe": "duoi 1/3 man hinh cho kinetic caption, margin ~6% moi canh (16:9)",
+    "startFrame": 2233,
+    "durationFrames": 82
+  },
+  {
+    "beatId": "vo_24",
+    "asset": "public/images/scene-vo_24.png",
+    "motion": "fade-scale",
+    "textSafe": "duoi 1/3 man hinh cho kinetic caption, margin ~6% moi canh (16:9)",
+    "startFrame": 2315,
+    "durationFrames": 109
+  },
+  {
+    "beatId": "vo_25",
+    "asset": "public/images/scene-vo_25.png",
+    "motion": "pan left-to-right",
+    "textSafe": "duoi 1/3 man hinh cho kinetic caption, margin ~6% moi canh (16:9)",
+    "startFrame": 2424,
+    "durationFrames": 158
+  },
+  {
+    "beatId": "vo_26",
+    "asset": "public/images/scene-vo_26.png",
+    "motion": "slow zoom-in",
+    "textSafe": "duoi 1/3 man hinh cho kinetic caption, margin ~6% moi canh (16:9)",
+    "startFrame": 2582,
+    "durationFrames": 104
+  },
+  {
+    "beatId": "vo_27",
+    "asset": "public/images/scene-vo_27.png",
+    "motion": "static hold",
+    "textSafe": "duoi 1/3 man hinh cho kinetic caption, margin ~6% moi canh (16:9)",
+    "startFrame": 2686,
+    "durationFrames": 122
+  },
+  {
+    "beatId": "vo_28",
+    "asset": "public/images/scene-vo_28.png",
+    "motion": "fade-scale",
+    "textSafe": "duoi 1/3 man hinh cho kinetic caption, margin ~6% moi canh (16:9)",
+    "startFrame": 2808,
+    "durationFrames": 94
+  },
+  {
+    "beatId": "vo_29",
+    "asset": "public/images/scene-vo_29.png",
+    "motion": "pan left-to-right",
+    "textSafe": "duoi 1/3 man hinh cho kinetic caption, margin ~6% moi canh (16:9)",
+    "startFrame": 2902,
+    "durationFrames": 135
+  },
+  {
+    "beatId": "vo_30",
+    "asset": "public/images/scene-vo_30.png",
+    "motion": "static hold",
+    "textSafe": "duoi 1/3 man hinh cho kinetic caption, margin ~6% moi canh (16:9)",
+    "startFrame": 3037,
+    "durationFrames": 85
+  },
+  {
+    "beatId": "vo_31",
+    "asset": "public/images/scene-vo_31.png",
+    "motion": "slide-up",
+    "textSafe": "duoi 1/3 man hinh cho kinetic caption, margin ~6% moi canh (16:9)",
+    "startFrame": 3122,
+    "durationFrames": 122
+  },
+  {
+    "beatId": "vo_32",
+    "asset": "public/images/scene-vo_32.png",
+    "motion": "static hold",
+    "textSafe": "duoi 1/3 man hinh cho kinetic caption, margin ~6% moi canh (16:9)",
+    "startFrame": 3244,
+    "durationFrames": 86
+  },
+  {
+    "beatId": "vo_33",
+    "asset": "public/images/scene-vo_33.png",
+    "motion": "slow zoom-in",
+    "textSafe": "duoi 1/3 man hinh cho kinetic caption, margin ~6% moi canh (16:9)",
+    "startFrame": 3330,
+    "durationFrames": 107
+  },
+  {
+    "beatId": "vo_34",
+    "asset": "public/images/scene-vo_34.png",
+    "motion": "slow zoom-in",
+    "textSafe": "duoi 1/3 man hinh cho kinetic caption, margin ~6% moi canh (16:9)",
+    "startFrame": 3437,
+    "durationFrames": 116
+  },
+  {
+    "beatId": "vo_35",
+    "asset": "public/images/scene-vo_35.png",
+    "motion": "pan down-to-up",
+    "textSafe": "duoi 1/3 man hinh cho kinetic caption, margin ~6% moi canh (16:9)",
+    "startFrame": 3553,
+    "durationFrames": 158
+  },
+  {
+    "beatId": "vo_36",
+    "asset": "public/images/scene-vo_36.png",
+    "motion": "static hold",
+    "textSafe": "duoi 1/3 man hinh cho kinetic caption, margin ~6% moi canh (16:9)",
+    "startFrame": 3711,
+    "durationFrames": 126
+  },
+  {
+    "beatId": "vo_37",
+    "asset": "public/images/scene-vo_37.png",
+    "motion": "fade-scale",
+    "textSafe": "duoi 1/3 man hinh cho kinetic caption, margin ~6% moi canh (16:9)",
+    "startFrame": 3837,
+    "durationFrames": 124
+  },
+  {
+    "beatId": "vo_38",
+    "asset": "public/images/scene-vo_38.png",
+    "motion": "static hold",
+    "textSafe": "duoi 1/3 man hinh cho kinetic caption, margin ~6% moi canh (16:9)",
+    "startFrame": 3961,
+    "durationFrames": 102
+  },
+  {
+    "beatId": "vo_39",
+    "asset": "public/images/scene-vo_39.png",
+    "motion": "fade-scale",
+    "textSafe": "duoi 1/3 man hinh cho kinetic caption, margin ~6% moi canh (16:9)",
+    "startFrame": 4063,
+    "durationFrames": 91
+  },
+  {
+    "beatId": "vo_40",
+    "asset": "public/images/scene-vo_40.png",
+    "motion": "static hold",
+    "textSafe": "duoi 1/3 man hinh cho kinetic caption, margin ~6% moi canh (16:9)",
+    "startFrame": 4154,
+    "durationFrames": 105
+  },
+  {
+    "beatId": "vo_41",
+    "asset": "public/images/scene-vo_41.png",
+    "motion": "pan left-to-right",
+    "textSafe": "duoi 1/3 man hinh cho kinetic caption, margin ~6% moi canh (16:9)",
+    "startFrame": 4259,
+    "durationFrames": 100
+  },
+  {
+    "beatId": "vo_42",
+    "asset": "public/images/scene-vo_42.png",
+    "motion": "pan left-to-right",
+    "textSafe": "duoi 1/3 man hinh cho kinetic caption, margin ~6% moi canh (16:9)",
+    "startFrame": 4359,
+    "durationFrames": 99
+  },
+  {
+    "beatId": "vo_43",
+    "asset": "public/images/scene-vo_43.png",
+    "motion": "slow zoom-in",
+    "textSafe": "duoi 1/3 man hinh cho kinetic caption, margin ~6% moi canh (16:9)",
+    "startFrame": 4458,
+    "durationFrames": 135
+  },
+  {
+    "beatId": "vo_44",
+    "asset": "public/images/scene-vo_44.png",
+    "motion": "static hold",
+    "textSafe": "duoi 1/3 man hinh cho kinetic caption, margin ~6% moi canh (16:9)",
+    "startFrame": 4593,
+    "durationFrames": 127
+  },
+  {
+    "beatId": "vo_45",
+    "asset": "public/images/scene-vo_45.png",
+    "motion": "fade-scale",
+    "textSafe": "duoi 1/3 man hinh cho kinetic caption, margin ~6% moi canh (16:9)",
+    "startFrame": 4720,
+    "durationFrames": 70
+  }
+]

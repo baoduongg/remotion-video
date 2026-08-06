@@ -24,3 +24,6 @@ Script Python dùng chung giữa các project (không phụ thuộc project cụ
 
 - `generate-voiceover.py` — sinh giọng đọc hàng loạt qua `edge-tts`, đo duration thật bằng `ffprobe`, xuất `manifest.json` cho timing Sequence.
 - `write-animation-spec.py`, `write-prompts.py` — hỗ trợ soạn spec animation / prompt ảnh.
+
+
+https://labs.google/fx/tools/flow/shared/tool/bc36fbb2-b3d8-4342-ab27-63cb27549632

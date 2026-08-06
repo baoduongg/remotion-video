@@ -1,0 +1,31 @@
+VOX VIDEO ENGINE — RE-GENERATE FIX (3 anh loi, dinh dang 16:9 ngang, khop voi 41 anh con lai)
+
+Doi tuong: vo_22 (thieu), vo_14 (co chu "PAPER LEGACY" bake san, phai xoa), vo_43 (bo cuc cat ghep 3 panel loi, phai thay bang 1 anh don).
+
+STYLE BIBLE (dan nguyen van vao dau moi prompt):
+Paper cut-out animation illustration in the style of layered handcrafted paper art: multiple layers of cut paper stacked to create depth, soft directional drop shadows between layers (simulating light through real paper), slightly imperfect torn or cut edges with visible paper grain texture, generous negative space reserved for kinetic-typography overlay. Bold but limited color palette held consistent across the whole project: kraft brown (#c8a876), cream (#f5ecd9), terracotta red (#c0453a), deep navy (#1b2a4a), mustard yellow (#e0a831) accent. Simple geometric character silhouettes cut from paper, without facial detail unless the beat needs a specific expression. Editorial infographic elements built from paper layers where relevant: simplified maps, bar or line charts, icons, timeline bars, arrows, circles used as highlight devices. ABSOLUTELY NO text, letters, words, labels, logos, or watermarks anywhere in the image — leave those areas as plain paper texture instead. Poster-like layered composition with exactly ONE unified scene (not a collage, not split into multiple panels or frames). Format: horizontal 16:9 composition, single continuous canvas.
+
+CLOSER (dan nguyen van vao cuoi moi prompt):
+The composition stays layered, tactile, and editorial with generous negative space in the bottom third of the frame for caption overlay, single unified 16:9 canvas. NOT photorealistic, NOT flat vector, NOT 3D render, NOT a triptych or split-panel collage, no clutter, no watermark, no logos, no text of any kind. Premium paper-cut stop-motion-inspired explainer aesthetic, ultra-detailed paper texture and layered shadow depth.
+
+======================================================================
+
+### vo_22 (anh moi, truoc day bi thieu)
+asset: public/images/scene-vo_22.png
+motion: fade-scale
+PROMPT:
+[STYLE BIBLE] Geometric paper silhouette of an explorer figure (tricorn-style hat shape, no facial detail) holding a rolled paper map beside a ship's paper sail silhouette. [CLOSER]
+
+### vo_14 (regenerate, xoa chu "PAPER LEGACY" da bake sai vao ban truoc)
+asset: public/images/scene-vo_14.png
+motion: static hold
+PROMPT:
+[STYLE BIBLE] Geometric paper silhouette of a seated king figure (no facial detail) beside an ornate paper crown shape and a quill, deep navy background. Absolutely no text or label anywhere in this image. [CLOSER]
+
+### vo_43 (regenerate, thay collage 3 panel bang 1 canh don gian)
+asset: public/images/scene-vo_43.png
+motion: slow zoom-in
+PROMPT:
+[STYLE BIBLE] A single unified full-width cut-paper map of the United States pulled back to show the whole silhouette in one continuous piece: left two-thirds shows crisp straight-ruled rectangle state borders, right third blends smoothly into organic winding paper-cut borders, no dividing seams or panel splits, generous negative space above and below the map. [CLOSER]
+
+Sau khi tao xong 3 anh nay, luu de vao public/images/ (ghi de file cu voi vo_14 va vo_43, tao moi vo_22), roi bao lai de dem du 45 file va lam lai clarity check.
